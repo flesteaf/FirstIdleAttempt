@@ -2,3 +2,4 @@
 **/.vs
 /Logs
 *.csproj.user
+/build
