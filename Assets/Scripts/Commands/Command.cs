@@ -10,6 +10,6 @@ namespace Assets.Scripts.Commands
     {
         public abstract String Name { get; }
 
-        public abstract void Execute(Game game, string command);
+        public abstract void Execute(GameManager game, string command);
     }
 }

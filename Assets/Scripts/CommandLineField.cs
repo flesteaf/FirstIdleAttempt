@@ -1,24 +1,24 @@
 ﻿using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CommandLineField : MonoBehaviour
 {
-    public InputField InputField;
-    private Game theGame;
-    private ConsoleText console;
+    public TMP_InputField InputField;
+    public TextMeshProUGUI Placeholder;
+    private GameManager theGame;
     private string command;
 
     private void Awake()
     {
-        theGame = FindObjectOfType<Game>();
-        console = FindObjectOfType<ConsoleText>();
+        theGame = FindObjectOfType<GameManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        InputField.placeholder.GetComponent<Text>().text = "Enter command...";
+        Placeholder.text = "Enter command...";
         InputField.ActivateInputField();
     }
 
@@ -39,10 +39,9 @@ public class CommandLineField : MonoBehaviour
             return;
         }
 
-        InputField.placeholder.GetComponent<Text>().text = "Enter command...";
+        Placeholder.text = "Enter command...";
         InputField.text = string.Empty;
         InputField.ActivateInputField();
-        console.AddMessage(command);
         theGame.ExecuteCommand(command);
     }
 }
