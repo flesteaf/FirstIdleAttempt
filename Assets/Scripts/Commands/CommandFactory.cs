@@ -14,11 +14,21 @@ namespace Assets.Scripts.Commands
         {
             HelpCommand helpCommand = new HelpCommand();
             StatusCommand statusCommand = new StatusCommand();
+            CrackCommand crackCommand = new CrackCommand();
+            FirewallCommand firewallCommand = new FirewallCommand();
+            InjectCommand injectCommand = new InjectCommand();
+            ScanCommand scanCommand = new ScanCommand();
+            SetRansomwareCommand setRansomwareCommand = new SetRansomwareCommand();
 
             commands = new Dictionary<string, Command>
             {
                 { helpCommand.Name, helpCommand },
-                { statusCommand.Name, statusCommand }
+                { statusCommand.Name, statusCommand },
+                { crackCommand.Name, crackCommand },
+                { firewallCommand.Name, firewallCommand },
+                { injectCommand.Name, injectCommand },
+                { scanCommand.Name, scanCommand },
+                { setRansomwareCommand.Name, setRansomwareCommand }
             };
         }
 
