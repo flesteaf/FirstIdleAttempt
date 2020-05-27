@@ -1,13 +1,11 @@
 ﻿using Assets.Scripts.Commands;
 using Assets.Scripts.Computers;
-using Assets.Scripts.MoneyGenerators;
 using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private float moneyAmmount = 100;
-    private MoneyProvider provider;
     internal CommandLineField InputText;
     internal ConsoleText Console;
     internal MissionText Missions;
@@ -22,7 +20,6 @@ public class GameManager : MonoBehaviour
         Missions = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
         Computer = new InitialComputer();
-        provider = new MoneyProvider();
     }
 
     void Start()
@@ -40,7 +37,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moneyAmmount += provider.GetAmmountGenerated();
+        moneyAmmount += 0.001f;
         Money.UpdateText(moneyAmmount);
     }
 }
