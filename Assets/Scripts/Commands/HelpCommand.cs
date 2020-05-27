@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 
 namespace Assets.Scripts.Commands
 {
@@ -6,14 +7,14 @@ namespace Assets.Scripts.Commands
     {
         public override string Name { get => "help"; }
 
-        public override void Execute(Game game, string command)
+        public override void Execute(GameManager game, string command)
         {
-            game.Console.AddMessage("The following commands are currently allowed:");
+            game.Console.AddMessage("The following commands are currently allowed:", MessageType.Info);
             
             var commands = CommandFactory.GetAllCommandsName();
             foreach (string item in commands)
             {
-                game.Console.AddMessage($"   - {item}");
+                game.Console.AddMessage($"   - {item}", MessageType.Info);
             }
         }
     }

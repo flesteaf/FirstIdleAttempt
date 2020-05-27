@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MissionText : MonoBehaviour
 {
+    public TextMeshProUGUI MissionsText;
+
     // Start is called before the first frame update
     void Start()
     {
