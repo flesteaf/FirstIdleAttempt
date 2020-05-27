@@ -67,8 +67,13 @@
     <Compile Include="Assets\Scripts\CommandLineField.cs" />
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandFactory.cs" />
+    <Compile Include="Assets\Scripts\Commands\CrackCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\FirewallCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\HelpCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\InjectCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\InvalidCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\ScanCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\SetRansomwareCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\StatusCommand.cs" />
     <Compile Include="Assets\Scripts\Computers\CPUs\Core1Speed200MHz.cs" />
     <Compile Include="Assets\Scripts\Computers\CPUs\Cpu.cs" />
