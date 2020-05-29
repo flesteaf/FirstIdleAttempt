@@ -8,7 +8,7 @@ namespace Assets.Scripts.Networks.Devices
 {
     internal sealed class WearableDevice : Device
     {
-        public WearableDevice(string ip, string mac) : base(ip, mac)
+        public WearableDevice(DeviceIdentification identification) : base(identification)
         {
         }
 

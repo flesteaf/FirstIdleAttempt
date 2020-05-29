@@ -2,17 +2,18 @@
 {
     internal abstract class Device
     {
-        internal string IP { get; }
-        internal string MAC { get; }
+        private DeviceIdentification identification;
+
+        internal string IP { get => identification.Ip; }
+        internal string MAC { get => identification.Mac; }
 
         internal abstract bool HasFirewall { get; }
         internal abstract float EnergyLevel { get; }
         internal abstract float DiskSize { get; }
 
-        public Device(string ip, string mac)
+        public Device(DeviceIdentification identification)
         {
-            IP = ip;
-            MAC = mac;
+            this.identification = identification;
         }
     }
 }

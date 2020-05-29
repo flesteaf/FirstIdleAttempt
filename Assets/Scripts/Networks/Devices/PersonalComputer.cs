@@ -8,7 +8,7 @@ namespace Assets.Scripts.Networks.Devices
 {
     internal class PersonalComputer : Device
     {
-        public PersonalComputer(string ip, string mac) : base(ip, mac)
+        public PersonalComputer(DeviceIdentification identification) : base(identification)
         {
         }
 

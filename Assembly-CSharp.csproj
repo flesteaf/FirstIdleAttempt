@@ -108,10 +108,14 @@
     <Compile Include="Assets\Scripts\MissionText.cs" />
     <Compile Include="Assets\Scripts\MoneyText.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Device.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\DeviceFactory.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\DeviceIdentification.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\PersonalComputer.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Phone.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Smartphone.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\WearableDevice.cs" />
+    <Compile Include="Assets\Scripts\Networks\NetworkFactory.cs" />
+    <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
     <Compile Include="Assets\Scripts\Networks\ProtectionType.cs" />
     <Compile Include="Assets\Scripts\Networks\HackableNetwork.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

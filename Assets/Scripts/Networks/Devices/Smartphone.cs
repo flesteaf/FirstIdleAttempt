@@ -8,7 +8,7 @@ namespace Assets.Scripts.Networks.Devices
 {
     internal class Smartphone : Device
     {
-        public Smartphone(string ip, string mac) : base(ip, mac)
+        public Smartphone(DeviceIdentification identification) : base(identification)
         {
         }
 
