@@ -32,7 +32,7 @@ namespace Assets.Scripts.Computers
         }
 
         protected abstract void SetupComputer();
-        
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();

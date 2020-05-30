@@ -1,6 +1,5 @@
-﻿using Assets.Scripts.MoneyGenerators;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class MoneyText : MonoBehaviour
 {
@@ -8,7 +7,6 @@ public class MoneyText : MonoBehaviour
 
     public void UpdateText(float moneyAmmount)
     {
-        
         Money.text = $"Money: {moneyAmmount}";
     }
 }
