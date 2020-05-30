@@ -2,11 +2,23 @@
 First attempt at an idle game in Unity 2D
 
 ## Overview
-- [Instructions](#instructions) 
-- [Commands](#commands) 
-- [Store](#store)
-- [Contracts](#contracts)
-- [Bot scripting](#bot-scripting)
+- [ ] [Instructions](#instructions)
+- [ ] [Commands](#commands)
+  - [ ] [Scan](#scan)
+  - [ ] [Crack](#crack)
+  - [ ] [Inject](#inject)
+  - [ ] [Firewall](#firewall)
+  - [ ] [Copy](#copy)
+  - [ ] [ls](#ls)
+  - [ ] [Ransomware](#ransomware)
+- [ ] [Store](#store)
+  - [ ] [PC Components](#pc-components)
+  - [ ] [Software](#software)
+- [ ] [Contracts](#contracts)
+  - [ ] [DDOS Attacks](#ddos-attacks)
+  - [ ] [Obtain file](#obtain-file)
+  - [ ] [Facilitate attack](#facilitate-attack) (e.g. disable firewall for someone else, or crack security protection for someone else)
+- [ ] [Bot scripting](#bot-scripting)
 
 ## Instructions
 TBD
