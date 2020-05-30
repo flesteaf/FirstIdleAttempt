@@ -1,9 +1,7 @@
 ﻿using Assets.Scripts.Networks.Devices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Scripts.Networks
 {
@@ -37,7 +35,7 @@ namespace Assets.Scripts.Networks
             string ssid = GetHomeSSID();
             List<Device> devices = deviceFactory.GetDevices(deviceIdentifications);
 
-            return new HackableNetwork(ssid, devices, ProtectionType.None, NetworkType.Home); 
+            return new HackableNetwork(ssid, devices, ProtectionType.None, NetworkType.Home);
         }
 
         public HackableNetwork GetSmallNetwork()

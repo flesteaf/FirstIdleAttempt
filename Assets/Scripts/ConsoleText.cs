@@ -1,8 +1,8 @@
 ﻿using Assets.Scripts.Extensions;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
 using UnityEditor;
+using UnityEngine;
 
 public class ConsoleText : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class ConsoleText : MonoBehaviour
     private readonly Queue<string> ConsoleMessages = new Queue<string>();
     private int acceptedNoOfLines;
     private readonly int lineWidth = 70;
-    
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -26,12 +26,12 @@ public class ConsoleText : MonoBehaviour
         if (text.Length > lineWidth)
         {
             HandleMessage(text.Substring(0, lineWidth), type);
-            HandleMessage(text.Substring(lineWidth), type);            
+            HandleMessage(text.Substring(lineWidth), type);
         }
         else
         {
             HandleMessage(text, type);
-        }        
+        }
 
         while (ConsoleMessages.Count > acceptedNoOfLines)
         {

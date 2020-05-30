@@ -1,7 +1,5 @@
-﻿using Assets.Scripts;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class CommandLineField : MonoBehaviour
 {
@@ -16,14 +14,14 @@ public class CommandLineField : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Placeholder.text = "Enter command...";
         InputField.ActivateInputField();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyUp(KeyCode.Return) && InputField.isActiveAndEnabled)
         {

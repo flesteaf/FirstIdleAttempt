@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 
 namespace Assets.Scripts.Commands
@@ -52,6 +51,7 @@ namespace Assets.Scripts.Commands
         }
 
         #region StatusCommands
+
         private void GetMoneyIncomeStatus(GameManager game)
         {
             //TODO: implement it
@@ -66,6 +66,7 @@ namespace Assets.Scripts.Commands
                 game.Console.AddMessage(item, MessageType.Info);
             }
         }
-        #endregion
+
+        #endregion StatusCommands
     }
 }

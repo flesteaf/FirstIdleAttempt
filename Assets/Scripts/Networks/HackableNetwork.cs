@@ -12,7 +12,7 @@ namespace Assets.Scripts.Networks
 
         internal NetworkType NetworkSize { get; }
 
-        public HackableNetwork(string ssid, List<Device> devices, 
+        public HackableNetwork(string ssid, List<Device> devices,
                                ProtectionType protectionType, NetworkType networkSize)
         {
             SSID = ssid;

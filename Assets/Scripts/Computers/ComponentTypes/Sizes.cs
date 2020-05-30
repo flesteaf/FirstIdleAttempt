@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Scripts.Computers.ComponentTypes
+﻿namespace Assets.Scripts.Computers.ComponentTypes
 {
     internal enum Sizes : long
     {

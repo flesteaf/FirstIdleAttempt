@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     internal Computer Computer;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         InputText = FindObjectOfType<CommandLineField>();
         Console = FindObjectOfType<ConsoleText>();
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         Computer = new InitialComputer();
     }
 
-    void Start()
+    private void Start()
     {
         Money.UpdateText(moneyAmmount);
     }
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         moneyAmmount += 0.001f;
         Money.UpdateText(moneyAmmount);
