@@ -8,9 +8,11 @@ namespace Assets.Scripts.Networks
         internal string SSID { get; }
 
         internal List<Device> Devices { get; }
-        internal ProtectionType Protection { get; }
+        internal ProtectionType Protection { get; private set; }
 
         internal NetworkType NetworkSize { get; }
+
+        internal bool WasHacked { get; private set; }
 
         public HackableNetwork(string ssid, List<Device> devices,
                                ProtectionType protectionType, NetworkType networkSize)
@@ -19,6 +21,18 @@ namespace Assets.Scripts.Networks
             Devices = devices;
             Protection = protectionType;
             NetworkSize = networkSize;
+            WasHacked = false;
+        }
+
+        internal void HackNetwork()
+        {
+            WasHacked = true;
+            Protection = ProtectionType.None;
+        }
+
+        public override string ToString()
+        {
+            return SSID;
         }
     }
 }

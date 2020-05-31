@@ -1,7 +1,14 @@
 ﻿using Assets.Scripts.Commands;
 using Assets.Scripts.Computers;
+using Assets.Scripts.Networks;
+using Random = System.Random;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System;
+using Assets.Scripts.Computers.Networks;
+using System.Linq;
+using Assets.Scripts.Networks.Devices;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +18,9 @@ public class GameManager : MonoBehaviour
     internal MissionText Missions;
     internal MoneyText Money;
     internal Computer Computer;
+    private List<HackableNetwork> foundNetworks;
+    private NetworkFactory networkFactory;
+    private Random random;
 
     // Start is called before the first frame update
     private void Awake()
@@ -20,6 +30,10 @@ public class GameManager : MonoBehaviour
         Missions = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
         Computer = new InitialComputer();
+
+        foundNetworks = new List<HackableNetwork>();
+        networkFactory = new NetworkFactory();
+        random = new System.Random();
     }
 
     private void Start()
@@ -39,5 +53,35 @@ public class GameManager : MonoBehaviour
     {
         moneyAmmount += 0.001f;
         Money.UpdateText(moneyAmmount);
+    }
+
+    internal void RefreshNetworks()
+    {
+        foundNetworks.RemoveAll(n => !n.WasHacked);
+
+        int noOfNetworksToDiscover = random.Next(1, 5);
+        for (int i = 0; i < noOfNetworksToDiscover; i++)
+        {
+            HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Small);
+            foundNetworks.Add(item);
+            Console.AddMessage($"{item} | {item.Protection}", MessageType.Info);
+        }
+    }
+
+    internal Device GetDeviceByIp(string ip)
+    {
+        Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
+        return Array.Find(devices, d => d.IP == ip);
+    }
+
+    internal HackableNetwork GetNetwork(string ssid)
+    {
+        return foundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
+    }
+
+    internal Device GetDeviceByMac(string mac)
+    {
+        Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
+        return Array.Find(devices, d => d.MAC == mac);
     }
 }

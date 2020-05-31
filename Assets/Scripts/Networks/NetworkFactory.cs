@@ -23,6 +23,38 @@ namespace Assets.Scripts.Networks
             smallSsidsCount = smallSsids.Count;
         }
 
+        public HackableNetwork GetRandomNetwork(NetworkType maxType)
+        {
+            int networkType = random.Next(0, (int)maxType);
+            NetworkType networkTypeToGenerate = (NetworkType)Enum.Parse(typeof(NetworkType), networkType.ToString());
+
+            switch (networkTypeToGenerate)
+            {
+                case NetworkType.Home:
+                    return GetHomeNetwork();
+                case NetworkType.Small:
+                    return GetSmallNetwork();
+                case NetworkType.Medium:
+                    return GetMediumNetwork();
+                case NetworkType.Huge:
+                    return GetHugeNetwork();
+                default:
+                    return null;
+            }
+        }
+
+        public HackableNetwork GetHugeNetwork()
+        {
+            //TODO: implement
+            throw new NotImplementedException();
+        }
+
+        public HackableNetwork GetMediumNetwork()
+        {
+            //TODO: implement
+            throw new NotImplementedException();
+        }
+
         public HackableNetwork GetHomeNetwork()
         {
             int noOfDevices = 4;
