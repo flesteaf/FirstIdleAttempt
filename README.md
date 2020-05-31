@@ -4,7 +4,8 @@ First attempt at an idle game in Unity 2D
 ## Overview
 - [ ] [Instructions](#instructions)
 - [ ] [Commands](#commands)
-  - [ ] [Scan](#scan)
+  - [x] [Scan](#scan)
+  - [ ] [Show](#show)
   - [ ] [Crack](#crack)
   - [ ] [Inject](#inject)
   - [ ] [Firewall](#firewall)
@@ -25,6 +26,7 @@ TBD
 
 ## Commands
 - [Scan](#scan)
+- [Show](#show)
 - [Crack](#crack)
 - [Inject](#inject)
 - [Firewall](#firewall)
@@ -36,6 +38,11 @@ The `scan` command can be used without parameters or with parameters
 - `scan` - detects networks in the area, a second run of `scan` without parameters, will move you to a new location, with new networks to be discovered. Can be upgraded to show the security level details
 - `scan network {SSID}` - scans for the security level of the given network `SSID` and also the available devices (IPs) in that network
 - `scan ip {IP}` - determines the firewall status and if firewall is up, what ports are available
+
+### Show
+The `show` command present different data related to found networks and also details about the hacked one. Including their devices.
+- `show networks` - presents all the currently found networks from the current location, including the already hacked ones
+- `show ips` - presents all the infected ips and the type of malware that was injected
 
 ### Crack
 `crack [Protection] {SSID}` command offers the possibility to infiltrate in a protected system. There are several `crack` tools, each for a specific protection level. The possible `crack` tools and their commands are: 
