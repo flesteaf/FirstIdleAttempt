@@ -38,6 +38,7 @@ The `scan` command can be used without parameters or with parameters
 - `scan` - detects networks in the area, a second run of `scan` without parameters, will move you to a new location, with new networks to be discovered. Can be upgraded to show the security level details
 - `scan network {SSID}` - scans for the security level of the given network `SSID` and also the available devices (IPs) in that network
 - `scan ip {IP}` - determines the firewall status and if firewall is up, what ports are available
+- `scan mac {MAC}` - determines the firewall status and if firewall is up, what ports are available
 
 ### Show
 The `show` command present different data related to found networks and also details about the hacked one. Including their devices.
