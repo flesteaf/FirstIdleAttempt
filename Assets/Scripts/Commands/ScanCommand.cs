@@ -34,6 +34,7 @@ namespace Assets.Scripts.Commands
             if (components.Length != 3)
             {
                 game.Console.AddMessage("Invalid command call, the scan command takes 2 parameters at most. Check help command for scan", MessageType.Error);
+                return;
             }
 
             if (!scanTypes.ContainsKey(components[1]))
@@ -91,6 +92,12 @@ namespace Assets.Scripts.Commands
             if (network == null)
             {
                 game.Console.AddMessage($"The provided SSID {ssid} was not found, please provide a different [SSID]", MessageType.Warning);
+                return;
+            }
+
+            if (network.Protection != ProtectionType.None)
+            {
+                game.Console.AddMessage($"The network {ssid} is protected. Crack the protection then try again.", MessageType.Warning);
                 return;
             }
 

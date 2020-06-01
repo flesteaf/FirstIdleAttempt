@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Networks.Devices
+﻿using Assets.Scripts.Software;
+
+namespace Assets.Scripts.Networks.Devices
 {
     internal abstract class Device
     {
@@ -12,9 +14,14 @@
         internal abstract float EnergyLevel { get; }
         internal abstract float DiskSize { get; }
 
+        internal bool IsInfected { get => InfectionType != InfectionType.None; }
+        internal InfectionType InfectionType { get; private set; }
+
         public Device(DeviceIdentification identification)
         {
             this.identification = identification;
+            FirewallIsActive = false;
+            InfectionType = InfectionType.None;
             ActivateFirewall();
         }
 
@@ -30,8 +37,18 @@
         {
             if (HasFirewall)
             {
-                FirewallIsActive = false;
+                FirewallIsActive = true;
             }
+        }
+
+        internal bool CanInfect()
+        {
+            return FirewallIsActive == false;
+        }
+
+        internal void Infect(InfectionType type)
+        {
+            InfectionType = type;
         }
 
         public override string ToString()

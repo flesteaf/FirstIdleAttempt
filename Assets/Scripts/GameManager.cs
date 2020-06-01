@@ -64,14 +64,24 @@ public class GameManager : MonoBehaviour
         {
             HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Small);
             foundNetworks.Add(item);
-            Console.AddMessage($"{item} | {item.Protection}", MessageType.Info);
+            Console.AddMessage(item.ToString(), MessageType.Info);
         }
+    }
+
+    internal IEnumerable<Device> GetAllHackedDevices()
+    {
+        return foundNetworks.SelectMany(n => n.Devices).Where(d => d.IsInfected);
     }
 
     internal Device GetDeviceByIp(string ip)
     {
         Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
         return Array.Find(devices, d => d.IP == ip);
+    }
+
+    internal IEnumerable<HackableNetwork> GetAllFoundNetworks()
+    {
+        return foundNetworks;
     }
 
     internal HackableNetwork GetNetwork(string ssid)

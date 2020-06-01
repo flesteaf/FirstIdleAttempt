@@ -32,7 +32,7 @@ namespace Assets.Scripts.Networks
 
         public override string ToString()
         {
-            return SSID;
+            return $"{SSID} | {Protection}";
         }
     }
 }

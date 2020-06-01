@@ -16,6 +16,7 @@ namespace Assets.Scripts.Commands
             InjectCommand injectCommand = new InjectCommand();
             ScanCommand scanCommand = new ScanCommand();
             SetRansomwareCommand setRansomwareCommand = new SetRansomwareCommand();
+            ShowCommand showCommand = new ShowCommand();
 
             commands = new Dictionary<string, Command>
             {
@@ -25,7 +26,8 @@ namespace Assets.Scripts.Commands
                 { firewallCommand.Name, firewallCommand },
                 { injectCommand.Name, injectCommand },
                 { scanCommand.Name, scanCommand },
-                { setRansomwareCommand.Name, setRansomwareCommand }
+                { setRansomwareCommand.Name, setRansomwareCommand },
+                {showCommand.Name, showCommand }
             };
         }
 
