@@ -8,14 +8,14 @@ namespace Assets.Scripts.Networks.Devices
 
         internal string IP { get => identification.Ip; }
         internal string MAC { get => identification.Mac; }
-
-        internal abstract bool HasFirewall { get; }
         internal bool FirewallIsActive { get; private set; }
-        internal abstract float EnergyLevel { get; }
-        internal abstract float DiskSize { get; }
-
+        internal bool CanBeInfected => FirewallIsActive == false;
         internal bool IsInfected { get => InfectionType != InfectionType.None; }
         internal InfectionType InfectionType { get; private set; }
+
+        internal abstract bool HasFirewall { get; }
+        internal abstract float EnergyLevel { get; }
+        internal abstract float DiskSize { get; }
 
         public Device(DeviceIdentification identification)
         {
@@ -39,11 +39,6 @@ namespace Assets.Scripts.Networks.Devices
             {
                 FirewallIsActive = true;
             }
-        }
-
-        internal bool CanInfect()
-        {
-            return FirewallIsActive == false;
         }
 
         internal void Infect(InfectionType type)
