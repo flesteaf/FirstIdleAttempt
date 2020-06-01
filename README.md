@@ -22,7 +22,14 @@ First attempt at an idle game in Unity 2D
 - [ ] [Bot scripting](#bot-scripting)
 
 ## Instructions
-TBD
+Attack order:
+- scan
+- crack SSID if needed
+- scan network SSID
+- scan ip IP - for firewall
+- disable-firewall if needed
+- inject miner - or anything else
+- re-enable-firewall - if needed
 
 ## Commands
 - [Scan](#scan)
