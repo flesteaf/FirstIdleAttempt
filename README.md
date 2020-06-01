@@ -5,7 +5,7 @@ First attempt at an idle game in Unity 2D
 - [ ] [Instructions](#instructions)
 - [ ] [Commands](#commands)
   - [x] [Scan](#scan)
-  - [ ] [Show](#show)
+  - [x] [Show](#show)
   - [ ] [Crack](#crack)
   - [ ] [Inject](#inject)
   - [ ] [Firewall](#firewall)
