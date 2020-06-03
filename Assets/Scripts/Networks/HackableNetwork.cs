@@ -24,8 +24,13 @@ namespace Assets.Scripts.Networks
             WasHacked = false;
         }
 
-        internal void HackNetwork()
+        internal void HackNetwork(ProtectionType crackType)
         {
+            if (crackType != Protection)
+            {
+                return;
+            }
+
             WasHacked = true;
             Protection = ProtectionType.None;
         }
