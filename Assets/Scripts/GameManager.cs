@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System;
-using Assets.Scripts.Computers.Networks;
 using System.Linq;
 using Assets.Scripts.Networks.Devices;
+using Assets.Scripts.Software;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,10 +17,22 @@ public class GameManager : MonoBehaviour
     internal ConsoleText Console;
     internal MissionText Missions;
     internal MoneyText Money;
-    internal Computer Computer;
-    private List<HackableNetwork> foundNetworks;
-    private NetworkFactory networkFactory;
-    private Random random;
+    internal readonly Computer Computer;
+    private readonly List<HackableNetwork> foundNetworks;
+    private readonly NetworkFactory networkFactory;
+    private readonly Random random;
+    private readonly Store Store;
+
+    public GameManager()
+    {
+        Computer = new InitialComputer();
+
+        foundNetworks = new List<HackableNetwork>();
+        networkFactory = new NetworkFactory();
+        random = new Random();
+
+        Store = new Store();
+    }
 
     // Start is called before the first frame update
     private void Awake()
@@ -29,11 +41,6 @@ public class GameManager : MonoBehaviour
         Console = FindObjectOfType<ConsoleText>();
         Missions = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
-        Computer = new InitialComputer();
-
-        foundNetworks = new List<HackableNetwork>();
-        networkFactory = new NetworkFactory();
-        random = new System.Random();
     }
 
     private void Start()
@@ -66,6 +73,16 @@ public class GameManager : MonoBehaviour
             foundNetworks.Add(item);
             Console.AddMessage(item.ToString(), MessageType.Info);
         }
+    }
+
+    internal IEnumerable<StoreComponent> GetAllComponents()
+    {
+        return Store.Components;
+    }
+
+    internal IEnumerable<Software> GetAllSoftwares()
+    {
+        return Store.Softwares;
     }
 
     internal IEnumerable<Device> GetAllHackedDevices()

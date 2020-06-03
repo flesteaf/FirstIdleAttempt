@@ -15,9 +15,9 @@ namespace Assets.Scripts.Commands
         {
             scanTypes = new Dictionary<string, Action<GameManager, string>>
             {
-                { "network", ScanNetwork },
-                { "ip", ScanIp },
-                { "mac", ScanMac }
+                { CommandOptions.network.ToString(), ScanNetwork },
+                { CommandOptions.ip.ToString(), ScanIp },
+                { CommandOptions.mac.ToString(), ScanMac }
             };
         }
 

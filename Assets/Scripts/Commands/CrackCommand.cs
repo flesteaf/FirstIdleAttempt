@@ -14,9 +14,9 @@ namespace Assets.Scripts.Commands
         {
             crackTypes = new Dictionary<string, Action<GameManager, string>>
             {
-                { "wep", CrackWep },
-                { "wpa", CrackWpa },
-                { "wpa2", CrackWpa2 }
+                { CommandOptions.wep.ToString(), CrackWep },
+                { CommandOptions.wpa.ToString(), CrackWpa },
+                { CommandOptions.wpa2.ToString(), CrackWpa2 }
             };
         }
 

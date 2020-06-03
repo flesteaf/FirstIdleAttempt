@@ -16,10 +16,10 @@ namespace Assets.Scripts.Commands
         {
             injectTypes = new Dictionary<string, Action<GameManager, string>>
             {
-                { "miner", InjectMiner },
-                { "bot", InjectBot },
-                { "spammer", InjectSpammer },
-                { "ransomware", InjectRansomware }
+                { CommandOptions.miner.ToString(), InjectMiner },
+                { CommandOptions.bot.ToString(), InjectBot },
+                { CommandOptions.spammer.ToString(), InjectSpammer },
+                { CommandOptions.ransomware.ToString(), InjectRansomware }
             }; 
         }
 

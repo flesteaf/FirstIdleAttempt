@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{94BA72A2-7360-2AB2-CAB4-9D556DBA381A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -67,6 +68,7 @@
     <Compile Include="Assets\Scripts\CommandLineField.cs" />
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandFactory.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandOptions.cs" />
     <Compile Include="Assets\Scripts\Commands\CrackCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\FirewallCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\HelpCommand.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Assets\Scripts\Commands\SetRansomwareCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\ShowCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\StatusCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\StoreCommand.cs" />
     <Compile Include="Assets\Scripts\Computers\CPUs\Core1Speed200MHz.cs" />
     <Compile Include="Assets\Scripts\Computers\CPUs\Cpu.cs" />
     <Compile Include="Assets\Scripts\Computers\ComponentTypes\HardType.cs" />
@@ -119,6 +122,9 @@
     <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
     <Compile Include="Assets\Scripts\Networks\ProtectionType.cs" />
     <Compile Include="Assets\Scripts\Software\InfectionType.cs" />
+    <Compile Include="Assets\Scripts\Software\Software.cs" />
+    <Compile Include="Assets\Scripts\Software\Store.cs" />
+    <Compile Include="Assets\Scripts\Software\StoreComponent.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
@@ -699,7 +705,8 @@
       <HintPath>C:/Users/Florin/Documents/UNITY/FirstIdleAttempt/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

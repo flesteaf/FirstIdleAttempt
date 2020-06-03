@@ -18,8 +18,8 @@ namespace Assets.Scripts.Commands
         {
             showTypes = new Dictionary<string, Action<GameManager>>
             {
-                { "networks",  ShowNetworks },
-                { "ips", ShowDevices }
+                { CommandOptions.networks.ToString(),  ShowNetworks },
+                { CommandOptions.ips.ToString(), ShowDevices }
             };
         }
 

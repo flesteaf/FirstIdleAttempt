@@ -14,8 +14,8 @@ namespace Assets.Scripts.Commands
         {
             statusTypes = new Dictionary<string, Action<GameManager>>
             {
-                { "computer", GetComputerStatus },
-                { "money", GetMoneyIncomeStatus }
+                { CommandOptions.computer.ToString(), GetComputerStatus },
+                { CommandOptions.money.ToString(), GetMoneyIncomeStatus }
             };
         }
 
@@ -36,18 +36,13 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
-            HandleStatus(game, commandComponents[1]);
-        }
-
-        private void HandleStatus(GameManager game, string parameter)
-        {
-            if (!statusTypes.ContainsKey(parameter))
+            if (!statusTypes.ContainsKey(commandComponents[1]))
             {
                 game.Console.AddMessage("Invalid parameter as input for status command, accepted are 'computer' or 'money'", MessageType.Error);
                 return;
             }
 
-            statusTypes[parameter](game);
+            statusTypes[commandComponents[1]](game);
         }
 
         #region StatusCommands
