@@ -4,7 +4,7 @@ namespace Assets.Scripts.Computers.HARDs
 {
     internal class HardDisk1GB : Hard
     {
-        internal override HardType Type => HardType.HardDisk;
+        internal override HardType HardType => HardType.HardDisk;
 
         internal override float Size => 1;
 

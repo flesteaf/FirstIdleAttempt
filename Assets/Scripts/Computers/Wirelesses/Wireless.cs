@@ -5,7 +5,7 @@ namespace Assets.Scripts.Computers.Wirelesses
 {
     internal abstract class Wireless : Network
     {
-        internal abstract WirelessType Type { get; }
+        internal abstract WirelessType WirelessType { get; }
 
         public override string ToString()
         {

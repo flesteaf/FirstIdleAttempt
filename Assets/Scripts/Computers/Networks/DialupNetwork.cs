@@ -6,7 +6,7 @@ namespace Assets.Scripts.Computers.Networks
     {
         internal override float Speed => 120;
 
-        internal override Sizes SpeedType => Sizes.KB;
+        internal override Sizes SizeType => Sizes.KB;
 
         internal override string Name => "Dial-up network";
 

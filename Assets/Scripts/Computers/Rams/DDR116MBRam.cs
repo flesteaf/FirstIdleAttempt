@@ -4,7 +4,7 @@ namespace Assets.Scripts.Computers.Rams
 {
     internal class DDR116MBRam : Ram
     {
-        public override RamType Type { get => RamType.DDR1; }
+        public override RamType RamType { get => RamType.DDR1; }
         public override float Size { get => 16; }
 
         public override Sizes SizeType => Sizes.MB;

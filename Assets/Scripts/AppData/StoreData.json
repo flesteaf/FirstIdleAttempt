@@ -1,0 +1,44 @@
+{
+  "Software": [
+    {
+      "Description": "Software needed to crack WEP protection",
+      "Name": "Crack WEP",
+      "Price": 12.5,
+      "Provides": "wep",
+      "WasBought": false
+    },
+    {
+      "Description": "Software needed to crack WPA protection",
+      "Name": "Crack WPA",
+      "Price": 15.5,
+      "Provides": "wpa",
+      "WasBought": false
+    }
+  ],
+  "Components": [
+    {
+      "Component": {
+        "Name": "CPU 200MHz",
+        "LoadUsage": 3,
+        "Cores": 1,
+        "Speed": 200,
+        "SpeedType": "MHz"
+      },
+      "Description": "A CPU with one core of 200MHz",
+      "WasBought": false,
+      "Price": 15.5
+    },
+    {
+      "Component": {
+        "Name": "Atari GPU 200KB DDR1",
+        "LoadUsage": 3,
+        "RamType": "DDR1",
+        "Size": 200,
+        "SizeType": "KB"
+      },
+      "Description": "A GPU with 200KB DDR1",
+      "WasBought": false,
+      "Price": 15.5
+    }
+  ]
+}

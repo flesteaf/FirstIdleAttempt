@@ -4,13 +4,13 @@ namespace Assets.Scripts.Computers.HARDs
 {
     internal abstract class Hard : ComputerComponent
     {
-        internal abstract HardType Type { get; }
+        internal abstract HardType HardType { get; }
         internal abstract float Size { get; }
         internal abstract Sizes SizeType { get; }
 
         public override string ToString()
         {
-            return $"{Name} {Size}{SizeType} {Type}";
+            return $"{Name} {Size}{SizeType} {HardType}";
         }
     }
 }

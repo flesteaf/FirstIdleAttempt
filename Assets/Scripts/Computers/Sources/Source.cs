@@ -1,8 +1,8 @@
 ﻿namespace Assets.Scripts.Computers.Sources
 {
-    internal abstract class Source
+    internal abstract class Source : ComputerComponent
     {
-        internal abstract string Name { get; }
+        internal override int LoadUsage { get => 0; }
         internal abstract int ProvidedLoad { get; }
 
         public override string ToString()
