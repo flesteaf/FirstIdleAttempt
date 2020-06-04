@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Computers.ComponentTypes
 {
-    internal enum Sizes : long
+    public enum Sizes : long
     {
         b = 1,
         B = b * 8,

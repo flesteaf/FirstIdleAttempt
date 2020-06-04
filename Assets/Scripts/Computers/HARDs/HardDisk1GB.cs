@@ -2,17 +2,17 @@
 
 namespace Assets.Scripts.Computers.HARDs
 {
-    internal class HardDisk1GB : Hard
+    public class HardDisk1GB : Hard
     {
-        internal override HardType HardType => HardType.HardDisk;
+        public override HardType HardType => HardType.HardDisk;
 
-        internal override float Size => 1;
+        public override float Size => 1;
 
         //TODO: think of a better name
-        internal override string Name => "First hard";
+        public override string Name => "First hard";
 
-        internal override int LoadUsage => 5;
+        public override int LoadUsage => 5;
 
-        internal override Sizes SizeType => Sizes.GB;
+        public override Sizes SizeType => Sizes.GB;
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Assets.Scripts.Computers.Networks
 {
-    internal abstract class Network : ComputerComponent
+    public abstract class Network : ComputerComponent
     {
-        internal abstract float Speed { get; }
-        internal abstract Sizes SizeType { get; }
+        public abstract float Speed { get; }
+        public abstract Sizes SizeType { get; }
 
         public override string ToString()
         {

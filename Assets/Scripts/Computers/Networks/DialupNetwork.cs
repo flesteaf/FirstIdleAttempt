@@ -2,14 +2,14 @@
 
 namespace Assets.Scripts.Computers.Networks
 {
-    internal class DialupNetwork : Network
+    public class DialupNetwork : Network
     {
-        internal override float Speed => 120;
+        public override float Speed => 120;
 
-        internal override Sizes SizeType => Sizes.KB;
+        public override Sizes SizeType => Sizes.KB;
 
-        internal override string Name => "Dial-up network";
+        public override string Name => "Dial-up network";
 
-        internal override int LoadUsage => 7;
+        public override int LoadUsage => 7;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Computers.Rams
 {
-    internal abstract class Ram : ComputerComponent
+    public abstract class Ram : ComputerComponent
     {
         public abstract RamType RamType { get; }
         public abstract float Size { get; }

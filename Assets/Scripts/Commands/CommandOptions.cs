@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Commands
 {
-    internal enum CommandOptions
+    public enum CommandOptions
     {
         #region ScanOptions
         network,

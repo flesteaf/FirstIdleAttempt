@@ -2,10 +2,10 @@
 
 namespace Assets.Scripts.Software
 {
-    internal class StoreComponent
+    public class StoreComponent
     {
-        internal ComputerComponent Component { get; private set; }
-        internal float Price { get; private set; }
+        public ComputerComponent Component { get; private set; }
+        public float Price { get; private set; }
         public string Description { get; internal set; }
         public bool WasBought { get; internal set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Computers.ComponentTypes
 {
-    internal enum WirelessType
+    public enum WirelessType
     {
         NZ
     }

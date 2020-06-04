@@ -4,20 +4,13 @@ using UnityEngine;
 
 namespace Assets.Scripts.Software
 {
-    internal class Store
+    public class Store
     {
-        private readonly string dataFile = $@"{Application.dataPath}\Scripts\AppData\StoreData.json";
-        private readonly string schemaFile = $@"{Application.dataPath}\Scripts\AppData\data-schema.json";
+        public List<StoreComponent> Components { get; set; }
+        public List<Software> Softwares { get; set; }
 
-        internal readonly IEnumerable<StoreComponent> Components;
-        internal readonly IEnumerable<Software> Softwares;
-
-        public Store(GameManager game)
+        public Store()
         {
-            
-
-            //dataAsset = (TextAsset)Resources.Load(dataFile);
-            //schemaAsset = (TextAsset)Resources.Load(schemaFile);
         }
     }
 }

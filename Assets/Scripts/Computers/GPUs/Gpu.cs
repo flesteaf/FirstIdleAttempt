@@ -2,11 +2,11 @@
 
 namespace Assets.Scripts.Computers.GPUs
 {
-    internal abstract class Gpu : ComputerComponent
+    public abstract class Gpu : ComputerComponent
     {
-        internal abstract RamType RamType { get; }
-        internal abstract float Size { get; }
-        internal abstract Sizes SizeType { get; }
+        public abstract RamType RamType { get; }
+        public abstract float Size { get; }
+        public abstract Sizes SizeType { get; }
 
         public override string ToString()
         {

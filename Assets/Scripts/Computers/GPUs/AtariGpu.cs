@@ -2,16 +2,16 @@
 
 namespace Assets.Scripts.Computers.GPUs
 {
-    internal class AtariGpu : Gpu
+    public class AtariGpu : Gpu
     {
-        internal override string Name => "Atari first GPU";
+        public override string Name => "Atari first GPU";
 
-        internal override int LoadUsage => 15;
+        public override int LoadUsage => 15;
 
-        internal override RamType RamType => RamType.DDR2;
+        public override RamType RamType => RamType.DDR2;
 
-        internal override float Size => 1;
+        public override float Size => 1;
 
-        internal override Sizes SizeType => Sizes.MB;
+        public override Sizes SizeType => Sizes.MB;
     }
 }

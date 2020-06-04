@@ -2,13 +2,17 @@
 
 namespace Assets.Scripts.Computers.CPUs
 {
-    internal abstract class Cpu : ComputerComponent
+    public class Cpu : ComputerComponent
     {
-        internal abstract int Cores { get; }
-        internal abstract float Speed { get; }
-        protected abstract SpeedType SpeedType { get; }
+        public int Cores { get; }
+        public float Speed { get; }
+        public SpeedType SpeedType { get; }
 
-        internal virtual float TotalSpeed()
+        public override string Name { get; set; }
+
+        public override int LoadUsage { get; set; }
+
+        public float TotalSpeed()
         {
             return Cores * Speed * (float)SpeedType;
         }

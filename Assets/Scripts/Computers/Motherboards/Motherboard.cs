@@ -1,14 +1,14 @@
 ﻿namespace Assets.Scripts.Computers.Motherboards
 {
-    internal abstract class Motherboard : ComputerComponent
+    public abstract class Motherboard : ComputerComponent
     {
-        internal abstract int AllowedCpus { get; }
-        internal abstract int AllowedRams { get; }
-        internal abstract int AllowedHards { get; }
-        internal abstract int AllowedGpus { get; }
+        public abstract int AllowedCpus { get; }
+        public abstract int AllowedRams { get; }
+        public abstract int AllowedHards { get; }
+        public abstract int AllowedGpus { get; }
 
-        //internal abstract int AllowedWirelesses { get; }
-        internal abstract int AllowedNetworks { get; }
+        //public abstract int AllowedWirelesses { get; }
+        public abstract int AllowedNetworks { get; }
 
         public override string ToString()
         {

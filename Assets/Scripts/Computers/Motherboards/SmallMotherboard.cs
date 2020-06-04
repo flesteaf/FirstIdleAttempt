@@ -2,22 +2,22 @@
 
 namespace Assets.Scripts.Computers
 {
-    internal class SmallMotherboard : Motherboard
+    public class SmallMotherboard : Motherboard
     {
-        internal override int AllowedCpus => 1;
+        public override int AllowedCpus => 1;
 
-        internal override int AllowedRams => 2;
+        public override int AllowedRams => 2;
 
-        internal override int AllowedHards => 1;
+        public override int AllowedHards => 1;
 
-        internal override int AllowedGpus => 1;
+        public override int AllowedGpus => 1;
 
-        //internal override int AllowedWirelesses => 0;
+        //public override int AllowedWirelesses => 0;
 
-        internal override int AllowedNetworks => 1;
+        public override int AllowedNetworks => 1;
 
-        internal override string Name => "Small motherboard";
+        public override string Name => "Small motherboard";
 
-        internal override int LoadUsage => 3;
+        public override int LoadUsage => 3;
     }
 }

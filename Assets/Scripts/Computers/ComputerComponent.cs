@@ -1,8 +1,8 @@
 ﻿namespace Assets.Scripts.Computers
 {
-    internal abstract class ComputerComponent
+    public abstract class ComputerComponent
     {
-        internal abstract string Name { get; }
-        internal abstract int LoadUsage { get; }
+        public abstract string Name { get; set; }
+        public abstract int LoadUsage { get; set; }
     }
 }

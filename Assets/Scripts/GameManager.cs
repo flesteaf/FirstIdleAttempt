@@ -9,6 +9,10 @@ using System;
 using System.Linq;
 using Assets.Scripts.Networks.Devices;
 using Assets.Scripts.Software;
+using Newtonsoft.Json.Schema;
+using Assets.Scripts.Computers.CPUs;
+using Newtonsoft.Json;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +25,7 @@ public class GameManager : MonoBehaviour
     private readonly List<HackableNetwork> foundNetworks;
     private readonly NetworkFactory networkFactory;
     private readonly Random random;
-    private readonly Store Store;
+    private Store Store;
 
     public GameManager()
     {
@@ -30,19 +34,28 @@ public class GameManager : MonoBehaviour
         foundNetworks = new List<HackableNetwork>();
         networkFactory = new NetworkFactory();
         random = new Random();
-
-        Store = new Store();
     }
 
-    // Start is called before the first frame update
     private void Awake()
     {
         InputText = FindObjectOfType<CommandLineField>();
         Console = FindObjectOfType<ConsoleText>();
         Missions = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
+
+        TextAsset dataAsset = (TextAsset)Resources.Load("StoreData");
+        Store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
+
+        Store store = new Store
+        {
+            Components = new List<StoreComponent>()
+        { new StoreComponent(new Core1Speed200MHz(), 12.5f, "Sometinhg") }
+        };
+
+        string json = JsonConvert.SerializeObject(store);
     }
 
+    // Start is called before the first frame update
     private void Start()
     {
         Money.UpdateText(moneyAmmount);
