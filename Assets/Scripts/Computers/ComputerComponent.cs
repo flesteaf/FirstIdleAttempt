@@ -1,8 +1,30 @@
-﻿namespace Assets.Scripts.Computers
+﻿using System;
+
+namespace Assets.Scripts.Computers
 {
     public abstract class ComputerComponent
     {
-        public abstract string Name { get; set; }
-        public abstract int LoadUsage { get; set; }
+        private string name = null;
+        private int loadUsage = -1;
+
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (String.IsNullOrEmpty(""))
+                    name = value;
+            }
+        }
+
+        public int LoadUsage
+        {
+            get => loadUsage;
+            set
+            {
+                if (loadUsage == -1)
+                    loadUsage = value;
+            }
+        }
     }
 }

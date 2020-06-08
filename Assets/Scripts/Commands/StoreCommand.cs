@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Software;
+﻿using Assets.Scripts.Store;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -77,7 +77,7 @@ namespace Assets.Scripts.Commands
                 game.Console.AddMessage(text, MessageType.Info);
             }
         }
-        
+
         private void PresentStoreOptions(GameManager game)
         {
             game.Console.AddMessage("store software - for buying new software", MessageType.Info);

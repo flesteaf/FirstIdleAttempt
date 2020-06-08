@@ -1,8 +1,0 @@
-﻿[
-	{
-		"Name": "200MHz CPU",
-		"Speed": 200.5,
-		"SpeedType": "MHz",
-		"LoadUsage": 12.5
-	}
-]

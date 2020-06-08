@@ -1,18 +1,15 @@
 ﻿using Assets.Scripts.Commands;
 using Assets.Scripts.Computers;
 using Assets.Scripts.Networks;
-using Random = System.Random;
+using Assets.Scripts.Networks.Devices;
+using Assets.Scripts.Store;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using System;
-using System.Linq;
-using Assets.Scripts.Networks.Devices;
-using Assets.Scripts.Software;
-using Newtonsoft.Json.Schema;
-using Assets.Scripts.Computers.CPUs;
-using Newtonsoft.Json;
-using System.IO;
+using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,14 +42,6 @@ public class GameManager : MonoBehaviour
 
         TextAsset dataAsset = (TextAsset)Resources.Load("StoreData");
         Store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
-
-        Store store = new Store
-        {
-            Components = new List<StoreComponent>()
-        { new StoreComponent(new Core1Speed200MHz(), 12.5f, "Sometinhg") }
-        };
-
-        string json = JsonConvert.SerializeObject(store);
     }
 
     // Start is called before the first frame update
@@ -86,11 +75,6 @@ public class GameManager : MonoBehaviour
             foundNetworks.Add(item);
             Console.AddMessage(item.ToString(), MessageType.Info);
         }
-    }
-
-    internal IEnumerable<StoreComponent> GetAllComponents()
-    {
-        return Store.Components;
     }
 
     internal IEnumerable<Software> GetAllSoftwares()

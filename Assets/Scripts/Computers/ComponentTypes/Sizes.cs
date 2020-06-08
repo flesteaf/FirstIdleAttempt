@@ -2,6 +2,7 @@
 {
     public enum Sizes : long
     {
+        None = -1,
         b = 1,
         B = b * 8,
         KB = B * 1024,

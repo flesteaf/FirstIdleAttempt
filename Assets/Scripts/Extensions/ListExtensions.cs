@@ -1,10 +1,4 @@
-﻿using Assets.Scripts.Computers.CPUs;
-using Assets.Scripts.Computers.GPUs;
-using Assets.Scripts.Computers.HARDs;
-using Assets.Scripts.Computers.Networks;
-using Assets.Scripts.Computers.Rams;
-using Assets.Scripts.Computers.Sources;
-using Assets.Scripts.Computers.Wirelesses;
+﻿using Assets.Scripts.Computers;
 using System.Collections.Generic;
 using System.Text;
 
@@ -52,7 +46,7 @@ namespace Assets.Scripts.Extensions
             return builder.ToString();
         }
 
-        internal static string ToStatus(this List<Network> networks)
+        internal static string ToStatus(this List<NetworkBoard> networks)
         {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < networks.Count; i++)

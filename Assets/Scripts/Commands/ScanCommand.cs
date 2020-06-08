@@ -81,8 +81,8 @@ namespace Assets.Scripts.Commands
 
         private void ProvideDeviceDetails(GameManager game, Device device)
         {
-            game.Console.AddMessage($"Device has firewall {device.HasFirewall}", MessageType.Info);   
-            game.Console.AddMessage($"Firewall status is {device.FirewallIsActive}", MessageType.Info);   
+            game.Console.AddMessage($"Device has firewall {device.HasFirewall}", MessageType.Info);
+            game.Console.AddMessage($"Firewall status is {device.FirewallIsActive}", MessageType.Info);
         }
 
         private void ScanNetwork(GameManager game, string ssid)

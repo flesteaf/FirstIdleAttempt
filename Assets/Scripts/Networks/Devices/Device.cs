@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Software;
+﻿using Assets.Scripts.Softwares;
 
 namespace Assets.Scripts.Networks.Devices
 {

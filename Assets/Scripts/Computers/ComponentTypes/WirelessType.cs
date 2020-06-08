@@ -2,6 +2,7 @@
 {
     public enum WirelessType
     {
+        None = -1,
         NZ
     }
 }

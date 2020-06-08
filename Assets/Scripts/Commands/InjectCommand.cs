@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Networks.Devices;
-using Assets.Scripts.Software;
+using Assets.Scripts.Softwares;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Commands
                 { CommandOptions.bot.ToString(), InjectBot },
                 { CommandOptions.spammer.ToString(), InjectSpammer },
                 { CommandOptions.ransomware.ToString(), InjectRansomware }
-            }; 
+            };
         }
 
         public override void Execute(GameManager game, string command)

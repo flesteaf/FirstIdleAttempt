@@ -1,11 +1,4 @@
-﻿using Assets.Scripts.Computers.CPUs;
-using Assets.Scripts.Computers.GPUs;
-using Assets.Scripts.Computers.HARDs;
-using Assets.Scripts.Computers.Motherboards;
-using Assets.Scripts.Computers.Networks;
-using Assets.Scripts.Computers.Rams;
-using Assets.Scripts.Computers.Sources;
-using Assets.Scripts.Computers.Wirelesses;
+﻿using Assets.Scripts.Computers.Motherboards;
 using Assets.Scripts.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +12,7 @@ namespace Assets.Scripts.Computers
         public abstract List<Hard> Hards { get; protected set; }
         public abstract List<Cpu> Cpus { get; protected set; }
         public abstract List<Gpu> Gpus { get; protected set; }
-        public abstract List<Network> Networks { get; protected set; }
-        public abstract List<Wireless> Wirelesses { get; protected set; }
+        public abstract List<NetworkBoard> Networks { get; protected set; }
         public abstract List<Source> Sources { get; protected set; }
         public abstract Motherboard Motherboard { get; protected set; }
 
@@ -43,7 +35,6 @@ namespace Assets.Scripts.Computers
             builder.AppendLine($"   RAM: {Rams.ToStatus()}");
             builder.AppendLine($"   GPU: {Gpus.ToStatus()}");
             builder.AppendLine($"   Network: {Networks.ToStatus()}");
-            builder.AppendLine($"   Wireless: {Wirelesses.ToStatus()}");
             builder.AppendLine($"   Sources: {Sources.ToStatus()}");
             builder.AppendLine($"   Motherboard: {Motherboard}");
 
@@ -82,7 +73,6 @@ namespace Assets.Scripts.Computers
                    Cpus.Select(x => x.LoadUsage).Sum() +
                    Gpus.Select(x => x.LoadUsage).Sum() +
                    Networks.Select(x => x.LoadUsage).Sum() +
-                   Wirelesses.Select(x => x.LoadUsage).Sum() +
                    Motherboard.LoadUsage;
         }
     }

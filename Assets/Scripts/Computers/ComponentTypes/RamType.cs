@@ -2,6 +2,7 @@
 {
     public enum RamType : int
     {
+        None = -1,
         DDR1 = 1,
         DDR2 = 2,
         DDR3 = 4,

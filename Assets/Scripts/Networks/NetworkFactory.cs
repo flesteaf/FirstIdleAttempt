@@ -32,12 +32,16 @@ namespace Assets.Scripts.Networks
             {
                 case NetworkType.Home:
                     return GetHomeNetwork();
+
                 case NetworkType.Small:
                     return GetSmallNetwork();
+
                 case NetworkType.Medium:
                     return GetMediumNetwork();
+
                 case NetworkType.Huge:
                     return GetHugeNetwork();
+
                 default:
                     return null;
             }

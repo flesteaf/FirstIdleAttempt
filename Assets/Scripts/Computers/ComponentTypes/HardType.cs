@@ -2,7 +2,8 @@
 {
     public enum HardType : int
     {
-        HardDisk = 100,
+        None = -1,
+        HDD = 100,
         SSD = 100000
     }
 }

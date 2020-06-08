@@ -2,46 +2,62 @@
 {
     public enum CommandOptions
     {
+        None,
+
         #region ScanOptions
+
         network,
         ip,
         mac,
+
         #endregion ScanOptions
 
         #region CrackOptions
+
         wep,
         wpa,
         wpa2,
-        #endregion 
+        #endregion CrackOptions
+
+
 
         #region InjectOptions
+
         miner,
         bot,
         spammer,
         ransomware,
-        #endregion 
+        #endregion InjectOptions
+
+
 
         #region FirewallOptions
+
         disable,
         enable,
-        #endregion 
+        #endregion FirewallOptions
+
+
 
         #region ShowOptions
+
         networks,
         ips,
-        #endregion
+
+        #endregion ShowOptions
 
         #region StatusOptions
+
         computer,
         money,
-        #endregion
+
+        #endregion StatusOptions
 
         #region StoreOptions
+
         software,
         components
-        #endregion 
+        #endregion StoreOptions
 
-        #region SetRansomwareOptions
-        #endregion 
     }
 }
