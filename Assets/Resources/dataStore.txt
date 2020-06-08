@@ -1,25 +1,23 @@
 {
-  "Software": [
+  "Softwares": [
     {
       "Description": "Software needed to crack WEP protection",
       "Name": "Crack WEP",
       "Price": 12.5,
-      "Provides": "wep",
-      "WasBought": false
+      "Provides": "wep"
     },
     {
       "Description": "Software needed to crack WPA protection",
       "Name": "Crack WPA",
       "Price": 15.5,
-      "Provides": "wpa",
-      "WasBought": false
+      "Provides": "wpa"
     }
   ],
   "CPUs": [
     {
         "CPU": {
                 "Name": "200MHz CPU",
-                "LoadUsage": 12.5,
+                "LoadUsage": 12,
                 "SpeedType": "MHz",
                 "Speed": 200.5
             },

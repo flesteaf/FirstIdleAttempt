@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Store;
+﻿using Assets.Scripts.Computers;
+using Assets.Scripts.Softwares;
+using Assets.Scripts.Store;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -48,23 +50,103 @@ namespace Assets.Scripts.Commands
 
         private void PresentComponents(GameManager game)
         {
-            IEnumerable<StoreComponent> components = game.GetAllComponents();
+            ConsoleText console = game.Console;
+            ShowCPUs(game, console);
+            ShowRAMs(game, console);
+            ShowGPUs(game, console);
+            ShowHards(game, console);
+            ShowMotherboards(game, console);
+            ShowSources(game, console);
+            ShowNetworkBoards(game, console);
+        }
 
-            foreach (var item in components)
+        private static void ShowCPUs(GameManager game, ConsoleText console)
+        {
+            IEnumerable<CpuStore> cpus = game.GetStoreCpus();
+
+            console.AddMessage("CPUs:", MessageType.Info);
+            foreach (var item in cpus)
             {
-                string text = $"{item.Component.Name} - ${item.Price} - {item.Component.LoadUsage} Watt - {item.Description}";
-                if (item.WasBought)
-                {
-                    text += " | Bought";
-                }
+                Cpu cpu = item.CPU;
+                console.AddMessage($"{cpu.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+            }
+        }
 
-                game.Console.AddMessage(text, MessageType.Info);
+        private static void ShowRAMs(GameManager game, ConsoleText console)
+        {
+            IEnumerable<RamStore> rams = game.GetStoreRams();
+
+            console.AddMessage("RAMs:", MessageType.Info);
+            foreach (var item in rams)
+            {
+                Ram ram = item.RAM;
+                console.AddMessage($"{ram.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+            }
+        }
+
+        private static void ShowGPUs(GameManager game, ConsoleText console)
+        {
+            IEnumerable<GpuStore> gpus = game.GetStoreGpus();
+
+            console.AddMessage("GPUs:", MessageType.Info);
+            foreach (var item in gpus)
+            {
+                Gpu gpu = item.GPU;
+                console.AddMessage($"{gpu.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+            }
+        }
+
+        private static void ShowHards(GameManager game, ConsoleText console)
+        {
+            IEnumerable<HardStore> hards = game.GetStoreHards();
+
+            console.AddMessage("Hards:", MessageType.Info);
+            foreach (var item in hards)
+            {
+                Hard hard = item.Hard;
+                console.AddMessage($"{hard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+            }
+        }
+
+        private static void ShowMotherboards(GameManager game, ConsoleText console)
+        {
+            IEnumerable<MotherboardStore> motherboards = game.GetStoreMotherboards();
+
+            console.AddMessage("Motherboards:", MessageType.Info);
+            foreach (var item in motherboards)
+            {
+                Motherboard motherboard = item.Motherboard;
+                console.AddMessage($"{motherboard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+            }
+        }
+
+        private static void ShowSources(GameManager game, ConsoleText console)
+        {
+            IEnumerable<SourceStore> sources = game.GetStoreSources();
+
+            console.AddMessage("Sources:", MessageType.Info);
+            foreach (var item in sources)
+            {
+                Source source = item.Source;
+                console.AddMessage($"{source.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+            }
+        }
+
+        private static void ShowNetworkBoards(GameManager game, ConsoleText console)
+        {
+            IEnumerable<NetworkBoardStore> networkBoards = game.GetStoreNetworkBoards();
+
+            console.AddMessage("NetworkBoards:", MessageType.Info);
+            foreach (var item in networkBoards)
+            {
+                NetworkBoard networkBoard = item.Network;
+                console.AddMessage($"{networkBoard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
         private void PresentSoftware(GameManager game)
         {
-            IEnumerable<Software.Software> softwares = game.GetAllSoftwares();
+            IEnumerable<Software> softwares = game.GetAllSoftwares();
 
             foreach (var item in softwares)
             {

@@ -2,6 +2,7 @@
 using Assets.Scripts.Computers;
 using Assets.Scripts.Networks;
 using Assets.Scripts.Networks.Devices;
+using Assets.Scripts.Softwares;
 using Assets.Scripts.Store;
 using Newtonsoft.Json;
 using System;
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         Missions = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
 
-        TextAsset dataAsset = (TextAsset)Resources.Load("StoreData");
+        TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
         Store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
     }
 
@@ -64,6 +65,8 @@ public class GameManager : MonoBehaviour
         Money.UpdateText(moneyAmmount);
     }
 
+    #region Networks
+
     internal void RefreshNetworks()
     {
         foundNetworks.RemoveAll(n => !n.WasHacked);
@@ -77,9 +80,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    internal IEnumerable<Software> GetAllSoftwares()
+    internal IEnumerable<HackableNetwork> GetAllFoundNetworks()
     {
-        return Store.Softwares;
+        return foundNetworks;
     }
 
     internal IEnumerable<Device> GetAllHackedDevices()
@@ -93,11 +96,6 @@ public class GameManager : MonoBehaviour
         return Array.Find(devices, d => d.IP == ip);
     }
 
-    internal IEnumerable<HackableNetwork> GetAllFoundNetworks()
-    {
-        return foundNetworks;
-    }
-
     internal HackableNetwork GetNetwork(string ssid)
     {
         return foundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
@@ -108,4 +106,50 @@ public class GameManager : MonoBehaviour
         Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
         return Array.Find(devices, d => d.MAC == mac);
     }
+
+    #endregion Networks
+
+    #region Store
+
+    internal IEnumerable<Software> GetAllSoftwares()
+    {
+        return Store.Softwares;
+    }
+
+    internal IEnumerable<RamStore> GetStoreRams()
+    {
+        return Store.RAMs;
+    }
+
+    internal IEnumerable<GpuStore> GetStoreGpus()
+    {
+        return Store.GPUs;
+    }
+
+    internal IEnumerable<HardStore> GetStoreHards()
+    {
+        return Store.Hards;
+    }
+
+    internal IEnumerable<MotherboardStore> GetStoreMotherboards()
+    {
+        return Store.Motherboards;
+    }
+
+    internal IEnumerable<SourceStore> GetStoreSources()
+    {
+        return Store.Sources;
+    }
+
+    internal IEnumerable<NetworkBoardStore> GetStoreNetworkBoards()
+    {
+        return Store.Networks;
+    }
+
+    internal IEnumerable<CpuStore> GetStoreCpus()
+    {
+        return Store.CPUs;
+    }
+
+    #endregion Store
 }
