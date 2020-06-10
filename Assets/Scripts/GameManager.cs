@@ -14,7 +14,7 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    private float moneyAmmount = 100;
+    private float moneyAmmount = 0;
     internal CommandLineField InputText;
     internal ConsoleText Console;
     internal MissionText Missions;
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private readonly NetworkFactory networkFactory;
     private readonly Random random;
     private Store Store;
+    private float currentProduction;
 
     public GameManager()
     {
@@ -32,10 +33,12 @@ public class GameManager : MonoBehaviour
         foundNetworks = new List<HackableNetwork>();
         networkFactory = new NetworkFactory();
         random = new Random();
+        currentProduction = 0;
     }
 
     private void Awake()
     {
+        //This can be done only in the main scene
         InputText = FindObjectOfType<CommandLineField>();
         Console = FindObjectOfType<ConsoleText>();
         Missions = FindObjectOfType<MissionText>();
@@ -61,7 +64,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        moneyAmmount += 0.001f;
+        moneyAmmount += currentProduction;
         Money.UpdateText(moneyAmmount);
     }
 
@@ -75,9 +78,24 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < noOfNetworksToDiscover; i++)
         {
             HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Small);
+            item.NetworkHacked += NetworkHacked;
             foundNetworks.Add(item);
             Console.AddMessage(item.ToString(), MessageType.Info);
         }
+    }
+
+    private void NetworkHacked(HackableNetwork hackedNetwork)
+    {
+        foreach (var item in hackedNetwork.Devices)
+        {
+            item.DeviceInfected += DeviceInfected;
+        }
+    }
+
+    private void DeviceInfected(Device infectedDevice, InfectionType infectionType)
+    {
+        if (infectionType == InfectionType.Miner)    
+            currentProduction += infectedDevice.EnergyLevel * 0.12f;
     }
 
     internal IEnumerable<HackableNetwork> GetAllFoundNetworks()
@@ -152,4 +170,12 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion Store
+
+    ~GameManager()
+    {
+        foundNetworks.RemoveAll(hn => !hn.WasHacked);
+        foundNetworks.SelectMany(n => n.Devices).ToList().ForEach(d => { if (d.IsInfected) d.DeviceInfected -= DeviceInfected; });
+        foundNetworks.ForEach(hn => hn.NetworkHacked -= NetworkHacked);
+        foundNetworks.RemoveAll(hn => true);
+    }
 }

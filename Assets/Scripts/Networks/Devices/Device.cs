@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Softwares;
+using static Assets.Scripts.HackingDelegates;
 
 namespace Assets.Scripts.Networks.Devices
 {
@@ -16,6 +17,8 @@ namespace Assets.Scripts.Networks.Devices
         internal abstract bool HasFirewall { get; }
         internal abstract float EnergyLevel { get; }
         internal abstract float DiskSize { get; }
+
+        internal event DeviceInfectedEventHandler DeviceInfected; 
 
         public Device(DeviceIdentification identification)
         {
@@ -44,6 +47,7 @@ namespace Assets.Scripts.Networks.Devices
         internal void Infect(InfectionType type)
         {
             InfectionType = type;
+            DeviceInfected?.Invoke(this, type);
         }
 
         public override string ToString()

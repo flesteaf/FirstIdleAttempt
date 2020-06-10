@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Networks.Devices;
 using System.Collections.Generic;
+using static Assets.Scripts.HackingDelegates;
 
 namespace Assets.Scripts.Networks
 {
@@ -13,6 +14,8 @@ namespace Assets.Scripts.Networks
         internal NetworkType NetworkSize { get; }
 
         internal bool WasHacked { get; private set; }
+
+        internal event NetworkHackedEventHandler NetworkHacked;
 
         public HackableNetwork(string ssid, List<Device> devices,
                                ProtectionType protectionType, NetworkType networkSize)
@@ -33,6 +36,7 @@ namespace Assets.Scripts.Networks
 
             WasHacked = true;
             Protection = ProtectionType.None;
+            NetworkHacked?.Invoke(this);
         }
 
         public override string ToString()

@@ -18,6 +18,7 @@ namespace Assets.Scripts.Commands
             SetRansomwareCommand setRansomwareCommand = new SetRansomwareCommand();
             ShowCommand showCommand = new ShowCommand();
             StoreCommand storeCommand = new StoreCommand();
+            BuyCommand buyCommand = new BuyCommand();
 
             commands = new Dictionary<string, Command>
             {
@@ -29,7 +30,8 @@ namespace Assets.Scripts.Commands
                 { scanCommand.Name, scanCommand },
                 { setRansomwareCommand.Name, setRansomwareCommand },
                 { showCommand.Name, showCommand },
-                { storeCommand.Name, storeCommand }
+                { storeCommand.Name, storeCommand },
+                { buyCommand.Name, buyCommand }
             };
         }
 
