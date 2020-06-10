@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
         TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
         Store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
+        Time.fixedDeltaTime = 1;
     }
 
     // Start is called before the first frame update
@@ -63,6 +64,11 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
+    {
+
+    }
+
+    private void FixedUpdate()
     {
         moneyAmmount += currentProduction;
         Money.UpdateText(moneyAmmount);
@@ -116,7 +122,13 @@ public class GameManager : MonoBehaviour
 
     internal HackableNetwork GetNetwork(string ssid)
     {
-        return foundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
+        HackableNetwork network = foundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
+        if (network != null && network.Protection == ProtectionType.None)
+        {
+            NetworkHacked(network);
+        }
+
+        return network;
     }
 
     internal Device GetDeviceByMac(string mac)
