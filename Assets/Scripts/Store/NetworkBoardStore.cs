@@ -15,5 +15,7 @@ namespace Assets.Scripts.Store
                     network = value;
             }
         }
+
+        public override ComputerComponent SoldComponent => network;
     }
 }

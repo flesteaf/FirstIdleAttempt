@@ -53,11 +53,12 @@
 
         #endregion StatusOptions
 
-        #region StoreOptions
+        #region Store&BuyOptions
 
         software,
-        components
-        #endregion StoreOptions
+        components,
+        component
+        #endregion Store&BuyOptions
 
     }
 }

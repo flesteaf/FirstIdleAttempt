@@ -15,5 +15,7 @@ namespace Assets.Scripts.Store
                     cpu = value;
             }
         }
+
+        public override ComputerComponent SoldComponent => cpu;
     }
 }

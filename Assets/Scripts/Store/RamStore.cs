@@ -15,5 +15,7 @@ namespace Assets.Scripts.Store
                     ram = value;
             }
         }
+
+        public override ComputerComponent SoldComponent => ram;
     }
 }

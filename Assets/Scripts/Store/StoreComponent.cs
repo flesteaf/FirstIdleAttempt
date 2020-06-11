@@ -1,9 +1,13 @@
-﻿namespace Assets.Scripts.Store
+﻿using Assets.Scripts.Computers;
+
+namespace Assets.Scripts.Store
 {
-    public class StoreComponent
+    public abstract class StoreComponent
     {
         private float price = -1;
         private string description;
+
+        public abstract ComputerComponent SoldComponent { get; }
 
         public float Price
         {

@@ -15,5 +15,7 @@ namespace Assets.Scripts.Store
                     hard = value;
             }
         }
+
+        public override ComputerComponent SoldComponent => hard;
     }
 }

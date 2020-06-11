@@ -15,5 +15,7 @@ namespace Assets.Scripts.Store
                     source = value;
             }
         }
+
+        public override ComputerComponent SoldComponent => source;
     }
 }

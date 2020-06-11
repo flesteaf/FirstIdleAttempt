@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private readonly Random random;
     private Store Store;
     private float currentProduction;
+    private float oneSecond = 1;
 
     public GameManager()
     {
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
 
         TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
         Store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
-        Time.fixedDeltaTime = 1;
+        Time.fixedDeltaTime = oneSecond;
     }
 
     // Start is called before the first frame update
@@ -60,12 +61,6 @@ public class GameManager : MonoBehaviour
         Console.AddMessage(command, MessageType.Info);
         Command action = CommandFactory.GetCommand(command);
         action.Execute(this, command);
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
     }
 
     private void FixedUpdate()
@@ -179,6 +174,38 @@ public class GameManager : MonoBehaviour
     internal IEnumerable<CpuStore> GetStoreCpus()
     {
         return Store.CPUs;
+    }
+
+    internal StoreComponent GetStoreComponent(string componentName)
+    {
+        return Store.GetComponent(componentName);
+    }
+
+    internal Software GetStoreSoftware(string softwareName)
+    {
+        return Store.GetSoftware(softwareName);
+    }
+
+    internal bool TryBuySoftware(float price, CommandOptions provides)
+    {
+        if (moneyAmmount < price)
+        {
+            return false;
+        }
+
+        //TODO: do something with the provides
+        return true;
+    }
+
+    internal bool TryBuyComponent(float price, ComputerComponent component)
+    {
+        if (moneyAmmount < price)
+        {
+            return false;
+        }
+
+        //TODO: do something with the component
+        return true;
     }
 
     #endregion Store

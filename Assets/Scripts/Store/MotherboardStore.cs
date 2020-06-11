@@ -15,5 +15,7 @@ namespace Assets.Scripts.Store
                     motherboard = value;
             }
         }
+
+        public override ComputerComponent SoldComponent => motherboard;
     }
 }

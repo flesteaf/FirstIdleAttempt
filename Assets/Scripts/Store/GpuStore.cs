@@ -15,5 +15,7 @@ namespace Assets.Scripts.Store
                     gpu = value;
             }
         }
+
+        public override ComputerComponent SoldComponent => gpu;
     }
 }
