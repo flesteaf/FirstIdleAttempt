@@ -8,7 +8,7 @@ namespace Assets.Scripts.Commands
 {
     internal class InjectCommand : Command
     {
-        public override string Name => "inject";
+        public override string Name => CommandNames.inject.ToString();
 
         private readonly Dictionary<string, Action<GameManager, string>> injectTypes;
 

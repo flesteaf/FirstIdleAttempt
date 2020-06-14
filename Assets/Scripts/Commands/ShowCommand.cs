@@ -8,7 +8,7 @@ namespace Assets.Scripts.Commands
 {
     internal class ShowCommand : Command
     {
-        public override string Name => "show";
+        public override string Name => CommandNames.show.ToString();
         private readonly Dictionary<string, Action<GameManager>> showTypes;
 
         public ShowCommand()

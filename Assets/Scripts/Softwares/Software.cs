@@ -8,6 +8,7 @@ namespace Assets.Scripts.Softwares
         private string description;
         private float price = -1;
         private CommandOptions provides;
+        private CommandNames commandName;
 
         public string Name
         {
@@ -48,6 +49,16 @@ namespace Assets.Scripts.Softwares
             {
                 if (provides == CommandOptions.None)
                     provides = value;
+            }
+        }
+
+        public CommandNames CommandName
+        {
+            get => commandName;
+            set
+            {
+                if (commandName == CommandNames.invalid)
+                    commandName = value;
             }
         }
     }

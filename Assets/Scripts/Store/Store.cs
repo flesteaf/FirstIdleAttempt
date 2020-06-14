@@ -45,5 +45,15 @@ namespace Assets.Scripts.Store
         {
             return Softwares.Find(s => s.Name.Equals(softwareName, StringComparison.InvariantCultureIgnoreCase));
         }
+
+        internal void SoftwareBought(Software software)
+        {
+            software.WasBought = true;
+        }
+
+        internal void ComponentBought(StoreComponent component)
+        {
+            component.WasBought = true;
+        }
     }
 }

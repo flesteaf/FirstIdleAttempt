@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     internal MissionText Missions;
     internal MoneyText Money;
     internal readonly Computer Computer;
+    internal readonly List<CommandOptions> AvailableSoftwareOptions;
+    internal readonly List<CommandNames> AvailableSoftware;
     private readonly List<HackableNetwork> foundNetworks;
     private readonly NetworkFactory networkFactory;
     private readonly Random random;
@@ -30,6 +32,27 @@ public class GameManager : MonoBehaviour
     public GameManager()
     {
         Computer = new InitialComputer();
+        AvailableSoftwareOptions = new List<CommandOptions> { 
+                    CommandOptions.ip, 
+                    CommandOptions.mac, 
+                    CommandOptions.network,
+                    CommandOptions.miner,
+                    CommandOptions.networks,
+                    CommandOptions.ips,
+                    CommandOptions.money,
+                    CommandOptions.computer,
+                    CommandOptions.component,
+                    CommandOptions.components,
+                    CommandOptions.software};
+
+        AvailableSoftware = new List<CommandNames> { 
+                    CommandNames.help, 
+                    CommandNames.status, 
+                    CommandNames.store, 
+                    CommandNames.buy, 
+                    CommandNames.scan, 
+                    CommandNames.inject,
+                    CommandNames.show};
 
         foundNetworks = new List<HackableNetwork>();
         networkFactory = new NetworkFactory();
@@ -95,7 +118,7 @@ public class GameManager : MonoBehaviour
 
     private void DeviceInfected(Device infectedDevice, InfectionType infectionType)
     {
-        if (infectionType == InfectionType.Miner)    
+        if (infectionType == InfectionType.Miner)
             currentProduction += infectedDevice.EnergyLevel * 0.12f;
     }
 
@@ -186,26 +209,33 @@ public class GameManager : MonoBehaviour
         return Store.GetSoftware(softwareName);
     }
 
-    internal bool TryBuySoftware(float price, CommandOptions provides)
+    internal bool TryBuySoftware(Software software)
     {
-        if (moneyAmmount < price)
+        if (moneyAmmount < software.Price)
         {
             return false;
         }
 
-        //TODO: do something with the provides
+        Store.SoftwareBought(software);
+
+        if (!AvailableSoftware.Contains(software.CommandName))
+        {
+            AvailableSoftware.Add(software.CommandName);
+        }
+
+        AvailableSoftwareOptions.Add(software.Provides);
         return true;
     }
 
-    internal bool TryBuyComponent(float price, ComputerComponent component)
+    internal bool TryBuyComponent(StoreComponent component)
     {
-        if (moneyAmmount < price)
+        if (moneyAmmount < component.Price)
         {
             return false;
         }
 
-        //TODO: do something with the component
-        return true;
+        Store.ComponentBought(component);
+        return Computer.UpdateComponent(component.SoldComponent);
     }
 
     #endregion Store

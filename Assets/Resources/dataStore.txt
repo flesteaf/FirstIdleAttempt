@@ -4,13 +4,15 @@
       "Description": "Software needed to crack WEP protection",
       "Name": "Crack WEP",
       "Price": 12.5,
-      "Provides": "wep"
+      "Provides": "wep",
+      "CommandName": "crack"
     },
     {
       "Description": "Software needed to crack WPA protection",
       "Name": "Crack WPA",
       "Price": 15.5,
-      "Provides": "wpa"
+      "Provides": "wpa",
+      "CommandName": "crack"
     }
   ],
   "CPUs": [

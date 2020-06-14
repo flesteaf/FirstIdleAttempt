@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     public class BuyCommand : Command
     {
         private Dictionary<string, Action<GameManager, string>> buyOptions;
-        public override string Name => "buy";
+        public override string Name => CommandNames.buy.ToString();
 
         public BuyCommand()
         {
@@ -59,7 +59,7 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
-            if (!game.TryBuyComponent(component.Price, component.SoldComponent))
+            if (!game.TryBuyComponent(component))
             {
                 game.Console.AddMessage("Not enough many!", MessageType.Error);
             }
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
-            if (!game.TryBuySoftware(software.Price, software.Provides))
+            if (!game.TryBuySoftware(software))
             {
                 game.Console.AddMessage("Not enough many!", MessageType.Error);
             }

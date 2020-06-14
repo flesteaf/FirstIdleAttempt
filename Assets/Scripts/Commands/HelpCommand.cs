@@ -4,7 +4,7 @@ namespace Assets.Scripts.Commands
 {
     internal class HelpCommand : Command
     {
-        public override string Name { get => "help"; }
+        public override string Name => CommandNames.help.ToString();
 
         public override void Execute(GameManager game, string command)
         {

@@ -8,7 +8,7 @@ namespace Assets.Scripts.Commands
 {
     internal class ScanCommand : Command
     {
-        public override string Name => "scan";
+        public override string Name => CommandNames.scan.ToString();
         private readonly Dictionary<string, Action<GameManager, string>> scanTypes;
 
         public ScanCommand()

@@ -19,8 +19,6 @@
         wpa2,
         #endregion CrackOptions
 
-
-
         #region InjectOptions
 
         miner,
@@ -29,15 +27,11 @@
         ransomware,
         #endregion InjectOptions
 
-
-
         #region FirewallOptions
 
         disable,
         enable,
         #endregion FirewallOptions
-
-
 
         #region ShowOptions
 

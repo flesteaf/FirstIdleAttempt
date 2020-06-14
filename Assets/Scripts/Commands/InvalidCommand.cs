@@ -4,7 +4,7 @@ namespace Assets.Scripts.Commands
 {
     internal class InvalidCommand : Command
     {
-        public override string Name => "invalid";
+        public override string Name => CommandNames.invalid.ToString();
 
         public override void Execute(GameManager game, string command)
         {

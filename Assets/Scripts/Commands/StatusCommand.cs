@@ -8,7 +8,7 @@ namespace Assets.Scripts.Commands
     {
         private readonly Dictionary<string, Action<GameManager>> statusTypes;
 
-        public override string Name => "status";
+        public override string Name => CommandNames.status.ToString();
 
         public StatusCommand()
         {
