@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Networks.Devices
 {
-    internal class DeviceIdentification
+    public class DeviceIdentification
     {
         public string Ip { get; }
         public string Mac { get; }

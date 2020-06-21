@@ -1,15 +1,13 @@
 ﻿namespace Assets.Scripts.Networks.Devices
 {
-    internal class Phone : Device
+    public class Phone : Device
     {
         public Phone(DeviceIdentification identification) : base(identification)
         {
         }
 
-        internal override bool HasFirewall => false;
-
-        internal override float EnergyLevel => 0.01f;
-
-        internal override float DiskSize => 0.01f;
+        public override bool HasFirewall => false;
+        public override float EnergyLevel => 0.01f;
+        public override float DiskSize => 0.01f;
     }
 }

@@ -6,12 +6,13 @@ namespace Assets.Scripts.Extensions
 {
     public static class QueueExtensions
     {
-        public static string ToTextConsole(this Queue<string> queue)
+        public static string ToTextConsole(this Queue<string> queue, int acceptedNoOfLines)
         {
             StringBuilder builder = new StringBuilder();
             List<string> listedQueue = queue.ToList();
-            foreach (var item in listedQueue)
+            for (int i = 0; i < acceptedNoOfLines && i < listedQueue.Count; i++)
             {
+                string item = listedQueue[i];
                 if (string.IsNullOrEmpty(item))
                     continue;
 

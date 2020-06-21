@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts
 {
-    internal class HackingDelegates
+    public class HackingDelegates
     {
         public delegate void NetworkHackedEventHandler(HackableNetwork hackedNetwork);
         public delegate void DeviceInfectedEventHandler(Device infectedDevice, InfectionType infectionType);

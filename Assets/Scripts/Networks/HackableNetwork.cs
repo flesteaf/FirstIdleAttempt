@@ -4,18 +4,18 @@ using static Assets.Scripts.HackingDelegates;
 
 namespace Assets.Scripts.Networks
 {
-    internal class HackableNetwork
+    public class HackableNetwork
     {
-        internal string SSID { get; }
+        public string SSID { get; }
 
-        internal List<Device> Devices { get; }
-        internal ProtectionType Protection { get; private set; }
+        public List<Device> Devices { get; }
+        public ProtectionType Protection { get; private set; }
 
-        internal NetworkType NetworkSize { get; }
+        public NetworkType NetworkSize { get; }
 
-        internal bool WasHacked { get; private set; }
+        public bool WasHacked { get; private set; }
 
-        internal event NetworkHackedEventHandler NetworkHacked;
+        public event NetworkHackedEventHandler NetworkHacked;
 
         public HackableNetwork(string ssid, List<Device> devices,
                                ProtectionType protectionType, NetworkType networkSize)
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Networks
             WasHacked = false;
         }
 
-        internal void HackNetwork(ProtectionType crackType)
+        public void HackNetwork(ProtectionType crackType)
         {
             if (crackType != Protection)
             {

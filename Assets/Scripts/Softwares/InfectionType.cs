@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Softwares
 {
-    internal enum InfectionType : int
+    public enum InfectionType : int
     {
         None,
         Miner,

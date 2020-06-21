@@ -14,14 +14,15 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public CommandLineField InputText;
+    public ConsoleText Console;
+    public MissionText Missions;
+    public MoneyText Money;
+    public readonly Computer Computer;
+    public readonly List<CommandOptions> AvailableSoftwareOptions;
+    public readonly List<CommandNames> AvailableSoftware;
+
     private float moneyAmmount = 0;
-    internal CommandLineField InputText;
-    internal ConsoleText Console;
-    internal MissionText Missions;
-    internal MoneyText Money;
-    internal readonly Computer Computer;
-    internal readonly List<CommandOptions> AvailableSoftwareOptions;
-    internal readonly List<CommandNames> AvailableSoftware;
     private readonly List<HackableNetwork> foundNetworks;
     private readonly NetworkFactory networkFactory;
     private readonly Random random;
@@ -32,9 +33,9 @@ public class GameManager : MonoBehaviour
     public GameManager()
     {
         Computer = new InitialComputer();
-        AvailableSoftwareOptions = new List<CommandOptions> { 
-                    CommandOptions.ip, 
-                    CommandOptions.mac, 
+        AvailableSoftwareOptions = new List<CommandOptions> {
+                    CommandOptions.ip,
+                    CommandOptions.mac,
                     CommandOptions.network,
                     CommandOptions.miner,
                     CommandOptions.networks,
@@ -45,12 +46,12 @@ public class GameManager : MonoBehaviour
                     CommandOptions.components,
                     CommandOptions.software};
 
-        AvailableSoftware = new List<CommandNames> { 
-                    CommandNames.help, 
-                    CommandNames.status, 
-                    CommandNames.store, 
-                    CommandNames.buy, 
-                    CommandNames.scan, 
+        AvailableSoftware = new List<CommandNames> {
+                    CommandNames.help,
+                    CommandNames.status,
+                    CommandNames.store,
+                    CommandNames.buy,
+                    CommandNames.scan,
                     CommandNames.inject,
                     CommandNames.show};
 
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
         Money.UpdateText(moneyAmmount);
     }
 
-    internal void ExecuteCommand(string command)
+    public void ExecuteCommand(string command)
     {
         Console.AddMessage(command, MessageType.Info);
         Command action = CommandFactory.GetCommand(command);
@@ -94,14 +95,14 @@ public class GameManager : MonoBehaviour
 
     #region Networks
 
-    internal void RefreshNetworks()
+    public void RefreshNetworks()
     {
         foundNetworks.RemoveAll(n => !n.WasHacked);
 
         int noOfNetworksToDiscover = random.Next(1, 5);
         for (int i = 0; i < noOfNetworksToDiscover; i++)
         {
-            HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Small);
+            HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Medium);
             item.NetworkHacked += NetworkHacked;
             foundNetworks.Add(item);
             Console.AddMessage(item.ToString(), MessageType.Info);
@@ -122,23 +123,23 @@ public class GameManager : MonoBehaviour
             currentProduction += infectedDevice.EnergyLevel * 0.12f;
     }
 
-    internal IEnumerable<HackableNetwork> GetAllFoundNetworks()
+    public IEnumerable<HackableNetwork> GetAllFoundNetworks()
     {
         return foundNetworks;
     }
 
-    internal IEnumerable<Device> GetAllHackedDevices()
+    public IEnumerable<Device> GetAllHackedDevices()
     {
         return foundNetworks.SelectMany(n => n.Devices).Where(d => d.IsInfected);
     }
 
-    internal Device GetDeviceByIp(string ip)
+    public Device GetDeviceByIp(string ip)
     {
         Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
         return Array.Find(devices, d => d.IP == ip);
     }
 
-    internal HackableNetwork GetNetwork(string ssid)
+    public HackableNetwork GetNetwork(string ssid)
     {
         HackableNetwork network = foundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
         if (network != null && network.Protection == ProtectionType.None)
@@ -149,7 +150,7 @@ public class GameManager : MonoBehaviour
         return network;
     }
 
-    internal Device GetDeviceByMac(string mac)
+    public Device GetDeviceByMac(string mac)
     {
         Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
         return Array.Find(devices, d => d.MAC == mac);
@@ -159,57 +160,57 @@ public class GameManager : MonoBehaviour
 
     #region Store
 
-    internal IEnumerable<Software> GetAllSoftwares()
+    public IEnumerable<Software> GetAllSoftwares()
     {
         return Store.Softwares;
     }
 
-    internal IEnumerable<RamStore> GetStoreRams()
+    public IEnumerable<RamStore> GetStoreRams()
     {
         return Store.RAMs;
     }
 
-    internal IEnumerable<GpuStore> GetStoreGpus()
+    public IEnumerable<GpuStore> GetStoreGpus()
     {
         return Store.GPUs;
     }
 
-    internal IEnumerable<HardStore> GetStoreHards()
+    public IEnumerable<HardStore> GetStoreHards()
     {
         return Store.Hards;
     }
 
-    internal IEnumerable<MotherboardStore> GetStoreMotherboards()
+    public IEnumerable<MotherboardStore> GetStoreMotherboards()
     {
         return Store.Motherboards;
     }
 
-    internal IEnumerable<SourceStore> GetStoreSources()
+    public IEnumerable<SourceStore> GetStoreSources()
     {
         return Store.Sources;
     }
 
-    internal IEnumerable<NetworkBoardStore> GetStoreNetworkBoards()
+    public IEnumerable<NetworkBoardStore> GetStoreNetworkBoards()
     {
         return Store.Networks;
     }
 
-    internal IEnumerable<CpuStore> GetStoreCpus()
+    public IEnumerable<CpuStore> GetStoreCpus()
     {
         return Store.CPUs;
     }
 
-    internal StoreComponent GetStoreComponent(string componentName)
+    public StoreComponent GetStoreComponent(string componentName)
     {
         return Store.GetComponent(componentName);
     }
 
-    internal Software GetStoreSoftware(string softwareName)
+    public Software GetStoreSoftware(string softwareName)
     {
         return Store.GetSoftware(softwareName);
     }
 
-    internal bool TryBuySoftware(Software software)
+    public bool TryBuySoftware(Software software)
     {
         if (moneyAmmount < software.Price)
         {
@@ -227,7 +228,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    internal bool TryBuyComponent(StoreComponent component)
+    public bool TryBuyComponent(StoreComponent component)
     {
         if (moneyAmmount < component.Price)
         {

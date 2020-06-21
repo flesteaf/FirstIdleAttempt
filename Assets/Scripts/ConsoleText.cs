@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -7,9 +8,12 @@ using UnityEngine;
 public class ConsoleText : MonoBehaviour
 {
     public TextMeshProUGUI Console;
-    private readonly Queue<string> ConsoleMessages = new Queue<string>();
+    public List<string> ConsoleMessages { get => consoleMessages.ToList(); }
+
+    private readonly Queue<string> consoleMessages = new Queue<string>();
     private int acceptedNoOfLines;
     private readonly int lineWidth = 70;
+    private readonly int totalNoOfLines = 100;
 
     // Start is called before the first frame update
     private void Start()
@@ -17,7 +21,7 @@ public class ConsoleText : MonoBehaviour
         Console.text = string.Empty;
 
         float lineHeight = Console.fontSize + 2 * (Console.lineSpacing + 1);
-        Rect consoleRect = ((RectTransform)transform).rect;
+        Rect consoleRect = GetComponent<RectTransform>().rect;
         acceptedNoOfLines = (int)(consoleRect.height / lineHeight);
     }
 
@@ -33,12 +37,12 @@ public class ConsoleText : MonoBehaviour
             HandleMessage(text, type);
         }
 
-        while (ConsoleMessages.Count > acceptedNoOfLines)
+        while (consoleMessages.Count > totalNoOfLines)
         {
-            ConsoleMessages.Dequeue();
+            consoleMessages.Dequeue();
         }
 
-        Console.text = ConsoleMessages.ToTextConsole();
+        Console.text = consoleMessages.ToTextConsole(acceptedNoOfLines);
     }
 
     private void HandleMessage(string message, MessageType type)
@@ -55,6 +59,6 @@ public class ConsoleText : MonoBehaviour
             message = $"<color=\"red\">{message}</color>";
         }
 
-        ConsoleMessages.Enqueue(message);
+        consoleMessages.Enqueue(message);
     }
 }

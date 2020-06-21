@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace Assets.Scripts.Commands
 {
-    internal class ScanCommand : Command
+    public class ScanCommand : Command
     {
         public override string Name => CommandNames.scan.ToString();
         private readonly Dictionary<string, Action<GameManager, string>> scanTypes;

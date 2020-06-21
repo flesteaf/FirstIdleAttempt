@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Networks
 {
-    internal enum ProtectionType
+    public enum ProtectionType
     {
         None,
         WEP,
