@@ -1,10 +1,13 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 
 namespace Assets.Scripts.Commands
 {
     internal class HelpCommand : Command
     {
-        public override string Name => CommandNames.help.ToString();
+        public override CommandNames Name => CommandNames.help;
+
+        public override List<CommandOptions> Options => new List<CommandOptions> { CommandOptions.None };
 
         public override void Execute(GameManager game, string command)
         {

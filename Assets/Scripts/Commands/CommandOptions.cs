@@ -2,6 +2,7 @@
 {
     public enum CommandOptions
     {
+        Invalid,
         None,
 
         #region ScanOptions

@@ -8,9 +8,17 @@ namespace Assets.Scripts.Commands
 {
     internal class InjectCommand : Command
     {
-        public override string Name => CommandNames.inject.ToString();
+        public override CommandNames Name => CommandNames.inject;
 
         private readonly Dictionary<string, Action<GameManager, string>> injectTypes;
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.miner,
+                            CommandOptions.bot,
+                            CommandOptions.spammer,
+                            CommandOptions.ransomware };
+        }
 
         public InjectCommand()
         {

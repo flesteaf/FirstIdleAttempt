@@ -84,6 +84,19 @@ public class GameManager : MonoBehaviour
     {
         Console.AddMessage(command, MessageType.Info);
         Command action = CommandFactory.GetCommand(command);
+        if (!AvailableSoftware.Contains(action.Name))
+        {
+            Console.AddMessage($"Command {action.Name} needs to be bought", MessageType.Error);
+            return;
+        }
+
+        CommandOptions option = action.GetOptionFromCommand(command);
+        if (option == CommandOptions.Invalid || !AvailableSoftwareOptions.Contains(option))
+        {
+            Console.AddMessage($"Option {option} of command {action.Name} needs to be bought", MessageType.Error);
+            return;
+        }
+        
         action.Execute(this, command);
     }
 

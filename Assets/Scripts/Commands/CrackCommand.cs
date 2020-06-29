@@ -8,7 +8,13 @@ namespace Assets.Scripts.Commands
     internal class CrackCommand : Command
     {
         private readonly Dictionary<string, Action<GameManager, string>> crackTypes;
-        public override string Name => CommandNames.crack.ToString();
+        public override CommandNames Name => CommandNames.crack;
+        public override List<CommandOptions> Options { 
+            get => new List<CommandOptions> { 
+                            CommandOptions.wep, 
+                            CommandOptions.wpa, 
+                            CommandOptions.wpa2 }; 
+        }
 
         public CrackCommand()
         {

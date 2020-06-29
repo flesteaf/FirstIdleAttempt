@@ -2,6 +2,7 @@
 using Assets.Scripts.Store;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 
 namespace Assets.Scripts.Commands
@@ -9,7 +10,13 @@ namespace Assets.Scripts.Commands
     public class BuyCommand : Command
     {
         private Dictionary<string, Action<GameManager, string>> buyOptions;
-        public override string Name => CommandNames.buy.ToString();
+        public override CommandNames Name => CommandNames.buy;
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.software,
+                            CommandOptions.component };
+        }
 
         public BuyCommand()
         {

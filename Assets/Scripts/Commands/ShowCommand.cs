@@ -8,8 +8,14 @@ namespace Assets.Scripts.Commands
 {
     internal class ShowCommand : Command
     {
-        public override string Name => CommandNames.show.ToString();
+        public override CommandNames Name => CommandNames.show;
         private readonly Dictionary<string, Action<GameManager>> showTypes;
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.networks,
+                            CommandOptions.ips };
+        }
 
         public ShowCommand()
         {

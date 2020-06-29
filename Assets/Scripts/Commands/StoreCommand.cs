@@ -10,7 +10,13 @@ namespace Assets.Scripts.Commands
     internal class StoreCommand : Command
     {
         private readonly Dictionary<string, Action<GameManager>> storeTypes;
-        public override string Name => CommandNames.store.ToString();
+        public override CommandNames Name => CommandNames.store;
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.software,
+                            CommandOptions.components };
+        }
 
         public StoreCommand()
         {

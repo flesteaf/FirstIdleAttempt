@@ -8,8 +8,15 @@ namespace Assets.Scripts.Commands
 {
     public class ScanCommand : Command
     {
-        public override string Name => CommandNames.scan.ToString();
+        public override CommandNames Name => CommandNames.scan;
         private readonly Dictionary<string, Action<GameManager, string>> scanTypes;
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.network,
+                            CommandOptions.ip,
+                            CommandOptions.mac };
+        }
 
         public ScanCommand()
         {

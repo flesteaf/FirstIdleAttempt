@@ -22,16 +22,16 @@ namespace Assets.Scripts.Commands
 
             commands = new Dictionary<string, Command>
             {
-                { helpCommand.Name, helpCommand },
-                { statusCommand.Name, statusCommand },
-                { crackCommand.Name, crackCommand },
-                { firewallCommand.Name, firewallCommand },
-                { injectCommand.Name, injectCommand },
-                { scanCommand.Name, scanCommand },
-                { setRansomwareCommand.Name, setRansomwareCommand },
-                { showCommand.Name, showCommand },
-                { storeCommand.Name, storeCommand },
-                { buyCommand.Name, buyCommand }
+                { helpCommand.Name.ToString(), helpCommand },
+                { statusCommand.Name.ToString(), statusCommand },
+                { crackCommand.Name.ToString(), crackCommand },
+                { firewallCommand.Name.ToString(), firewallCommand },
+                { injectCommand.Name.ToString(), injectCommand },
+                { scanCommand.Name.ToString(), scanCommand },
+                { setRansomwareCommand.Name.ToString(), setRansomwareCommand },
+                { showCommand.Name.ToString(), showCommand },
+                { storeCommand.Name.ToString(), storeCommand },
+                { buyCommand.Name.ToString(), buyCommand }
             };
         }
 

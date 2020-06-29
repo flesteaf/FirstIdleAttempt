@@ -8,8 +8,14 @@ namespace Assets.Scripts.Commands
 {
     internal class FirewallCommand : Command
     {
-        public override string Name => CommandNames.firewall.ToString();
+        public override CommandNames Name => CommandNames.firewall;
         private readonly Dictionary<string, Action<GameManager, string>> firewallOptions;
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.enable,
+                            CommandOptions.disable };
+        }
 
         public FirewallCommand()
         {
