@@ -59,7 +59,7 @@ namespace Assets.Scripts.Commands
 
         private static void CrackNetwork(GameManager game, string ssid, ProtectionType protection)
         {
-            HackableNetwork network = game.GetNetwork(ssid);
+            HackableNetwork network = game.GetNetworkBySSID(ssid);
 
             if (network == null)
             {

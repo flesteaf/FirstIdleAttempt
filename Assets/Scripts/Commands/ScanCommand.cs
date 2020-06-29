@@ -87,7 +87,7 @@ namespace Assets.Scripts.Commands
 
         private void ScanNetwork(GameManager game, string ssid)
         {
-            HackableNetwork network = game.GetNetwork(ssid);
+            HackableNetwork network = game.GetNetworkBySSID(ssid);
 
             if (network == null)
             {

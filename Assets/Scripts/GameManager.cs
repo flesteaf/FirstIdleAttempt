@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         return Array.Find(devices, d => d.IP == ip);
     }
 
-    public HackableNetwork GetNetwork(string ssid)
+    public HackableNetwork GetNetworkBySSID(string ssid)
     {
         HackableNetwork network = foundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
         if (network != null && network.Protection == ProtectionType.None)
