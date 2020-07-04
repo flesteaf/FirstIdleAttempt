@@ -17,6 +17,7 @@ namespace Assets.Scripts.Networks.Devices
         public abstract bool HasFirewall { get; }
         public abstract float EnergyLevel { get; }
         public abstract float DiskSize { get; }
+        public abstract DeviceType Type { get; }
 
         public event DeviceInfectedEventHandler DeviceInfected; 
 

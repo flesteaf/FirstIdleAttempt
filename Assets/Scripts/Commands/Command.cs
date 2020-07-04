@@ -16,7 +16,7 @@ namespace Assets.Scripts.Commands
         public abstract void Execute(GameManager game, string command);
         public CommandOptions GetOptionFromCommand(string command)
         {
-            string[] commandComponents = command.Split(new[] { '\'', '"' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] commandComponents = command.Split(new[] { '\'', '"', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (commandComponents.Length < 2)
             {
                 return CommandOptions.None;

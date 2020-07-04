@@ -47,7 +47,7 @@ namespace Assets.Scripts.Softwares
             get => provides;
             set
             {
-                if (provides == CommandOptions.None)
+                if (provides == CommandOptions.Invalid)
                     provides = value;
             }
         }

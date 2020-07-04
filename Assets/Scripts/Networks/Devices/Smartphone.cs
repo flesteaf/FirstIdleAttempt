@@ -11,5 +11,6 @@
         public override float EnergyLevel => 0.1f;
 
         public override float DiskSize => 1f;
+        public override DeviceType Type => DeviceType.Smartphone;
     }
 }

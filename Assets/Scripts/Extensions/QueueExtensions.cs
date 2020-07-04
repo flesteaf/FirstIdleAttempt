@@ -10,7 +10,14 @@ namespace Assets.Scripts.Extensions
         {
             StringBuilder builder = new StringBuilder();
             List<string> listedQueue = queue.ToList();
-            for (int i = 0; i < acceptedNoOfLines && i < listedQueue.Count; i++)
+
+            int startIndex = 0;
+            if (listedQueue.Count >= acceptedNoOfLines)
+            {
+                startIndex = listedQueue.Count - acceptedNoOfLines;
+            }
+
+            for (int i = startIndex; i < listedQueue.Count; i++)
             {
                 string item = listedQueue[i];
                 if (string.IsNullOrEmpty(item))

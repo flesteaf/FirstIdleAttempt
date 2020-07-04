@@ -29,11 +29,13 @@ public class GameManager : MonoBehaviour
     private Store Store;
     private float currentProduction;
     private float oneSecond = 1;
+    private float moneyGenerationExponent = 2.912f;
 
     public GameManager()
     {
         Computer = new InitialComputer();
         AvailableSoftwareOptions = new List<CommandOptions> {
+                    CommandOptions.None,
                     CommandOptions.ip,
                     CommandOptions.mac,
                     CommandOptions.network,
@@ -133,7 +135,7 @@ public class GameManager : MonoBehaviour
     private void DeviceInfected(Device infectedDevice, InfectionType infectionType)
     {
         if (infectionType == InfectionType.Miner)
-            currentProduction += infectedDevice.EnergyLevel * 0.12f;
+            currentProduction += infectedDevice.EnergyLevel * moneyGenerationExponent;
     }
 
     public IEnumerable<HackableNetwork> GetAllFoundNetworks()
@@ -238,6 +240,7 @@ public class GameManager : MonoBehaviour
         }
 
         AvailableSoftwareOptions.Add(software.Provides);
+        moneyAmmount -= software.Price;
         return true;
     }
 

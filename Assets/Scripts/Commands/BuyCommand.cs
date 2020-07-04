@@ -84,7 +84,7 @@ namespace Assets.Scripts.Commands
 
             if (!game.TryBuySoftware(software))
             {
-                game.Console.AddMessage("Not enough many!", MessageType.Error);
+                game.Console.AddMessage("Not enough money!", MessageType.Error);
             }
         }
     }

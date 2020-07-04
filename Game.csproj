@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{81BD9CF7-2A69-E648-137C-A2252DD764FF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -109,6 +108,7 @@
     <Compile Include="Assets\Scripts\Networks\Devices\Device.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\DeviceFactory.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\DeviceIdentification.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\DeviceType.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\PersonalComputer.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Phone.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Smartphone.cs" />
@@ -696,8 +696,7 @@
       <HintPath>C:/Users/Florin/Documents/UNITY/FirstIdleAttempt/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
