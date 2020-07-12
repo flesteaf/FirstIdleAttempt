@@ -12,5 +12,6 @@
         setRansomware,
         show,
         status,
-        store    }
+        store    
+    }
 }

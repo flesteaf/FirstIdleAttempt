@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Commands;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Softwares
 {
@@ -7,8 +8,7 @@ namespace Assets.Scripts.Softwares
         private string name;
         private string description;
         private float price = -1;
-        private CommandOptions provides;
-        private CommandNames commandName;
+        private List<Provides> provides;
 
         public string Name
         {
@@ -42,23 +42,12 @@ namespace Assets.Scripts.Softwares
             }
         }
 
-        public CommandOptions Provides
+        public List<Provides> Provides
         {
             get => provides;
             set
             {
-                if (provides == CommandOptions.Invalid)
-                    provides = value;
-            }
-        }
-
-        public CommandNames CommandName
-        {
-            get => commandName;
-            set
-            {
-                if (commandName == CommandNames.invalid)
-                    commandName = value;
+                provides = value;
             }
         }
     }

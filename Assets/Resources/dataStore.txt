@@ -4,15 +4,66 @@
       "Description": "Software needed to crack WEP protection",
       "Name": "Crack WEP",
       "Price": 12.5,
-      "Provides": "wep",
-      "CommandName": "crack"
+      "Provides":
+      [
+        {"CommandName": "crack", "Provide": "wep"}
+      ]
     },
     {
       "Description": "Software needed to crack WPA protection",
       "Name": "Crack WPA",
       "Price": 15.5,
-      "Provides": "wpa",
-      "CommandName": "crack"
+      "Provides":
+      [
+        {"CommandName": "crack", "Provide": "wpa"}
+      ]
+    },
+    {
+      "Description": "Software needed to crack WPA2 protection",
+      "Name": "Crack WPA2",
+      "Price": 18.5,
+      "Provides":
+      [
+        {"CommandName": "crack", "Provide": "wpa2"}
+      ]
+    },
+    {
+      "Description": "Handle firewalls",
+      "Name": "Firewall",
+      "Price": 25.5,
+      "Provides":
+      [
+        {"CommandName": "firewall", "Provide": "enable"},
+        {"CommandName": "firewall", "Provide": "disable"}
+      ]
+    },
+    {
+      "Description": "Offers the possibility to inject bots",
+      "Name": "Bots",
+      "Price": 55.5,
+      "Provides":
+      [
+        {"CommandName": "inject", "Provide": "bot"}
+      ]
+    },
+    {
+      "Description": "Offers the possibility to inject spammers",
+      "Name": "Spammers",
+      "Price": 105.5,
+      "Provides":
+      [
+        {"CommandName": "inject", "Provide": "spammer"}
+      ]
+    },
+    {
+      "Description": "Offers the possibility to inject ransomware software",
+      "Name": "Ransomware",
+      "Price": 300,
+      "Provides":
+      [
+        {"CommandName": "inject", "Provide": "ransomware"},
+        {"CommandName": "setRansomware", "Provide": "None"}
+      ]
     }
   ],
   "CPUs": [

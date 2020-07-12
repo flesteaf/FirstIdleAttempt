@@ -234,12 +234,19 @@ public class GameManager : MonoBehaviour
 
         Store.SoftwareBought(software);
 
-        if (!AvailableSoftware.Contains(software.CommandName))
+        foreach (var item in software.Provides)
         {
-            AvailableSoftware.Add(software.CommandName);
+            if (!AvailableSoftware.Contains(item.CommandName))
+            {
+                AvailableSoftware.Add(item.CommandName);
+            }
+
+            if (item.Provide != CommandOptions.Invalid && item.Provide != CommandOptions.None)
+            {
+                AvailableSoftwareOptions.Add(item.Provide); 
+            }
         }
 
-        AvailableSoftwareOptions.Add(software.Provides);
         moneyAmmount -= software.Price;
         return true;
     }
