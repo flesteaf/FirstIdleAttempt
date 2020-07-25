@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     internal class FirewallCommand : Command
     {
         public override CommandNames Name => CommandNames.firewall;
-        private readonly Dictionary<string, Action<GameManager, string>> firewallOptions;
+        private readonly Dictionary<CommandOptions, Action<GameManager, string>> firewallOptions;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,31 +19,30 @@ namespace Assets.Scripts.Commands
 
         public FirewallCommand()
         {
-            firewallOptions = new Dictionary<string, Action<GameManager, string>>
+            firewallOptions = new Dictionary<CommandOptions, Action<GameManager, string>>
             {
-                { CommandOptions.enable.ToString(), EnableFirewall },
-                { CommandOptions.disable.ToString(), DisableFirewall }
+                { CommandOptions.enable, EnableFirewall },
+                { CommandOptions.disable, DisableFirewall }
             };
         }
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            ConsoleText console = game.Console;
-            var commandComponents = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            ConsoleText console = game.SceneManager.Console;
 
-            if (commandComponents.Length != 3)
+            if (!command.HasArgumentAndOption())
             {
                 console.AddMessage("The firewall command receives 2 parameters: action (enable or disable) and ip or mac of the device", MessageType.Warning);
                 return;
             }
 
-            if (!firewallOptions.ContainsKey(commandComponents[1]))
+            if (!firewallOptions.ContainsKey(command.Option))
             {
-                console.AddMessage($"Wrong option selected. Option {commandComponents[1]} is unrecognized", MessageType.Error);
+                console.AddMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
                 return;
             }
 
-            firewallOptions[commandComponents[1]](game, commandComponents[2]);
+            firewallOptions[command.Option](game, command.Argument);
         }
 
         private void DisableFirewall(GameManager manager, string identifier)
@@ -81,7 +80,7 @@ namespace Assets.Scripts.Commands
                 device = manager.GetDeviceByMac(identifier);
                 if (device == null)
                 {
-                    manager.Console.AddMessage($"Device {identifier} not found", MessageType.Error);
+                    manager.SceneManager.Console.AddMessage($"Device {identifier} not found", MessageType.Error);
                 }
             }
 

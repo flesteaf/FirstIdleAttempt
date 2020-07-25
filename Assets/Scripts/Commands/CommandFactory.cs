@@ -1,54 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.Commands
 {
     internal static class CommandFactory
     {
-        private static readonly Dictionary<string, Command> commands;
+        private static readonly Dictionary<CommandNames, Command> commands;
 
         static CommandFactory()
         {
-            HelpCommand helpCommand = new HelpCommand();
-            StatusCommand statusCommand = new StatusCommand();
-            CrackCommand crackCommand = new CrackCommand();
-            FirewallCommand firewallCommand = new FirewallCommand();
-            InjectCommand injectCommand = new InjectCommand();
-            ScanCommand scanCommand = new ScanCommand();
-            SetRansomwareCommand setRansomwareCommand = new SetRansomwareCommand();
-            ShowCommand showCommand = new ShowCommand();
-            StoreCommand storeCommand = new StoreCommand();
-            BuyCommand buyCommand = new BuyCommand();
+            HelpCommand help = new HelpCommand();
+            StatusCommand status = new StatusCommand();
+            CrackCommand crack = new CrackCommand();
+            FirewallCommand firewall = new FirewallCommand();
+            InjectCommand inject = new InjectCommand();
+            ScanCommand scan = new ScanCommand();
+            SetRansomwareCommand setRansomware = new SetRansomwareCommand();
+            ShowCommand show = new ShowCommand();
+            StoreCommand store = new StoreCommand();
+            BuyCommand buy = new BuyCommand();
+            InvalidCommand invalid = new InvalidCommand();
 
-            commands = new Dictionary<string, Command>
+            commands = new Dictionary<CommandNames, Command>
             {
-                { helpCommand.Name.ToString(), helpCommand },
-                { statusCommand.Name.ToString(), statusCommand },
-                { crackCommand.Name.ToString(), crackCommand },
-                { firewallCommand.Name.ToString(), firewallCommand },
-                { injectCommand.Name.ToString(), injectCommand },
-                { scanCommand.Name.ToString(), scanCommand },
-                { setRansomwareCommand.Name.ToString(), setRansomwareCommand },
-                { showCommand.Name.ToString(), showCommand },
-                { storeCommand.Name.ToString(), storeCommand },
-                { buyCommand.Name.ToString(), buyCommand }
+                { help.Name, help },
+                { status.Name, status },
+                { crack.Name, crack },
+                { firewall.Name, firewall },
+                { inject.Name, inject },
+                { scan.Name, scan },
+                { setRansomware.Name, setRansomware },
+                { show.Name, show },
+                { store.Name, store },
+                { buy.Name, buy },
+                { invalid.Name, invalid }
             };
         }
 
         internal static IEnumerable<string> GetAllCommandsName()
         {
-            return commands.Keys;
+            return commands.Keys.Select(x => x.ToString());
         }
 
-        internal static Command GetCommand(string command)
+        internal static Command GetCommand(CommandLine command)
         {
-            string commandName = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
-            if (!commands.ContainsKey(commandName))
-            {
-                return new InvalidCommand();
-            }
-
-            return commands[commandName];
+            return commands[command.CommandName];
         }
     }
 }

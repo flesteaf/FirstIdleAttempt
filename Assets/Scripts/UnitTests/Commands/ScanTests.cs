@@ -55,7 +55,7 @@ namespace Assets.Scripts.UnitTests.Commands
             HackableNetwork network = manager.GetAllFoundNetworks().First();
             manager.ExecuteCommand($"scan network {network.SSID}");
 
-            string consoleText = string.Join("", manager.Console.ConsoleMessages);
+            string consoleText = string.Join("", manager.SceneManager.Console.ConsoleMessages);
 
             for (int i = 0; i < network.Devices.Count; i++)
             {
@@ -69,7 +69,7 @@ namespace Assets.Scripts.UnitTests.Commands
         {
             manager.ExecuteCommand($"scan network SomeNetwork");
 
-            string consoleText = string.Join("", manager.Console.ConsoleMessages);
+            string consoleText = string.Join("", manager.SceneManager.Console.ConsoleMessages);
 
             Assert.IsTrue(consoleText.Contains("not found"));
         }
@@ -87,7 +87,7 @@ namespace Assets.Scripts.UnitTests.Commands
 
             manager.ExecuteCommand($"scan network {protectedNetwork.SSID}");
 
-            string consoleText = string.Join("", manager.Console.ConsoleMessages);
+            string consoleText = string.Join("", manager.SceneManager.Console.ConsoleMessages);
 
             Assert.IsTrue(consoleText.Contains("is protected"));
         }

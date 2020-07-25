@@ -10,7 +10,7 @@ namespace Assets.Scripts.Commands
     {
         public override CommandNames Name => CommandNames.inject;
 
-        private readonly Dictionary<string, Action<GameManager, string>> injectTypes;
+        private readonly Dictionary<CommandOptions, Action<GameManager, string>> injectTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -22,33 +22,32 @@ namespace Assets.Scripts.Commands
 
         public InjectCommand()
         {
-            injectTypes = new Dictionary<string, Action<GameManager, string>>
+            injectTypes = new Dictionary<CommandOptions, Action<GameManager, string>>
             {
-                { CommandOptions.miner.ToString(), InjectMiner },
-                { CommandOptions.bot.ToString(), InjectBot },
-                { CommandOptions.spammer.ToString(), InjectSpammer },
-                { CommandOptions.ransomware.ToString(), InjectRansomware }
+                { CommandOptions.miner, InjectMiner },
+                { CommandOptions.bot, InjectBot },
+                { CommandOptions.spammer, InjectSpammer },
+                { CommandOptions.ransomware, InjectRansomware }
             };
         }
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            ConsoleText console = game.Console;
-            var commandComponents = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            ConsoleText console = game.SceneManager.Console;
 
-            if (commandComponents.Length != 3)
+            if (!command.HasArgumentAndOption())
             {
                 console.AddMessage("The inject command receives 2 parameters: inject type (bot, miner, spammer, ransomware) and the ip or mac of the device", MessageType.Warning);
                 return;
             }
 
-            if (!injectTypes.ContainsKey(commandComponents[1]))
+            if (!injectTypes.ContainsKey(command.Option))
             {
-                console.AddMessage($"Wrong option selected. Option {commandComponents[1]} is unrecognized", MessageType.Error);
+                console.AddMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
                 return;
             }
 
-            injectTypes[commandComponents[1]](game, commandComponents[2]);
+            injectTypes[command.Option](game, command.Argument);
         }
 
         #region InjectCommands
@@ -56,19 +55,19 @@ namespace Assets.Scripts.Commands
         private void InjectRansomware(GameManager game, string identifier)
         {
             //TODO: implement this;
-            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            game.SceneManager.Console.AddMessage("Not implemented yet", MessageType.Warning);
         }
 
         private void InjectSpammer(GameManager game, string identifier)
         {
             //TODO: implement this;
-            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            game.SceneManager.Console.AddMessage("Not implemented yet", MessageType.Warning);
         }
 
         private void InjectBot(GameManager game, string identifier)
         {
             //TODO: implement this;
-            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            game.SceneManager.Console.AddMessage("Not implemented yet", MessageType.Warning);
         }
 
         private void InjectMiner(GameManager game, string identifier)
@@ -80,14 +79,14 @@ namespace Assets.Scripts.Commands
 
                 if (device == null)
                 {
-                    game.Console.AddMessage($"The provided device {identifier} was not found.", MessageType.Error);
+                    game.SceneManager.Console.AddMessage($"The provided device {identifier} was not found.", MessageType.Error);
                     return;
                 }
             }
 
             if (!device.CanBeInfected)
             {
-                game.Console.AddMessage($"The provided device {identifier} cannot be infected, probably the firewall is up.", MessageType.Error);
+                game.SceneManager.Console.AddMessage($"The provided device {identifier} cannot be infected, probably the firewall is up.", MessageType.Error);
                 return;
             }
 

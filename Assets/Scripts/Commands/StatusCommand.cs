@@ -6,7 +6,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StatusCommand : Command
     {
-        private readonly Dictionary<string, Action<GameManager>> statusTypes;
+        private readonly Dictionary<CommandOptions, Action<GameManager>> statusTypes;
 
         public override CommandNames Name => CommandNames.status;
         public override List<CommandOptions> Options
@@ -18,37 +18,36 @@ namespace Assets.Scripts.Commands
 
         public StatusCommand()
         {
-            statusTypes = new Dictionary<string, Action<GameManager>>
+            statusTypes = new Dictionary<CommandOptions, Action<GameManager>>
             {
-                { CommandOptions.computer.ToString(), GetComputerStatus },
-                { CommandOptions.money.ToString(), GetMoneyIncomeStatus }
+                { CommandOptions.computer, GetComputerStatus },
+                { CommandOptions.money, GetMoneyIncomeStatus }
             };
         }
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            ConsoleText console = game.Console;
-            var commandComponents = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (commandComponents.Length < 2)
+            ConsoleText console = game.SceneManager.Console;
+            if (!command.HasArgumentAndNoOption())
             {
                 console.AddMessage("Status command provides details about either 'computer' or 'money'.", MessageType.Warning);
                 console.AddMessage("Please provide the component for which to receive status, e.g. 'status computer'", MessageType.Warning);
                 return;
             }
 
-            if (commandComponents.Length > 2)
+            if (command.HasArgumentAndOption())
             {
                 console.AddMessage("Status command receives only 1 parameter from 'computer' or 'money'", MessageType.Warning);
                 return;
             }
 
-            if (!statusTypes.ContainsKey(commandComponents[1]))
+            if (!statusTypes.ContainsKey(command.ArgumentAsOption()))
             {
-                game.Console.AddMessage("Invalid parameter as input for status command, accepted are 'computer' or 'money'", MessageType.Error);
+                console.AddMessage("Invalid parameter as input for status command, accepted are 'computer' or 'money'", MessageType.Error);
                 return;
             }
 
-            statusTypes[commandComponents[1]](game);
+            statusTypes[command.ArgumentAsOption()](game);
         }
 
         #region StatusCommands
@@ -64,7 +63,7 @@ namespace Assets.Scripts.Commands
             string computerDetails = game.Computer.ToString();
             foreach (var item in computerDetails.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                game.Console.AddMessage(item, MessageType.Info);
+                game.SceneManager.Console.AddMessage(item, MessageType.Info);
             }
         }
 

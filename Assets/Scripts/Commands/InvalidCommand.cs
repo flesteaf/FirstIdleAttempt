@@ -9,9 +9,9 @@ namespace Assets.Scripts.Commands
 
         public override List<CommandOptions> Options => new List<CommandOptions> { CommandOptions.None };
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            game.Console.AddMessage($"The command {command} is invalid", MessageType.Error);
+            game.SceneManager.Console.AddMessage($"The command is invalid", MessageType.Error);
         }
     }
 }

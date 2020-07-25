@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
-        private Dictionary<string, Action<GameManager, string>> buyOptions;
+        private readonly Dictionary<CommandOptions, Action<GameManager, string>> buyOptions;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -20,40 +20,36 @@ namespace Assets.Scripts.Commands
 
         public BuyCommand()
         {
-            buyOptions = new Dictionary<string, Action<GameManager, string>>
+            buyOptions = new Dictionary<CommandOptions, Action<GameManager, string>>
             {
-                { CommandOptions.software.ToString(), BuySoftware },
-                { CommandOptions.component.ToString(), BuyComponent }
+                { CommandOptions.software, BuySoftware },
+                { CommandOptions.component, BuyComponent }
             };
         }
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            string[] commandComponents = command.Split(new[] { '\'', '"' }, StringSplitOptions.RemoveEmptyEntries);
-            ConsoleText console = game.Console;
+            ConsoleText console = game.SceneManager.Console;
 
-            if (commandComponents.Length > 2)
+            if (!command.LongArgument)
             {
                 console.AddMessage($"The buy command requires to specify something to buy and only one", MessageType.Warning);
                 return;
             }
 
-            string[] commandParameters = commandComponents[0].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (commandParameters.Length < 2 || commandParameters.Length > 3)
+            if (command.Option == CommandOptions.None)
             {
                 console.AddMessage($"The buy command requires to specify the type of things you want to buy", MessageType.Warning);
                 return;
             }
 
-            if (!buyOptions.ContainsKey(commandParameters[1]))
+            if (!buyOptions.ContainsKey(command.Option))
             {
                 console.AddMessage($"The buy option is not available", MessageType.Warning);
                 return;
             }
 
-            string product = commandComponents.Length == 2 ? commandComponents[1] : commandParameters[2];
-
-            buyOptions[commandParameters[1]](game, product);
+            buyOptions[command.Option](game, command.Argument);
         }
 
         private void BuyComponent(GameManager game, string componentName)
@@ -62,13 +58,13 @@ namespace Assets.Scripts.Commands
 
             if (component == null)
             {
-                game.Console.AddMessage($"Component {componentName} not found", MessageType.Error);
+                game.SceneManager.Console.AddMessage($"Component {componentName} not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuyComponent(component))
             {
-                game.Console.AddMessage("Not enough many!", MessageType.Error);
+                game.SceneManager.Console.AddMessage("Not enough many!", MessageType.Error);
             }
         }
 
@@ -78,13 +74,13 @@ namespace Assets.Scripts.Commands
 
             if (software == null)
             {
-                game.Console.AddMessage($"Software {softwareName} not found", MessageType.Error);
+                game.SceneManager.Console.AddMessage($"Software {softwareName} not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuySoftware(software))
             {
-                game.Console.AddMessage("Not enough money!", MessageType.Error);
+                game.SceneManager.Console.AddMessage("Not enough money!", MessageType.Error);
             }
         }
     }

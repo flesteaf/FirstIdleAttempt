@@ -14,22 +14,20 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    public CommandLineField InputText;
-    public ConsoleText Console;
-    public MissionText Missions;
-    public MoneyText Money;
+    public SceneManager SceneManager;
     public readonly Computer Computer;
     public readonly List<CommandOptions> AvailableSoftwareOptions;
     public readonly List<CommandNames> AvailableSoftware;
 
-    private float moneyAmmount = 0;
+    internal float MoneyAmmount = 0;
+
     private readonly List<HackableNetwork> foundNetworks;
     private readonly NetworkFactory networkFactory;
     private readonly Random random;
+    private readonly float oneSecond = 1;
+    private readonly float moneyGenerationExponent = 2.912f;
     private Store Store;
     private float currentProduction;
-    private float oneSecond = 1;
-    private float moneyGenerationExponent = 2.912f;
 
     public GameManager()
     {
@@ -66,36 +64,29 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         //This can be done only in the main scene
-        InputText = FindObjectOfType<CommandLineField>();
-        Console = FindObjectOfType<ConsoleText>();
-        Missions = FindObjectOfType<MissionText>();
-        Money = FindObjectOfType<MoneyText>();
+        SceneManager = FindObjectOfType<SceneManager>();
 
         TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
         Store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
         Time.fixedDeltaTime = oneSecond;
     }
 
-    // Start is called before the first frame update
-    private void Start()
+    public void ExecuteCommand(string input)
     {
-        Money.UpdateText(moneyAmmount);
-    }
+        SceneManager.Console.AddMessage(input, MessageType.Info);
+        CommandLine command = new CommandLine(input);
 
-    public void ExecuteCommand(string command)
-    {
-        Console.AddMessage(command, MessageType.Info);
         Command action = CommandFactory.GetCommand(command);
         if (!AvailableSoftware.Contains(action.Name))
         {
-            Console.AddMessage($"Command {action.Name} needs to be bought", MessageType.Error);
+            SceneManager.Console.AddMessage($"Command {action.Name} needs to be bought", MessageType.Error);
             return;
         }
 
         CommandOptions option = action.GetOptionFromCommand(command);
         if (option == CommandOptions.Invalid || !AvailableSoftwareOptions.Contains(option))
         {
-            Console.AddMessage($"Option {option} of command {action.Name} needs to be bought", MessageType.Error);
+            SceneManager.Console.AddMessage($"Option {option} of command {action.Name} needs to be bought", MessageType.Error);
             return;
         }
         
@@ -104,8 +95,8 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moneyAmmount += currentProduction;
-        Money.UpdateText(moneyAmmount);
+        MoneyAmmount += currentProduction;
+        SceneManager.Money.UpdateText(MoneyAmmount);
     }
 
     #region Networks
@@ -120,7 +111,7 @@ public class GameManager : MonoBehaviour
             HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Medium);
             item.NetworkHacked += NetworkHacked;
             foundNetworks.Add(item);
-            Console.AddMessage(item.ToString(), MessageType.Info);
+            SceneManager.Console.AddMessage(item.ToString(), MessageType.Info);
         }
     }
 
@@ -227,7 +218,7 @@ public class GameManager : MonoBehaviour
 
     public bool TryBuySoftware(Software software)
     {
-        if (moneyAmmount < software.Price)
+        if (MoneyAmmount < software.Price)
         {
             return false;
         }
@@ -247,13 +238,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        moneyAmmount -= software.Price;
+        MoneyAmmount -= software.Price;
         return true;
     }
 
     public bool TryBuyComponent(StoreComponent component)
     {
-        if (moneyAmmount < component.Price)
+        if (MoneyAmmount < component.Price)
         {
             return false;
         }

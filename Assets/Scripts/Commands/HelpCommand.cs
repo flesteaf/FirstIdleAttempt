@@ -9,14 +9,15 @@ namespace Assets.Scripts.Commands
 
         public override List<CommandOptions> Options => new List<CommandOptions> { CommandOptions.None };
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            game.Console.AddMessage("The following commands are currently allowed:", MessageType.Info);
+            //TODO: improve to provide help for all commands
+            game.SceneManager.Console.AddMessage("The following commands are currently allowed:", MessageType.Info);
 
             var commands = CommandFactory.GetAllCommandsName();
             foreach (string item in commands)
             {
-                game.Console.AddMessage($"   - {item}", MessageType.Info);
+                game.SceneManager.Console.AddMessage($"   - {item}", MessageType.Info);
             }
         }
     }

@@ -13,16 +13,20 @@ namespace Assets.Scripts.Commands
         //public abstract string Description { get; }
         protected const string HelpOption = "?";
 
-        public abstract void Execute(GameManager game, string command);
-        public CommandOptions GetOptionFromCommand(string command)
+        public abstract void Execute(GameManager game, CommandLine command);
+        public CommandOptions GetOptionFromCommand(CommandLine command)
         {
-            string[] commandComponents = command.Split(new[] { '\'', '"', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (commandComponents.Length < 2)
+            if (command.Option == CommandOptions.None)
             {
-                return CommandOptions.None;
+                return command.Option;
             }
 
-            return Options.FirstOrDefault(x => x.ToString().Equals(commandComponents[1]));
+            if (!Options.Contains(command.Option))
+            {
+                return CommandOptions.Invalid;
+            }
+
+            return command.Option;
         }
     }
 }

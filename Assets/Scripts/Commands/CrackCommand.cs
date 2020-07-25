@@ -7,7 +7,7 @@ namespace Assets.Scripts.Commands
 {
     internal class CrackCommand : Command
     {
-        private readonly Dictionary<string, Action<GameManager, string>> crackTypes;
+        private readonly Dictionary<CommandOptions, Action<GameManager, string>> crackTypes;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
             get => new List<CommandOptions> { 
@@ -18,32 +18,31 @@ namespace Assets.Scripts.Commands
 
         public CrackCommand()
         {
-            crackTypes = new Dictionary<string, Action<GameManager, string>>
+            crackTypes = new Dictionary<CommandOptions, Action<GameManager, string>>
             {
-                { CommandOptions.wep.ToString(), CrackWep },
-                { CommandOptions.wpa.ToString(), CrackWpa },
-                { CommandOptions.wpa2.ToString(), CrackWpa2 }
+                { CommandOptions.wep, CrackWep },
+                { CommandOptions.wpa, CrackWpa },
+                { CommandOptions.wpa2, CrackWpa2 }
             };
         }
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            ConsoleText console = game.Console;
-            var commandComponents = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            ConsoleText console = game.SceneManager.Console;
 
-            if (commandComponents.Length != 3)
+            if (!command.HasArgumentAndOption())
             {
                 console.AddMessage("The crack command receives 2 parameters: crack type (wep, wpa, wpa2) and the SSID of the network", MessageType.Warning);
                 return;
             }
 
-            if (!crackTypes.ContainsKey(commandComponents[1]))
+            if (!crackTypes.ContainsKey(command.Option))
             {
-                console.AddMessage($"Wrong option selected. Option {commandComponents[1]} is unrecognized", MessageType.Error);
+                console.AddMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
                 return;
             }
 
-            crackTypes[commandComponents[1]](game, commandComponents[2]);
+            crackTypes[command.Option](game, command.Argument);
         }
 
         #region CrackCommands
@@ -69,7 +68,7 @@ namespace Assets.Scripts.Commands
 
             if (network == null)
             {
-                game.Console.AddMessage($"Unrecognized network {ssid}", MessageType.Error);
+                game.SceneManager.Console.AddMessage($"Unrecognized network {ssid}", MessageType.Error);
                 return;
             }
 
@@ -77,11 +76,11 @@ namespace Assets.Scripts.Commands
 
             if (network.WasHacked)
             {
-                game.Console.AddMessage($"Network {ssid} is now accessible", MessageType.Info);
+                game.SceneManager.Console.AddMessage($"Network {ssid} is now accessible", MessageType.Info);
             }
             else
             {
-                game.Console.AddMessage($"Network {ssid} has protection {network.Protection}. Cannot crack it with {protection}.", MessageType.Error);
+                game.SceneManager.Console.AddMessage($"Network {ssid} has protection {network.Protection}. Cannot crack it with {protection}.", MessageType.Error);
             }
         }
 

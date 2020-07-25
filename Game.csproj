@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Commands\BuyCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandFactory.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandLine.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandNames.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandOptions.cs" />
     <Compile Include="Assets\Scripts\Commands\CrackCommand.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Assets\Scripts\Networks\NetworkFactory.cs" />
     <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
     <Compile Include="Assets\Scripts\Networks\ProtectionType.cs" />
+    <Compile Include="Assets\Scripts\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Softwares\InfectionType.cs" />
     <Compile Include="Assets\Scripts\Softwares\Provides.cs" />
     <Compile Include="Assets\Scripts\Softwares\Software.cs" />

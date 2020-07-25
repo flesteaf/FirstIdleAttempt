@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StoreCommand : Command
     {
-        private readonly Dictionary<string, Action<GameManager>> storeTypes;
+        private readonly Dictionary<CommandOptions, Action<GameManager>> storeTypes;
         public override CommandNames Name => CommandNames.store;
         public override List<CommandOptions> Options
         {
@@ -20,43 +20,42 @@ namespace Assets.Scripts.Commands
 
         public StoreCommand()
         {
-            storeTypes = new Dictionary<string, Action<GameManager>>
+            storeTypes = new Dictionary<CommandOptions, Action<GameManager>>
             {
-                { CommandOptions.software.ToString(), PresentSoftware },
-                { CommandOptions.components.ToString(), PresentComponents }
+                { CommandOptions.software, PresentSoftware },
+                { CommandOptions.components, PresentComponents }
             };
         }
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            string[] components = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (components.Length == 1)
+            ConsoleText console = game.SceneManager.Console;
+            if (!command.HasArgument())
             {
                 PresentStoreOptions(game);
                 return;
             }
 
-            if (components.Length != 2)
+            if (!command.HasArgumentAndNoOption())
             {
-                game.Console.AddMessage("Invalid command call, the store command takes 1 parameter at most. Check help command for store", MessageType.Error);
+                console.AddMessage("Invalid command call, the store command takes 1 parameter at most. Check help command for store", MessageType.Error);
                 return;
             }
 
-            if (!storeTypes.ContainsKey(components[1]))
+            if (!storeTypes.ContainsKey(command.ArgumentAsOption()))
             {
-                game.Console.AddMessage("Invalid parameter as input for store command, accepted are 'software' and 'components'", MessageType.Error);
+                console.AddMessage("Invalid parameter as input for store command, accepted are 'software' and 'components'", MessageType.Error);
                 return;
             }
 
-            storeTypes[components[1]](game);
+            storeTypes[command.ArgumentAsOption()](game);
         }
 
         #region StoreOptions
 
         private void PresentComponents(GameManager game)
         {
-            ConsoleText console = game.Console;
+            ConsoleText console = game.SceneManager.Console;
             ShowCPUs(game, console);
             ShowRAMs(game, console);
             ShowGPUs(game, console);
@@ -156,20 +155,17 @@ namespace Assets.Scripts.Commands
 
             foreach (var item in softwares)
             {
-                string text = $"{item.Name} - ${item.Price} - {item.Description}";
-                if (item.WasBought)
-                {
-                    text += " | Bought";
-                }
+                string price = item.WasBought ? "Bought" : item.Price.ToString();
+                string text = $"{item.Name} - ${price} - {item.Description}";
 
-                game.Console.AddMessage(text, MessageType.Info);
+                game.SceneManager.Console.AddMessage(text, MessageType.Info);
             }
         }
 
         private void PresentStoreOptions(GameManager game)
         {
-            game.Console.AddMessage("store software - for buying new software", MessageType.Info);
-            game.Console.AddMessage("store components - for upgrading your computer", MessageType.Info);
+            game.SceneManager.Console.AddMessage("store software - for buying new software", MessageType.Info);
+            game.SceneManager.Console.AddMessage("store components - for upgrading your computer", MessageType.Info);
         }
 
         #endregion StoreOptions

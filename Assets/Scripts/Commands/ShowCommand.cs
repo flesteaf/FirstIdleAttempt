@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     internal class ShowCommand : Command
     {
         public override CommandNames Name => CommandNames.show;
-        private readonly Dictionary<string, Action<GameManager>> showTypes;
+        private readonly Dictionary<CommandOptions, Action<GameManager>> showTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,37 +19,36 @@ namespace Assets.Scripts.Commands
 
         public ShowCommand()
         {
-            showTypes = new Dictionary<string, Action<GameManager>>
+            showTypes = new Dictionary<CommandOptions, Action<GameManager>>
             {
-                { CommandOptions.networks.ToString(),  ShowNetworks },
-                { CommandOptions.ips.ToString(), ShowDevices }
+                { CommandOptions.networks,  ShowNetworks },
+                { CommandOptions.ips, ShowDevices }
             };
         }
 
-        public override void Execute(GameManager game, string command)
+        public override void Execute(GameManager game, CommandLine command)
         {
-            ConsoleText console = game.Console;
-            var commandComponents = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (commandComponents.Length < 2)
+            ConsoleText console = game.SceneManager.Console;
+            if (!command.HasArgumentAndNoOption())
             {
                 console.AddMessage("Show command provides details about either 'networks' or 'ips'.", MessageType.Warning);
                 console.AddMessage("Please provide the option to show, e.g. 'show networks'", MessageType.Warning);
                 return;
             }
 
-            if (commandComponents.Length > 2)
+            if (command.HasArgumentAndOption())
             {
-                console.AddMessage("Show command receives only 1 option parameter from 'netwroks' or 'ips'", MessageType.Warning);
+                console.AddMessage("Show command receives only 1 option parameter from 'networks' or 'ips'", MessageType.Warning);
                 return;
             }
 
-            if (!showTypes.ContainsKey(commandComponents[1]))
+            if (!showTypes.ContainsKey(command.ArgumentAsOption()))
             {
-                console.AddMessage($"Wrong option selected. Option {commandComponents[1]} is unrecognized", MessageType.Error);
+                console.AddMessage($"Wrong option selected. Option {command.ArgumentAsOption()} is unrecognized", MessageType.Error);
                 return;
             }
 
-            showTypes[commandComponents[1]](game);
+            showTypes[command.ArgumentAsOption()](game);
         }
 
         #region ShowCommands
@@ -60,7 +59,7 @@ namespace Assets.Scripts.Commands
 
             foreach (var item in devices)
             {
-                game.Console.AddMessage(item.ToString(), MessageType.Info);
+                game.SceneManager.Console.AddMessage(item.ToString(), MessageType.Info);
             }
         }
 
@@ -70,7 +69,7 @@ namespace Assets.Scripts.Commands
 
             foreach (var item in networks)
             {
-                game.Console.AddMessage(item.ToString(), MessageType.Info);
+                game.SceneManager.Console.AddMessage(item.ToString(), MessageType.Info);
             }
         }
 
