@@ -32,7 +32,7 @@ namespace Assets.Scripts.Commands
         {
             if (!command.HasArgument())
             {
-                ScanForNetworks(game);
+                game.RefreshNetworks();
                 return;
             }
 
@@ -52,11 +52,6 @@ namespace Assets.Scripts.Commands
         }
 
         #region Scan commands
-
-        private void ScanForNetworks(SceneManager game)
-        {
-            game.RefreshNetworks();
-        }
 
         private void ScanIp(SceneManager game, string ip)
         {

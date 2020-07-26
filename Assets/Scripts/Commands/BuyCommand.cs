@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> buyOptions;
+        private readonly Dictionary<CommandOptions, Action<ISceneManager, string>> buyOptions;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -20,14 +20,14 @@ namespace Assets.Scripts.Commands
 
         public BuyCommand()
         {
-            buyOptions = new Dictionary<CommandOptions, Action<SceneManager, string>>
+            buyOptions = new Dictionary<CommandOptions, Action<ISceneManager, string>>
             {
                 { CommandOptions.software, BuySoftware },
                 { CommandOptions.component, BuyComponent }
             };
         }
 
-        public override void Execute(SceneManager game, CommandLine command)
+        public override void Execute(ISceneManager game, CommandLine command)
         {
             IConsoleText console = game.Console;
 
@@ -52,9 +52,9 @@ namespace Assets.Scripts.Commands
             buyOptions[command.Option](game, command.Argument);
         }
 
-        private void BuyComponent(SceneManager game, string componentName)
+        private void BuyComponent(ISceneManager game, string componentName)
         {
-            StoreComponent component = game.GetStoreComponent(componentName);
+            StoreComponent component = game.Store.GetComponent(componentName);
 
             if (component == null)
             {
@@ -68,9 +68,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void BuySoftware(SceneManager game, string softwareName)
+        private void BuySoftware(ISceneManager game, string softwareName)
         {
-            Software software = game.GetStoreSoftware(softwareName);
+            Software software = game.Store.GetSoftware(softwareName);
 
             if (software == null)
             {

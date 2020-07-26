@@ -7,7 +7,7 @@ namespace Assets.Scripts.Commands
 {
     internal class CrackCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> crackTypes;
+        private readonly Dictionary<CommandOptions, Action<ISceneManager, string>> crackTypes;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
             get => new List<CommandOptions> { 
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commands
 
         public CrackCommand()
         {
-            crackTypes = new Dictionary<CommandOptions, Action<SceneManager, string>>
+            crackTypes = new Dictionary<CommandOptions, Action<ISceneManager, string>>
             {
                 { CommandOptions.wep, CrackWep },
                 { CommandOptions.wpa, CrackWpa },
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(SceneManager game, CommandLine command)
+        public override void Execute(ISceneManager game, CommandLine command)
         {
             IConsoleText console = game.Console;
 
@@ -47,22 +47,22 @@ namespace Assets.Scripts.Commands
 
         #region CrackCommands
 
-        private void CrackWpa2(SceneManager game, string ssid)
+        private void CrackWpa2(ISceneManager game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA2);
         }
 
-        private void CrackWpa(SceneManager game, string ssid)
+        private void CrackWpa(ISceneManager game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA);
         }
 
-        private void CrackWep(SceneManager game, string ssid)
+        private void CrackWep(ISceneManager game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WEP);
         }
 
-        private static void CrackNetwork(SceneManager game, string ssid, ProtectionType protection)
+        private static void CrackNetwork(ISceneManager game, string ssid, ProtectionType protection)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 

@@ -16,12 +16,11 @@ public class SceneManager : MonoBehaviour, ISceneManager
 {
     private readonly List<CommandNames> AvailableSoftware;
     private readonly List<CommandOptions> AvailableSoftwareOptions;
-    private readonly List<HackableNetwork> foundNetworks;
     private readonly NetworkFactory networkFactory;
     private readonly Random random;
     private readonly float oneSecond = 1;
     private readonly float moneyGenerationExponent = 2.912f;
-    private Store Store;
+    private Store store;
     private float currentProduction;
     private ConsoleText consoleText;
     private MissionText missionsText;
@@ -32,6 +31,8 @@ public class SceneManager : MonoBehaviour, ISceneManager
     public IConsoleText Console { get => consoleText; }
     public IMissionText Mission { get => missionsText; }
     public IMoneyText Money { get => moneyText; }
+    public List<HackableNetwork> FoundNetworks { get; }
+    public IStore Store { get => store; }
 
     public SceneManager()
     {
@@ -59,7 +60,7 @@ public class SceneManager : MonoBehaviour, ISceneManager
                     CommandNames.inject,
                     CommandNames.show};
 
-        foundNetworks = new List<HackableNetwork>();
+        FoundNetworks = new List<HackableNetwork>();
         networkFactory = new NetworkFactory();
         random = new Random();
         currentProduction = 0;
@@ -78,7 +79,7 @@ public class SceneManager : MonoBehaviour, ISceneManager
         moneyText = FindObjectOfType<MoneyText>();
 
         TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
-        Store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
+        store = JsonConvert.DeserializeObject<Store>(dataAsset.text);
         Time.fixedDeltaTime = oneSecond;
     }
 
@@ -113,14 +114,14 @@ public class SceneManager : MonoBehaviour, ISceneManager
 
     public void RefreshNetworks()
     {
-        foundNetworks.RemoveAll(n => !n.WasHacked);
+        FoundNetworks.RemoveAll(n => !n.WasHacked);
 
         int noOfNetworksToDiscover = random.Next(1, 5);
         for (int i = 0; i < noOfNetworksToDiscover; i++)
         {
             HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Medium);
             item.NetworkHacked += NetworkHacked;
-            foundNetworks.Add(item);
+            FoundNetworks.Add(item);
             consoleText.AddMessage(item.ToString(), MessageType.Info);
         }
     }
@@ -139,25 +140,20 @@ public class SceneManager : MonoBehaviour, ISceneManager
             currentProduction += infectedDevice.EnergyLevel * moneyGenerationExponent;
     }
 
-    public IEnumerable<HackableNetwork> GetAllFoundNetworks()
-    {
-        return foundNetworks;
-    }
-
     public IEnumerable<Device> GetAllHackedDevices()
     {
-        return foundNetworks.SelectMany(n => n.Devices).Where(d => d.IsInfected);
+        return FoundNetworks.SelectMany(n => n.Devices).Where(d => d.IsInfected);
     }
 
     public Device GetDeviceByIp(string ip)
     {
-        Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
+        Device[] devices = FoundNetworks.SelectMany(n => n.Devices).ToArray();
         return Array.Find(devices, d => d.IP == ip);
     }
 
     public HackableNetwork GetNetworkBySSID(string ssid)
     {
-        HackableNetwork network = foundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
+        HackableNetwork network = FoundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
         if (network != null && network.Protection == ProtectionType.None)
         {
             NetworkHacked(network);
@@ -168,63 +164,13 @@ public class SceneManager : MonoBehaviour, ISceneManager
 
     public Device GetDeviceByMac(string mac)
     {
-        Device[] devices = foundNetworks.SelectMany(n => n.Devices).ToArray();
+        Device[] devices = FoundNetworks.SelectMany(n => n.Devices).ToArray();
         return Array.Find(devices, d => d.MAC == mac);
     }
 
     #endregion Networks
 
     #region Store
-
-    public IEnumerable<Software> GetAllSoftwares()
-    {
-        return Store.Softwares;
-    }
-
-    public IEnumerable<RamStore> GetStoreRams()
-    {
-        return Store.RAMs;
-    }
-
-    public IEnumerable<GpuStore> GetStoreGpus()
-    {
-        return Store.GPUs;
-    }
-
-    public IEnumerable<HardStore> GetStoreHards()
-    {
-        return Store.Hards;
-    }
-
-    public IEnumerable<MotherboardStore> GetStoreMotherboards()
-    {
-        return Store.Motherboards;
-    }
-
-    public IEnumerable<SourceStore> GetStoreSources()
-    {
-        return Store.Sources;
-    }
-
-    public IEnumerable<NetworkBoardStore> GetStoreNetworkBoards()
-    {
-        return Store.Networks;
-    }
-
-    public IEnumerable<CpuStore> GetStoreCpus()
-    {
-        return Store.CPUs;
-    }
-
-    public StoreComponent GetStoreComponent(string componentName)
-    {
-        return Store.GetComponent(componentName);
-    }
-
-    public Software GetStoreSoftware(string softwareName)
-    {
-        return Store.GetSoftware(softwareName);
-    }
 
     public bool TryBuySoftware(Software software)
     {
@@ -233,7 +179,7 @@ public class SceneManager : MonoBehaviour, ISceneManager
             return false;
         }
 
-        Store.SoftwareBought(software);
+        store.SoftwareBought(software);
 
         foreach (var item in software.Provides)
         {
@@ -259,7 +205,7 @@ public class SceneManager : MonoBehaviour, ISceneManager
             return false;
         }
 
-        Store.ComponentBought(component);
+        store.ComponentBought(component);
         return Computer.UpdateComponent(component.SoldComponent);
     }
 
@@ -267,9 +213,9 @@ public class SceneManager : MonoBehaviour, ISceneManager
 
     ~SceneManager()
     {
-        foundNetworks.RemoveAll(hn => !hn.WasHacked);
-        foundNetworks.SelectMany(n => n.Devices).ToList().ForEach(d => { if (d.IsInfected) d.DeviceInfected -= DeviceInfected; });
-        foundNetworks.ForEach(hn => hn.NetworkHacked -= NetworkHacked);
-        foundNetworks.RemoveAll(hn => true);
+        FoundNetworks.RemoveAll(hn => !hn.WasHacked);
+        FoundNetworks.SelectMany(n => n.Devices).ToList().ForEach(d => { if (d.IsInfected) d.DeviceInfected -= DeviceInfected; });
+        FoundNetworks.ForEach(hn => hn.NetworkHacked -= NetworkHacked);
+        FoundNetworks.RemoveAll(hn => true);
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Assets.Scripts.Commands
 {
@@ -13,7 +11,7 @@ namespace Assets.Scripts.Commands
         //public abstract string Description { get; }
         protected const string HelpOption = "?";
 
-        public abstract void Execute(SceneManager game, CommandLine command);
+        public abstract void Execute(ISceneManager game, CommandLine command);
         public CommandOptions GetOptionFromCommand(CommandLine command)
         {
             if (command.Option == CommandOptions.None)

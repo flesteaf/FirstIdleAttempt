@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Commands;
 using Assets.Scripts.Networks;
 using Assets.Scripts.Networks.Devices;
+using Moq;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -9,29 +11,29 @@ namespace Assets.Scripts.UnitTests.Commands
 {
     public class ScanTests
     {
-        private SceneManager manager;
+        readonly Mock<ISceneManager> mockManager = new Mock<ISceneManager>();
+        readonly Mock<IConsoleText> mockConsole = new Mock<IConsoleText>();
+        private ISceneManager manager;
+        private IConsoleText console;
 
         [SetUp]
         public void Init()
         {
-            var rootObject = new GameObject();
-            rootObject.AddComponent<RectTransform>();
-            var moneyText = rootObject.AddComponent<MoneyText>();
-            moneyText.SetupMoneyText();
-            var consoleText = rootObject.AddComponent<ConsoleText>();
-            consoleText.SetupConsoleText();
-            manager = rootObject.AddComponent<SceneManager>();
+            console = mockConsole.Object;
+
+            mockManager.Setup(x => x.Console).Returns(console);
+
+            manager = mockManager.Object;
         }
 
 
         [Test]
-        public void ScanWithoutParametersGeneratesNewNetworks()
+        public void ScanWithoutParametersTriggersARefreshOfNetworks()
         {
-            int networksFound = manager.GetAllFoundNetworks().Count();
-            manager.ExecuteCommand("scan");
-            int newNetworksCount = manager.GetAllFoundNetworks().Count();
+            ScanCommand command = new ScanCommand();
+            command.Execute(manager, new CommandLine("scan"));
 
-            Assert.IsTrue(networksFound < newNetworksCount);
+            mockManager.Verify(x => x.RefreshNetworks(), Times.Once);
         }
 
         [Test]
@@ -39,10 +41,10 @@ namespace Assets.Scripts.UnitTests.Commands
         {
             AddHackedNetworks();
 
-            List<HackableNetwork> foundNetworks = manager.GetAllFoundNetworks().ToList();
-            manager.ExecuteCommand("scan");
+            List<HackableNetwork> foundNetworks = manager.FoundNetworks;
+            manager.ExecuteCommand(new CommandLine("scan"));
 
-            List<HackableNetwork> newNetworks = manager.GetAllFoundNetworks().ToList();
+            List<HackableNetwork> newNetworks = manager.FoundNetworks;
 
             CollectionAssert.AreEquivalent(foundNetworks.Where(n => n.WasHacked), newNetworks.Where(n => n.WasHacked));
             CollectionAssert.AreNotEquivalent(foundNetworks.Where(n => !n.WasHacked), newNetworks.Where(n => !n.WasHacked));
@@ -52,10 +54,10 @@ namespace Assets.Scripts.UnitTests.Commands
         public void ScanNetworkPresentsAllDevicesInThatNetwork()
         {
             manager.RefreshNetworks();
-            HackableNetwork network = manager.GetAllFoundNetworks().First();
-            manager.ExecuteCommand($"scan network {network.SSID}");
+            HackableNetwork network = manager.FoundNetworks.First();
+            manager.ExecuteCommand(new CommandLine($"scan network {network.SSID}"));
 
-            string consoleText = string.Join("", manager.Console.ConsoleMessages);
+            string consoleText = string.Join("", console.ConsoleMessages);
 
             for (int i = 0; i < network.Devices.Count; i++)
             {
@@ -67,9 +69,9 @@ namespace Assets.Scripts.UnitTests.Commands
         [Test]
         public void ScanNetworkWithWrongNameShowsAnError()
         {
-            manager.ExecuteCommand($"scan network SomeNetwork");
+            manager.ExecuteCommand(new CommandLine($"scan network SomeNetwork"));
 
-            string consoleText = string.Join("", manager.Console.ConsoleMessages);
+            string consoleText = string.Join("", console.ConsoleMessages);
 
             Assert.IsTrue(consoleText.Contains("not found"));
         }
@@ -81,13 +83,13 @@ namespace Assets.Scripts.UnitTests.Commands
             do
             {
                 manager.RefreshNetworks();
-                protectedNetwork = manager.GetAllFoundNetworks().FirstOrDefault(n => n.Protection != ProtectionType.None);
+                protectedNetwork = manager.FoundNetworks.FirstOrDefault(n => n.Protection != ProtectionType.None);
             } while (protectedNetwork == null);
 
 
-            manager.ExecuteCommand($"scan network {protectedNetwork.SSID}");
+            manager.ExecuteCommand(new CommandLine($"scan network {protectedNetwork.SSID}"));
 
-            string consoleText = string.Join("", manager.Console.ConsoleMessages);
+            string consoleText = string.Join("", console.ConsoleMessages);
 
             Assert.IsTrue(consoleText.Contains("is protected"));
         }
@@ -95,8 +97,8 @@ namespace Assets.Scripts.UnitTests.Commands
         private void AddHackedNetworks()
         {
             manager.RefreshNetworks();
-            IEnumerable<HackableNetwork> currentNetworks = manager.GetAllFoundNetworks();
-            int currentNetworksCount = currentNetworks.Count();
+            List<HackableNetwork> currentNetworks = manager.FoundNetworks;
+            int currentNetworksCount = currentNetworks.Count;
             for (int i = 0; i < currentNetworksCount; i += 2)
             {
                 var network = currentNetworks.ElementAt(i);

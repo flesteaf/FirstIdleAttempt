@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Store
 {
-    public class Store
+    public class Store : IStore
     {
         public List<Software> Softwares { get; set; }
         public List<CpuStore> CPUs { get; set; }
@@ -15,7 +15,7 @@ namespace Assets.Scripts.Store
         public List<SourceStore> Sources { get; set; }
         public List<MotherboardStore> Motherboards { get; set; }
 
-        internal StoreComponent GetComponent(string componentName)
+        public StoreComponent GetComponent(string componentName)
         {
             StoreComponent component;
             component = CPUs.Find(com => com.CPU.Name.Equals(componentName, StringComparison.InvariantCultureIgnoreCase));
@@ -40,7 +40,7 @@ namespace Assets.Scripts.Store
             return component;
         }
 
-        internal Software GetSoftware(string softwareName)
+        public Software GetSoftware(string softwareName)
         {
             return Softwares.Find(s => s.Name.Equals(softwareName, StringComparison.InvariantCultureIgnoreCase));
         }
