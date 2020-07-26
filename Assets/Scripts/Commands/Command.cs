@@ -13,7 +13,7 @@ namespace Assets.Scripts.Commands
         //public abstract string Description { get; }
         protected const string HelpOption = "?";
 
-        public abstract void Execute(GameManager game, CommandLine command);
+        public abstract void Execute(SceneManager game, CommandLine command);
         public CommandOptions GetOptionFromCommand(CommandLine command)
         {
             if (command.Option == CommandOptions.None)

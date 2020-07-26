@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StoreCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameManager>> storeTypes;
+        private readonly Dictionary<CommandOptions, Action<SceneManager>> storeTypes;
         public override CommandNames Name => CommandNames.store;
         public override List<CommandOptions> Options
         {
@@ -20,16 +20,16 @@ namespace Assets.Scripts.Commands
 
         public StoreCommand()
         {
-            storeTypes = new Dictionary<CommandOptions, Action<GameManager>>
+            storeTypes = new Dictionary<CommandOptions, Action<SceneManager>>
             {
                 { CommandOptions.software, PresentSoftware },
                 { CommandOptions.components, PresentComponents }
             };
         }
 
-        public override void Execute(GameManager game, CommandLine command)
+        public override void Execute(SceneManager game, CommandLine command)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
             if (!command.HasArgument())
             {
                 PresentStoreOptions(game);
@@ -53,9 +53,9 @@ namespace Assets.Scripts.Commands
 
         #region StoreOptions
 
-        private void PresentComponents(GameManager game)
+        private void PresentComponents(SceneManager game)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
             ShowCPUs(game, console);
             ShowRAMs(game, console);
             ShowGPUs(game, console);
@@ -65,7 +65,7 @@ namespace Assets.Scripts.Commands
             ShowNetworkBoards(game, console);
         }
 
-        private static void ShowCPUs(GameManager game, ConsoleText console)
+        private static void ShowCPUs(SceneManager game, IConsoleText console)
         {
             IEnumerable<CpuStore> cpus = game.GetStoreCpus();
 
@@ -77,7 +77,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private static void ShowRAMs(GameManager game, ConsoleText console)
+        private static void ShowRAMs(SceneManager game, IConsoleText console)
         {
             IEnumerable<RamStore> rams = game.GetStoreRams();
 
@@ -89,7 +89,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private static void ShowGPUs(GameManager game, ConsoleText console)
+        private static void ShowGPUs(SceneManager game, IConsoleText console)
         {
             IEnumerable<GpuStore> gpus = game.GetStoreGpus();
 
@@ -101,7 +101,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private static void ShowHards(GameManager game, ConsoleText console)
+        private static void ShowHards(SceneManager game, IConsoleText console)
         {
             IEnumerable<HardStore> hards = game.GetStoreHards();
 
@@ -113,7 +113,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private static void ShowMotherboards(GameManager game, ConsoleText console)
+        private static void ShowMotherboards(SceneManager game, IConsoleText console)
         {
             IEnumerable<MotherboardStore> motherboards = game.GetStoreMotherboards();
 
@@ -125,7 +125,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private static void ShowSources(GameManager game, ConsoleText console)
+        private static void ShowSources(SceneManager game, IConsoleText console)
         {
             IEnumerable<SourceStore> sources = game.GetStoreSources();
 
@@ -137,7 +137,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private static void ShowNetworkBoards(GameManager game, ConsoleText console)
+        private static void ShowNetworkBoards(SceneManager game, IConsoleText console)
         {
             IEnumerable<NetworkBoardStore> networkBoards = game.GetStoreNetworkBoards();
 
@@ -149,7 +149,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void PresentSoftware(GameManager game)
+        private void PresentSoftware(SceneManager game)
         {
             IEnumerable<Software> softwares = game.GetAllSoftwares();
 
@@ -158,14 +158,14 @@ namespace Assets.Scripts.Commands
                 string price = item.WasBought ? "Bought" : item.Price.ToString();
                 string text = $"{item.Name} - ${price} - {item.Description}";
 
-                game.SceneManager.Console.AddMessage(text, MessageType.Info);
+                game.Console.AddMessage(text, MessageType.Info);
             }
         }
 
-        private void PresentStoreOptions(GameManager game)
+        private void PresentStoreOptions(SceneManager game)
         {
-            game.SceneManager.Console.AddMessage("store software - for buying new software", MessageType.Info);
-            game.SceneManager.Console.AddMessage("store components - for upgrading your computer", MessageType.Info);
+            game.Console.AddMessage("store software - for buying new software", MessageType.Info);
+            game.Console.AddMessage("store components - for upgrading your computer", MessageType.Info);
         }
 
         #endregion StoreOptions

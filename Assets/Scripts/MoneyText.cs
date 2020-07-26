@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class MoneyText : MonoBehaviour
+public class MoneyText : MonoBehaviour, IMoneyText
 {
     public TextMeshProUGUI Money;
 

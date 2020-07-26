@@ -102,8 +102,12 @@
     <Compile Include="Assets\Scripts\ConsoleText.cs" />
     <Compile Include="Assets\Scripts\Extensions\ListExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\QueueExtensions.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HackingDelegates.cs" />
+    <Compile Include="Assets\Scripts\ICommandLineField.cs" />
+    <Compile Include="Assets\Scripts\IConsoleText.cs" />
+    <Compile Include="Assets\Scripts\IMissionText.cs" />
+    <Compile Include="Assets\Scripts\IMoneyText.cs" />
+    <Compile Include="Assets\Scripts\ISceneManager.cs" />
     <Compile Include="Assets\Scripts\MissionText.cs" />
     <Compile Include="Assets\Scripts\MoneyText.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Device.cs" />

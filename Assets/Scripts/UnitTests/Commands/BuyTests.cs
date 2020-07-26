@@ -9,7 +9,7 @@ namespace Assets.Scripts.UnitTests.Commands
 {
     public class BuyTests
     {
-        private GameManager manager;
+        private SceneManager manager;
 
         [SetUp]
         public void Initialize()
@@ -20,7 +20,7 @@ namespace Assets.Scripts.UnitTests.Commands
             moneyText.SetupMoneyText();
             var consoleText = rootObject.AddComponent<ConsoleText>();
             consoleText.SetupConsoleText();
-            manager = rootObject.AddComponent<GameManager>();
+            manager = rootObject.AddComponent<SceneManager>();
         }
 
         [Test]

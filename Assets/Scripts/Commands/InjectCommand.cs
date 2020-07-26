@@ -10,7 +10,7 @@ namespace Assets.Scripts.Commands
     {
         public override CommandNames Name => CommandNames.inject;
 
-        private readonly Dictionary<CommandOptions, Action<GameManager, string>> injectTypes;
+        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> injectTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Commands
 
         public InjectCommand()
         {
-            injectTypes = new Dictionary<CommandOptions, Action<GameManager, string>>
+            injectTypes = new Dictionary<CommandOptions, Action<SceneManager, string>>
             {
                 { CommandOptions.miner, InjectMiner },
                 { CommandOptions.bot, InjectBot },
@@ -31,9 +31,9 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(GameManager game, CommandLine command)
+        public override void Execute(SceneManager game, CommandLine command)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
 
             if (!command.HasArgumentAndOption())
             {
@@ -52,25 +52,25 @@ namespace Assets.Scripts.Commands
 
         #region InjectCommands
 
-        private void InjectRansomware(GameManager game, string identifier)
+        private void InjectRansomware(SceneManager game, string identifier)
         {
             //TODO: implement this;
-            game.SceneManager.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectSpammer(GameManager game, string identifier)
+        private void InjectSpammer(SceneManager game, string identifier)
         {
             //TODO: implement this;
-            game.SceneManager.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectBot(GameManager game, string identifier)
+        private void InjectBot(SceneManager game, string identifier)
         {
             //TODO: implement this;
-            game.SceneManager.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectMiner(GameManager game, string identifier)
+        private void InjectMiner(SceneManager game, string identifier)
         {
             Device device = game.GetDeviceByIp(identifier);
             if (device == null)
@@ -79,14 +79,14 @@ namespace Assets.Scripts.Commands
 
                 if (device == null)
                 {
-                    game.SceneManager.Console.AddMessage($"The provided device {identifier} was not found.", MessageType.Error);
+                    game.Console.AddMessage($"The provided device {identifier} was not found.", MessageType.Error);
                     return;
                 }
             }
 
             if (!device.CanBeInfected)
             {
-                game.SceneManager.Console.AddMessage($"The provided device {identifier} cannot be infected, probably the firewall is up.", MessageType.Error);
+                game.Console.AddMessage($"The provided device {identifier} cannot be infected, probably the firewall is up.", MessageType.Error);
                 return;
             }
 

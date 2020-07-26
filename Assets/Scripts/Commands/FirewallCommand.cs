@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     internal class FirewallCommand : Command
     {
         public override CommandNames Name => CommandNames.firewall;
-        private readonly Dictionary<CommandOptions, Action<GameManager, string>> firewallOptions;
+        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> firewallOptions;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,16 +19,16 @@ namespace Assets.Scripts.Commands
 
         public FirewallCommand()
         {
-            firewallOptions = new Dictionary<CommandOptions, Action<GameManager, string>>
+            firewallOptions = new Dictionary<CommandOptions, Action<SceneManager, string>>
             {
                 { CommandOptions.enable, EnableFirewall },
                 { CommandOptions.disable, DisableFirewall }
             };
         }
 
-        public override void Execute(GameManager game, CommandLine command)
+        public override void Execute(SceneManager game, CommandLine command)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
 
             if (!command.HasArgumentAndOption())
             {
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Commands
             firewallOptions[command.Option](game, command.Argument);
         }
 
-        private void DisableFirewall(GameManager manager, string identifier)
+        private void DisableFirewall(SceneManager manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
             if (device == null) { 
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void EnableFirewall(GameManager manager, string identifier)
+        private void EnableFirewall(SceneManager manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
             if (device == null)
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Commands
             }
         }
         
-        private Device GetDevice(GameManager manager, string identifier)
+        private Device GetDevice(SceneManager manager, string identifier)
         {
             Device device = manager.GetDeviceByIp(identifier);
             if (device == null)
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Commands
                 device = manager.GetDeviceByMac(identifier);
                 if (device == null)
                 {
-                    manager.SceneManager.Console.AddMessage($"Device {identifier} not found", MessageType.Error);
+                    manager.Console.AddMessage($"Device {identifier} not found", MessageType.Error);
                 }
             }
 

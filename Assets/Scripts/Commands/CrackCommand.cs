@@ -7,7 +7,7 @@ namespace Assets.Scripts.Commands
 {
     internal class CrackCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameManager, string>> crackTypes;
+        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> crackTypes;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
             get => new List<CommandOptions> { 
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commands
 
         public CrackCommand()
         {
-            crackTypes = new Dictionary<CommandOptions, Action<GameManager, string>>
+            crackTypes = new Dictionary<CommandOptions, Action<SceneManager, string>>
             {
                 { CommandOptions.wep, CrackWep },
                 { CommandOptions.wpa, CrackWpa },
@@ -26,9 +26,9 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(GameManager game, CommandLine command)
+        public override void Execute(SceneManager game, CommandLine command)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
 
             if (!command.HasArgumentAndOption())
             {
@@ -47,28 +47,28 @@ namespace Assets.Scripts.Commands
 
         #region CrackCommands
 
-        private void CrackWpa2(GameManager game, string ssid)
+        private void CrackWpa2(SceneManager game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA2);
         }
 
-        private void CrackWpa(GameManager game, string ssid)
+        private void CrackWpa(SceneManager game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA);
         }
 
-        private void CrackWep(GameManager game, string ssid)
+        private void CrackWep(SceneManager game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WEP);
         }
 
-        private static void CrackNetwork(GameManager game, string ssid, ProtectionType protection)
+        private static void CrackNetwork(SceneManager game, string ssid, ProtectionType protection)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 
             if (network == null)
             {
-                game.SceneManager.Console.AddMessage($"Unrecognized network {ssid}", MessageType.Error);
+                game.Console.AddMessage($"Unrecognized network {ssid}", MessageType.Error);
                 return;
             }
 
@@ -76,11 +76,11 @@ namespace Assets.Scripts.Commands
 
             if (network.WasHacked)
             {
-                game.SceneManager.Console.AddMessage($"Network {ssid} is now accessible", MessageType.Info);
+                game.Console.AddMessage($"Network {ssid} is now accessible", MessageType.Info);
             }
             else
             {
-                game.SceneManager.Console.AddMessage($"Network {ssid} has protection {network.Protection}. Cannot crack it with {protection}.", MessageType.Error);
+                game.Console.AddMessage($"Network {ssid} has protection {network.Protection}. Cannot crack it with {protection}.", MessageType.Error);
             }
         }
 

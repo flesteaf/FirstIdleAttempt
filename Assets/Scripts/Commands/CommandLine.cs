@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Assets.Scripts.Commands
 {
@@ -10,7 +11,6 @@ namespace Assets.Scripts.Commands
         public CommandNames CommandName { get => commandName; }
         public CommandOptions Option { get => option; }
         public bool LongArgument { get; set; }
-        public string Option1 { get; private set; }
         public string Argument { get; private set; }
 
         public CommandLine(string command)
@@ -38,8 +38,6 @@ namespace Assets.Scripts.Commands
                 {
                     throw new ArgumentException($"Command option {option} is unsupported for any command");
                 }
-
-                if (componentsLength > 2) Option1 = commandComponents[2];
             }
             else
             {
@@ -48,8 +46,6 @@ namespace Assets.Scripts.Commands
                 {
                     throw new ArgumentException($"Command option {option} is unsupported for any command");
                 }
-
-                if (componentsLength > 3) Option1 = commandComponents[2];
             }
         }
 
@@ -57,7 +53,13 @@ namespace Assets.Scripts.Commands
 
         public override string ToString()
         {
-            return CommandName.ToString();
+            StringBuilder builder = new StringBuilder();
+            builder.Append(commandName);
+            if (option != CommandOptions.None) builder.Append($" {option}");
+            if (LongArgument) builder.Append($" \"{Argument}\"");
+            if (!LongArgument && !string.IsNullOrEmpty(Argument)) builder.Append($" {Argument}");
+
+            return builder.ToString();
         }
 
         #endregion Overrides

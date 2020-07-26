@@ -1,16 +1,17 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Commands;
+using TMPro;
 using UnityEngine;
 
-public class CommandLineField : MonoBehaviour
+public class CommandLineField : MonoBehaviour, ICommandLineField
 {
     public TMP_InputField InputField;
     public TextMeshProUGUI Placeholder;
-    private GameManager theGame;
-    private string command;
+    private SceneManager theGame;
+    private string line;
 
     private void Awake()
     {
-        theGame = FindObjectOfType<GameManager>();
+        theGame = FindObjectOfType<SceneManager>();
     }
 
     // Start is called before the first frame update
@@ -31,8 +32,8 @@ public class CommandLineField : MonoBehaviour
 
     public void AddCommand()
     {
-        command = InputField.text;
-        if (string.IsNullOrEmpty(command))
+        line = InputField.text;
+        if (string.IsNullOrEmpty(line))
         {
             return;
         }
@@ -40,6 +41,7 @@ public class CommandLineField : MonoBehaviour
         Placeholder.text = "Enter command...";
         InputField.text = string.Empty;
         InputField.ActivateInputField();
+        CommandLine command = new CommandLine(line);
         theGame.ExecuteCommand(command);
     }
 }

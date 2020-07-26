@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     internal class ShowCommand : Command
     {
         public override CommandNames Name => CommandNames.show;
-        private readonly Dictionary<CommandOptions, Action<GameManager>> showTypes;
+        private readonly Dictionary<CommandOptions, Action<SceneManager>> showTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,16 +19,16 @@ namespace Assets.Scripts.Commands
 
         public ShowCommand()
         {
-            showTypes = new Dictionary<CommandOptions, Action<GameManager>>
+            showTypes = new Dictionary<CommandOptions, Action<SceneManager>>
             {
                 { CommandOptions.networks,  ShowNetworks },
                 { CommandOptions.ips, ShowDevices }
             };
         }
 
-        public override void Execute(GameManager game, CommandLine command)
+        public override void Execute(SceneManager game, CommandLine command)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
             if (!command.HasArgumentAndNoOption())
             {
                 console.AddMessage("Show command provides details about either 'networks' or 'ips'.", MessageType.Warning);
@@ -53,23 +53,23 @@ namespace Assets.Scripts.Commands
 
         #region ShowCommands
 
-        private void ShowDevices(GameManager game)
+        private void ShowDevices(SceneManager game)
         {
             IEnumerable<Device> devices = game.GetAllHackedDevices();
 
             foreach (var item in devices)
             {
-                game.SceneManager.Console.AddMessage(item.ToString(), MessageType.Info);
+                game.Console.AddMessage(item.ToString(), MessageType.Info);
             }
         }
 
-        private void ShowNetworks(GameManager game)
+        private void ShowNetworks(SceneManager game)
         {
             IEnumerable<HackableNetwork> networks = game.GetAllFoundNetworks();
 
             foreach (var item in networks)
             {
-                game.SceneManager.Console.AddMessage(item.ToString(), MessageType.Info);
+                game.Console.AddMessage(item.ToString(), MessageType.Info);
             }
         }
 

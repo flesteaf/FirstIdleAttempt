@@ -6,7 +6,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StatusCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameManager>> statusTypes;
+        private readonly Dictionary<CommandOptions, Action<SceneManager>> statusTypes;
 
         public override CommandNames Name => CommandNames.status;
         public override List<CommandOptions> Options
@@ -18,16 +18,16 @@ namespace Assets.Scripts.Commands
 
         public StatusCommand()
         {
-            statusTypes = new Dictionary<CommandOptions, Action<GameManager>>
+            statusTypes = new Dictionary<CommandOptions, Action<SceneManager>>
             {
                 { CommandOptions.computer, GetComputerStatus },
                 { CommandOptions.money, GetMoneyIncomeStatus }
             };
         }
 
-        public override void Execute(GameManager game, CommandLine command)
+        public override void Execute(SceneManager game, CommandLine command)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
             if (!command.HasArgumentAndNoOption())
             {
                 console.AddMessage("Status command provides details about either 'computer' or 'money'.", MessageType.Warning);
@@ -52,18 +52,18 @@ namespace Assets.Scripts.Commands
 
         #region StatusCommands
 
-        private void GetMoneyIncomeStatus(GameManager game)
+        private void GetMoneyIncomeStatus(SceneManager game)
         {
             //TODO: implement it
             return;
         }
 
-        private void GetComputerStatus(GameManager game)
+        private void GetComputerStatus(SceneManager game)
         {
             string computerDetails = game.Computer.ToString();
             foreach (var item in computerDetails.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                game.SceneManager.Console.AddMessage(item, MessageType.Info);
+                game.Console.AddMessage(item, MessageType.Info);
             }
         }
 

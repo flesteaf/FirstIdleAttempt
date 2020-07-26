@@ -9,7 +9,7 @@ namespace Assets.Scripts.UnitTests.Commands
 {
     public class ScanTests
     {
-        private GameManager manager;
+        private SceneManager manager;
 
         [SetUp]
         public void Init()
@@ -20,7 +20,7 @@ namespace Assets.Scripts.UnitTests.Commands
             moneyText.SetupMoneyText();
             var consoleText = rootObject.AddComponent<ConsoleText>();
             consoleText.SetupConsoleText();
-            manager = rootObject.AddComponent<GameManager>();
+            manager = rootObject.AddComponent<SceneManager>();
         }
 
 
@@ -55,7 +55,7 @@ namespace Assets.Scripts.UnitTests.Commands
             HackableNetwork network = manager.GetAllFoundNetworks().First();
             manager.ExecuteCommand($"scan network {network.SSID}");
 
-            string consoleText = string.Join("", manager.SceneManager.Console.ConsoleMessages);
+            string consoleText = string.Join("", manager.Console.ConsoleMessages);
 
             for (int i = 0; i < network.Devices.Count; i++)
             {
@@ -69,7 +69,7 @@ namespace Assets.Scripts.UnitTests.Commands
         {
             manager.ExecuteCommand($"scan network SomeNetwork");
 
-            string consoleText = string.Join("", manager.SceneManager.Console.ConsoleMessages);
+            string consoleText = string.Join("", manager.Console.ConsoleMessages);
 
             Assert.IsTrue(consoleText.Contains("not found"));
         }
@@ -87,7 +87,7 @@ namespace Assets.Scripts.UnitTests.Commands
 
             manager.ExecuteCommand($"scan network {protectedNetwork.SSID}");
 
-            string consoleText = string.Join("", manager.SceneManager.Console.ConsoleMessages);
+            string consoleText = string.Join("", manager.Console.ConsoleMessages);
 
             Assert.IsTrue(consoleText.Contains("is protected"));
         }

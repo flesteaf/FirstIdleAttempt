@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class MissionText : MonoBehaviour
+public class MissionText : MonoBehaviour, IMissionText
 {
     public TextMeshProUGUI MissionsText;
 

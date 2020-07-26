@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameManager, string>> buyOptions;
+        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> buyOptions;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -20,16 +20,16 @@ namespace Assets.Scripts.Commands
 
         public BuyCommand()
         {
-            buyOptions = new Dictionary<CommandOptions, Action<GameManager, string>>
+            buyOptions = new Dictionary<CommandOptions, Action<SceneManager, string>>
             {
                 { CommandOptions.software, BuySoftware },
                 { CommandOptions.component, BuyComponent }
             };
         }
 
-        public override void Execute(GameManager game, CommandLine command)
+        public override void Execute(SceneManager game, CommandLine command)
         {
-            ConsoleText console = game.SceneManager.Console;
+            IConsoleText console = game.Console;
 
             if (!command.LongArgument)
             {
@@ -52,35 +52,35 @@ namespace Assets.Scripts.Commands
             buyOptions[command.Option](game, command.Argument);
         }
 
-        private void BuyComponent(GameManager game, string componentName)
+        private void BuyComponent(SceneManager game, string componentName)
         {
             StoreComponent component = game.GetStoreComponent(componentName);
 
             if (component == null)
             {
-                game.SceneManager.Console.AddMessage($"Component {componentName} not found", MessageType.Error);
+                game.Console.AddMessage($"Component {componentName} not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuyComponent(component))
             {
-                game.SceneManager.Console.AddMessage("Not enough many!", MessageType.Error);
+                game.Console.AddMessage("Not enough many!", MessageType.Error);
             }
         }
 
-        private void BuySoftware(GameManager game, string softwareName)
+        private void BuySoftware(SceneManager game, string softwareName)
         {
             Software software = game.GetStoreSoftware(softwareName);
 
             if (software == null)
             {
-                game.SceneManager.Console.AddMessage($"Software {softwareName} not found", MessageType.Error);
+                game.Console.AddMessage($"Software {softwareName} not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuySoftware(software))
             {
-                game.SceneManager.Console.AddMessage("Not enough money!", MessageType.Error);
+                game.Console.AddMessage("Not enough money!", MessageType.Error);
             }
         }
     }
