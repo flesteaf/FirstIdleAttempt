@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Store
 {
-    public class Store : IStore
+    public class Store
     {
         public List<Software> Softwares { get; set; }
         public List<CpuStore> CPUs { get; set; }

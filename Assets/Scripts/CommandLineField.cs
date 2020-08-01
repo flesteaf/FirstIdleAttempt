@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-public class CommandLineField : MonoBehaviour, ICommandLineField
+public class CommandLineField : MonoBehaviour
 {
     public TMP_InputField InputField;
     public TextMeshProUGUI Placeholder;

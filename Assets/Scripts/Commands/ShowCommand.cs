@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     internal class ShowCommand : Command
     {
         public override CommandNames Name => CommandNames.show;
-        private readonly Dictionary<CommandOptions, Action<SceneManager>> showTypes;
+        private readonly Dictionary<CommandOptions, Action<GameData>> showTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,32 +19,31 @@ namespace Assets.Scripts.Commands
 
         public ShowCommand()
         {
-            showTypes = new Dictionary<CommandOptions, Action<SceneManager>>
+            showTypes = new Dictionary<CommandOptions, Action<GameData>>
             {
                 { CommandOptions.networks,  ShowNetworks },
                 { CommandOptions.ips, ShowDevices }
             };
         }
 
-        public override void Execute(SceneManager game, CommandLine command)
+        public override void Execute(GameData game, CommandLine command)
         {
-            IConsoleText console = game.Console;
             if (!command.HasArgumentAndNoOption())
             {
-                console.AddMessage("Show command provides details about either 'networks' or 'ips'.", MessageType.Warning);
-                console.AddMessage("Please provide the option to show, e.g. 'show networks'", MessageType.Warning);
+                SendMessage("Show command provides details about either 'networks' or 'ips'.", MessageType.Warning);
+                SendMessage("Please provide the option to show, e.g. 'show networks'", MessageType.Warning);
                 return;
             }
 
             if (command.HasArgumentAndOption())
             {
-                console.AddMessage("Show command receives only 1 option parameter from 'networks' or 'ips'", MessageType.Warning);
+                SendMessage("Show command receives only 1 option parameter from 'networks' or 'ips'", MessageType.Warning);
                 return;
             }
 
             if (!showTypes.ContainsKey(command.ArgumentAsOption()))
             {
-                console.AddMessage($"Wrong option selected. Option {command.ArgumentAsOption()} is unrecognized", MessageType.Error);
+                SendMessage($"Wrong option selected. Option {command.ArgumentAsOption()} is unrecognized", MessageType.Error);
                 return;
             }
 
@@ -53,23 +52,23 @@ namespace Assets.Scripts.Commands
 
         #region ShowCommands
 
-        private void ShowDevices(SceneManager game)
+        private void ShowDevices(GameData game)
         {
             IEnumerable<Device> devices = game.GetAllHackedDevices();
 
             foreach (var item in devices)
             {
-                game.Console.AddMessage(item.ToString(), MessageType.Info);
+                SendMessage(item.ToString(), MessageType.Info);
             }
         }
 
-        private void ShowNetworks(SceneManager game)
+        private void ShowNetworks(GameData game)
         {
             IEnumerable<HackableNetwork> networks = game.GetAllFoundNetworks();
 
             foreach (var item in networks)
             {
-                game.Console.AddMessage(item.ToString(), MessageType.Info);
+                SendMessage(item.ToString(), MessageType.Info);
             }
         }
 

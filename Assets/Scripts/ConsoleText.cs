@@ -5,7 +5,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
-public class ConsoleText : MonoBehaviour, IConsoleText
+public class ConsoleText : MonoBehaviour
 {
     public TextMeshProUGUI Console;
     public List<string> ConsoleMessages { get => consoleMessages.ToList(); }

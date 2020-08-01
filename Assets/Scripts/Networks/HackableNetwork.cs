@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Networks.Devices;
 using System.Collections.Generic;
-using static Assets.Scripts.HackingDelegates;
+using static Assets.Scripts.HackerDelegates;
 
 namespace Assets.Scripts.Networks
 {

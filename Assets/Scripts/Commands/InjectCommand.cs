@@ -10,7 +10,7 @@ namespace Assets.Scripts.Commands
     {
         public override CommandNames Name => CommandNames.inject;
 
-        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> injectTypes;
+        private readonly Dictionary<CommandOptions, Action<GameData, string>> injectTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Commands
 
         public InjectCommand()
         {
-            injectTypes = new Dictionary<CommandOptions, Action<SceneManager, string>>
+            injectTypes = new Dictionary<CommandOptions, Action<GameData, string>>
             {
                 { CommandOptions.miner, InjectMiner },
                 { CommandOptions.bot, InjectBot },
@@ -31,19 +31,17 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(SceneManager game, CommandLine command)
+        public override void Execute(GameData game, CommandLine command)
         {
-            IConsoleText console = game.Console;
-
             if (!command.HasArgumentAndOption())
             {
-                console.AddMessage("The inject command receives 2 parameters: inject type (bot, miner, spammer, ransomware) and the ip or mac of the device", MessageType.Warning);
+                SendMessage("The inject command receives 2 parameters: inject type (bot, miner, spammer, ransomware) and the ip or mac of the device", MessageType.Warning);
                 return;
             }
 
             if (!injectTypes.ContainsKey(command.Option))
             {
-                console.AddMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
+                SendMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
                 return;
             }
 
@@ -52,25 +50,25 @@ namespace Assets.Scripts.Commands
 
         #region InjectCommands
 
-        private void InjectRansomware(SceneManager game, string identifier)
+        private void InjectRansomware(GameData game, string identifier)
         {
             //TODO: implement this;
-            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            SendMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectSpammer(SceneManager game, string identifier)
+        private void InjectSpammer(GameData game, string identifier)
         {
             //TODO: implement this;
-            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            SendMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectBot(SceneManager game, string identifier)
+        private void InjectBot(GameData game, string identifier)
         {
             //TODO: implement this;
-            game.Console.AddMessage("Not implemented yet", MessageType.Warning);
+            SendMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectMiner(SceneManager game, string identifier)
+        private void InjectMiner(GameData game, string identifier)
         {
             Device device = game.GetDeviceByIp(identifier);
             if (device == null)
@@ -79,14 +77,14 @@ namespace Assets.Scripts.Commands
 
                 if (device == null)
                 {
-                    game.Console.AddMessage($"The provided device {identifier} was not found.", MessageType.Error);
+                    SendMessage($"The provided device {identifier} was not found.", MessageType.Error);
                     return;
                 }
             }
 
             if (!device.CanBeInfected)
             {
-                game.Console.AddMessage($"The provided device {identifier} cannot be infected, probably the firewall is up.", MessageType.Error);
+                SendMessage($"The provided device {identifier} cannot be infected, probably the firewall is up.", MessageType.Error);
                 return;
             }
 

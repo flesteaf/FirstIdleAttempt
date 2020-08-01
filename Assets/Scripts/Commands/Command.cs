@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
+using static Assets.Scripts.HackerDelegates;
 
 namespace Assets.Scripts.Commands
 {
@@ -7,11 +9,12 @@ namespace Assets.Scripts.Commands
         //TODO: implement command help option and CanExecute
         public abstract CommandNames Name { get; }
         public abstract List<CommandOptions> Options { get; }
+        public event SendMessageEventHandler MessageNotification;
 
         //public abstract string Description { get; }
         protected const string HelpOption = "?";
 
-        public abstract void Execute(ISceneManager game, CommandLine command);
+        public abstract void Execute(GameData game, CommandLine command);
         public CommandOptions GetOptionFromCommand(CommandLine command)
         {
             if (command.Option == CommandOptions.None)
@@ -25,6 +28,11 @@ namespace Assets.Scripts.Commands
             }
 
             return command.Option;
+        }
+
+        protected void SendMessage(string message, MessageType type)
+        {
+            MessageNotification?.Invoke(message, type);
         }
     }
 }

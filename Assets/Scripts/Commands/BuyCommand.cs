@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<ISceneManager, string>> buyOptions;
+        private readonly Dictionary<CommandOptions, Action<GameData, string>> buyOptions;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -20,67 +20,65 @@ namespace Assets.Scripts.Commands
 
         public BuyCommand()
         {
-            buyOptions = new Dictionary<CommandOptions, Action<ISceneManager, string>>
+            buyOptions = new Dictionary<CommandOptions, Action<GameData, string>>
             {
                 { CommandOptions.software, BuySoftware },
                 { CommandOptions.component, BuyComponent }
             };
         }
 
-        public override void Execute(ISceneManager game, CommandLine command)
+        public override void Execute(GameData game, CommandLine command)
         {
-            IConsoleText console = game.Console;
-
             if (!command.LongArgument)
             {
-                console.AddMessage($"The buy command requires to specify something to buy and only one", MessageType.Warning);
+                SendMessage($"The buy command requires to specify something to buy and only one", MessageType.Warning);
                 return;
             }
 
             if (command.Option == CommandOptions.None)
             {
-                console.AddMessage($"The buy command requires to specify the type of things you want to buy", MessageType.Warning);
+                SendMessage($"The buy command requires to specify the type of things you want to buy", MessageType.Warning);
                 return;
             }
 
             if (!buyOptions.ContainsKey(command.Option))
             {
-                console.AddMessage($"The buy option is not available", MessageType.Warning);
+                SendMessage($"The buy option is not available", MessageType.Warning);
                 return;
             }
 
             buyOptions[command.Option](game, command.Argument);
         }
 
-        private void BuyComponent(ISceneManager game, string componentName)
+        private void BuyComponent(GameData game, string componentName)
         {
             StoreComponent component = game.Store.GetComponent(componentName);
 
             if (component == null)
             {
-                game.Console.AddMessage($"Component {componentName} not found", MessageType.Error);
+                SendMessage($"Component {componentName} not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuyComponent(component))
             {
-                game.Console.AddMessage("Not enough many!", MessageType.Error);
+                SendMessage("Not enough many!", MessageType.Error);
             }
         }
 
-        private void BuySoftware(ISceneManager game, string softwareName)
+        private void BuySoftware(GameData game, string softwareName)
         {
             Software software = game.Store.GetSoftware(softwareName);
 
             if (software == null)
             {
-                game.Console.AddMessage($"Software {softwareName} not found", MessageType.Error);
+                SendMessage($"Software {softwareName} not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuySoftware(software))
             {
-                game.Console.AddMessage("Not enough money!", MessageType.Error);
+                SendMessage("Not enough money!", MessageType.Error);
             }
         }
     }

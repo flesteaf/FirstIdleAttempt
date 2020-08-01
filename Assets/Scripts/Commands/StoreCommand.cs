@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StoreCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<SceneManager>> storeTypes;
+        private readonly Dictionary<CommandOptions, Action<GameData>> storeTypes;
         public override CommandNames Name => CommandNames.store;
         public override List<CommandOptions> Options
         {
@@ -20,16 +20,15 @@ namespace Assets.Scripts.Commands
 
         public StoreCommand()
         {
-            storeTypes = new Dictionary<CommandOptions, Action<SceneManager>>
+            storeTypes = new Dictionary<CommandOptions, Action<GameData>>
             {
                 { CommandOptions.software, PresentSoftware },
                 { CommandOptions.components, PresentComponents }
             };
         }
 
-        public override void Execute(SceneManager game, CommandLine command)
+        public override void Execute(GameData game, CommandLine command)
         {
-            IConsoleText console = game.Console;
             if (!command.HasArgument())
             {
                 PresentStoreOptions(game);
@@ -38,13 +37,13 @@ namespace Assets.Scripts.Commands
 
             if (!command.HasArgumentAndNoOption())
             {
-                console.AddMessage("Invalid command call, the store command takes 1 parameter at most. Check help command for store", MessageType.Error);
+                SendMessage("Invalid command call, the store command takes 1 parameter at most. Check help command for store", MessageType.Error);
                 return;
             }
 
             if (!storeTypes.ContainsKey(command.ArgumentAsOption()))
             {
-                console.AddMessage("Invalid parameter as input for store command, accepted are 'software' and 'components'", MessageType.Error);
+                SendMessage("Invalid parameter as input for store command, accepted are 'software' and 'components'", MessageType.Error);
                 return;
             }
 
@@ -53,103 +52,102 @@ namespace Assets.Scripts.Commands
 
         #region StoreOptions
 
-        private void PresentComponents(SceneManager game)
+        private void PresentComponents(GameData game)
         {
-            IConsoleText console = game.Console;
-            ShowCPUs(game, console);
-            ShowRAMs(game, console);
-            ShowGPUs(game, console);
-            ShowHards(game, console);
-            ShowMotherboards(game, console);
-            ShowSources(game, console);
-            ShowNetworkBoards(game, console);
+            ShowCPUs(game);
+            ShowRAMs(game);
+            ShowGPUs(game);
+            ShowHards(game);
+            ShowMotherboards(game);
+            ShowSources(game);
+            ShowNetworkBoards(game);
         }
 
-        private static void ShowCPUs(SceneManager game, IConsoleText console)
+        private void ShowCPUs(GameData game)
         {
             IEnumerable<CpuStore> cpus = game.GetStoreCpus();
 
-            console.AddMessage("CPUs:", MessageType.Info);
+            SendMessage("CPUs:", MessageType.Info);
             foreach (var item in cpus)
             {
                 Cpu cpu = item.CPU;
-                console.AddMessage($"{cpu.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+                SendMessage($"{cpu.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
-        private static void ShowRAMs(SceneManager game, IConsoleText console)
+        private void ShowRAMs(GameData game)
         {
             IEnumerable<RamStore> rams = game.GetStoreRams();
 
-            console.AddMessage("RAMs:", MessageType.Info);
+            SendMessage("RAMs:", MessageType.Info);
             foreach (var item in rams)
             {
                 Ram ram = item.RAM;
-                console.AddMessage($"{ram.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+                SendMessage($"{ram.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
-        private static void ShowGPUs(SceneManager game, IConsoleText console)
+        private void ShowGPUs(GameData game)
         {
             IEnumerable<GpuStore> gpus = game.GetStoreGpus();
 
-            console.AddMessage("GPUs:", MessageType.Info);
+            SendMessage("GPUs:", MessageType.Info);
             foreach (var item in gpus)
             {
                 Gpu gpu = item.GPU;
-                console.AddMessage($"{gpu.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+                SendMessage($"{gpu.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
-        private static void ShowHards(SceneManager game, IConsoleText console)
+        private void ShowHards(GameData game)
         {
             IEnumerable<HardStore> hards = game.GetStoreHards();
 
-            console.AddMessage("Hards:", MessageType.Info);
+            SendMessage("Hards:", MessageType.Info);
             foreach (var item in hards)
             {
                 Hard hard = item.Hard;
-                console.AddMessage($"{hard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+                SendMessage($"{hard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
-        private static void ShowMotherboards(SceneManager game, IConsoleText console)
+        private void ShowMotherboards(GameData game)
         {
             IEnumerable<MotherboardStore> motherboards = game.GetStoreMotherboards();
 
-            console.AddMessage("Motherboards:", MessageType.Info);
+            SendMessage("Motherboards:", MessageType.Info);
             foreach (var item in motherboards)
             {
                 Motherboard motherboard = item.Motherboard;
-                console.AddMessage($"{motherboard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+                SendMessage($"{motherboard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
-        private static void ShowSources(SceneManager game, IConsoleText console)
+        private void ShowSources(GameData game)
         {
             IEnumerable<SourceStore> sources = game.GetStoreSources();
 
-            console.AddMessage("Sources:", MessageType.Info);
+            SendMessage("Sources:", MessageType.Info);
             foreach (var item in sources)
             {
                 Source source = item.Source;
-                console.AddMessage($"{source.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+                SendMessage($"{source.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
-        private static void ShowNetworkBoards(SceneManager game, IConsoleText console)
+        private void ShowNetworkBoards(GameData game)
         {
             IEnumerable<NetworkBoardStore> networkBoards = game.GetStoreNetworkBoards();
 
-            console.AddMessage("NetworkBoards:", MessageType.Info);
+            SendMessage("NetworkBoards:", MessageType.Info);
             foreach (var item in networkBoards)
             {
                 NetworkBoard networkBoard = item.Network;
-                console.AddMessage($"{networkBoard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
+                SendMessage($"{networkBoard.Name,-15} - {item.Price,4} - {item.Description}", MessageType.Info);
             }
         }
 
-        private void PresentSoftware(SceneManager game)
+        private void PresentSoftware(GameData game)
         {
             IEnumerable<Software> softwares = game.GetAllSoftwares();
 
@@ -158,14 +156,14 @@ namespace Assets.Scripts.Commands
                 string price = item.WasBought ? "Bought" : item.Price.ToString();
                 string text = $"{item.Name} - ${price} - {item.Description}";
 
-                game.Console.AddMessage(text, MessageType.Info);
+                SendMessage(text, MessageType.Info);
             }
         }
 
-        private void PresentStoreOptions(SceneManager game)
+        private void PresentStoreOptions(GameData game)
         {
-            game.Console.AddMessage("store software - for buying new software", MessageType.Info);
-            game.Console.AddMessage("store components - for upgrading your computer", MessageType.Info);
+            SendMessage("store software - for buying new software", MessageType.Info);
+            SendMessage("store components - for upgrading your computer", MessageType.Info);
         }
 
         #endregion StoreOptions

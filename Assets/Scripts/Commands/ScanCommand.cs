@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     public class ScanCommand : Command
     {
         public override CommandNames Name => CommandNames.scan;
-        private readonly Dictionary<CommandOptions, Action<SceneManager, string>> scanTypes;
+        private readonly Dictionary<CommandOptions, Action<GameData, string>> scanTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Commands
 
         public ScanCommand()
         {
-            scanTypes = new Dictionary<CommandOptions, Action<SceneManager, string>>
+            scanTypes = new Dictionary<CommandOptions, Action<GameData, string>>
             {
                 { CommandOptions.network, ScanNetwork },
                 { CommandOptions.ip, ScanIp },
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(SceneManager game, CommandLine command)
+        public override void Execute(GameData game, CommandLine command)
         {
             if (!command.HasArgument())
             {
@@ -38,13 +38,13 @@ namespace Assets.Scripts.Commands
 
             if (!command.HasArgumentAndOption())
             {
-                game.Console.AddMessage("Invalid command call, the scan command takes 2 parameters at most. Check help command for scan", MessageType.Error);
+                SendMessage("Invalid command call, the scan command takes 2 parameters at most. Check help command for scan", MessageType.Error);
                 return;
             }
 
             if (!scanTypes.ContainsKey(command.Option))
             {
-                game.Console.AddMessage("Invalid parameter as input for scan command, accepted are 'network', 'ip' and 'mac'", MessageType.Error);
+                SendMessage("Invalid parameter as input for scan command, accepted are 'network', 'ip' and 'mac'", MessageType.Error);
                 return;
             }
 
@@ -53,59 +53,59 @@ namespace Assets.Scripts.Commands
 
         #region Scan commands
 
-        private void ScanIp(SceneManager game, string ip)
+        private void ScanIp(GameData game, string ip)
         {
             Device device = game.GetDeviceByIp(ip);
 
             if (device == null)
             {
-                game.Console.AddMessage($"The provided ip {ip} was not found, please provide a different [IP]", MessageType.Warning);
+                SendMessage($"The provided ip {ip} was not found, please provide a different [IP]", MessageType.Warning);
                 return;
             }
 
             ProvideDeviceDetails(game, device);
         }
 
-        private void ScanMac(SceneManager game, string mac)
+        private void ScanMac(GameData game, string mac)
         {
             Device device = game.GetDeviceByMac(mac);
 
             if (device == null)
             {
-                game.Console.AddMessage($"The provided mac {mac} was not found, please provide a different [MAC]", MessageType.Warning);
+                SendMessage($"The provided mac {mac} was not found, please provide a different [MAC]", MessageType.Warning);
                 return;
             }
 
-            ProvideDeviceDetails(game, device);
+            ProvideDeviceDetails(device);
         }
 
-        private void ProvideDeviceDetails(SceneManager game, Device device)
+        private void ProvideDeviceDetails(Device device)
         {
             string firewallStatus = device.FirewallIsActive ? "enabled" : "disabled";
-            game.Console.AddMessage($"Device has firewall {device.HasFirewall}", MessageType.Info);
-            game.Console.AddMessage($"Firewall status is {firewallStatus}", MessageType.Info);
+            SendMessage($"Device has firewall {device.HasFirewall}", MessageType.Info);
+            SendMessage($"Firewall status is {firewallStatus}", MessageType.Info);
         }
 
-        private void ScanNetwork(SceneManager game, string ssid)
+        private void ScanNetwork(GameData game, string ssid)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 
             if (network == null)
             {
-                game.Console.AddMessage($"The provided SSID {ssid} was not found, please provide a different [SSID]", MessageType.Warning);
+                SendMessage($"The provided SSID {ssid} was not found, please provide a different [SSID]", MessageType.Warning);
                 return;
             }
 
             if (network.Protection != ProtectionType.None)
             {
-                game.Console.AddMessage($"The network {ssid} is protected. Crack the protection then try again.", MessageType.Warning);
+                SendMessage($"The network {ssid} is protected. Crack the protection then try again.", MessageType.Warning);
                 return;
             }
 
-            game.Console.AddMessage($"Network {network} has the following devices:", MessageType.Info);
+            SendMessage($"Network {network} has the following devices:", MessageType.Info);
             foreach (Device item in network.Devices)
             {
-                game.Console.AddMessage($"- {item} | {item.Type}", MessageType.Info);
+                SendMessage($"- {item} | {item.Type}", MessageType.Info);
             }
         }
 

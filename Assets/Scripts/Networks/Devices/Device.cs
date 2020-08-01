@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Softwares;
-using static Assets.Scripts.HackingDelegates;
+using static Assets.Scripts.HackerDelegates;
 
 namespace Assets.Scripts.Networks.Devices
 {

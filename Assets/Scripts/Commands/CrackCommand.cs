@@ -7,7 +7,7 @@ namespace Assets.Scripts.Commands
 {
     internal class CrackCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<ISceneManager, string>> crackTypes;
+        private readonly Dictionary<CommandOptions, Action<GameData, string>> crackTypes;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
             get => new List<CommandOptions> { 
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commands
 
         public CrackCommand()
         {
-            crackTypes = new Dictionary<CommandOptions, Action<ISceneManager, string>>
+            crackTypes = new Dictionary<CommandOptions, Action<GameData, string>>
             {
                 { CommandOptions.wep, CrackWep },
                 { CommandOptions.wpa, CrackWpa },
@@ -26,19 +26,17 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(ISceneManager game, CommandLine command)
+        public override void Execute(GameData game, CommandLine command)
         {
-            IConsoleText console = game.Console;
-
             if (!command.HasArgumentAndOption())
             {
-                console.AddMessage("The crack command receives 2 parameters: crack type (wep, wpa, wpa2) and the SSID of the network", MessageType.Warning);
+                SendMessage("The crack command receives 2 parameters: crack type (wep, wpa, wpa2) and the SSID of the network", MessageType.Warning);
                 return;
             }
 
             if (!crackTypes.ContainsKey(command.Option))
             {
-                console.AddMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
+                SendMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
                 return;
             }
 
@@ -47,28 +45,28 @@ namespace Assets.Scripts.Commands
 
         #region CrackCommands
 
-        private void CrackWpa2(ISceneManager game, string ssid)
+        private void CrackWpa2(GameData game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA2);
         }
 
-        private void CrackWpa(ISceneManager game, string ssid)
+        private void CrackWpa(GameData game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA);
         }
 
-        private void CrackWep(ISceneManager game, string ssid)
+        private void CrackWep(GameData game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WEP);
         }
 
-        private static void CrackNetwork(ISceneManager game, string ssid, ProtectionType protection)
+        private void CrackNetwork(GameData game, string ssid, ProtectionType protection)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 
             if (network == null)
             {
-                game.Console.AddMessage($"Unrecognized network {ssid}", MessageType.Error);
+                SendMessage($"Unrecognized network {ssid}", MessageType.Error);
                 return;
             }
 
@@ -76,11 +74,11 @@ namespace Assets.Scripts.Commands
 
             if (network.WasHacked)
             {
-                game.Console.AddMessage($"Network {ssid} is now accessible", MessageType.Info);
+                SendMessage($"Network {ssid} is now accessible", MessageType.Info);
             }
             else
             {
-                game.Console.AddMessage($"Network {ssid} has protection {network.Protection}. Cannot crack it with {protection}.", MessageType.Error);
+                SendMessage($"Network {ssid} has protection {network.Protection}. Cannot crack it with {protection}.", MessageType.Error);
             }
         }
 
