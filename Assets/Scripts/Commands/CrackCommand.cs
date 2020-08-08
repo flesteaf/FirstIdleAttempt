@@ -7,7 +7,7 @@ namespace Assets.Scripts.Commands
 {
     internal class CrackCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameData, string>> crackTypes;
+        private readonly Dictionary<CommandOptions, Action<IGameData, string>> crackTypes;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
             get => new List<CommandOptions> { 
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commands
 
         public CrackCommand()
         {
-            crackTypes = new Dictionary<CommandOptions, Action<GameData, string>>
+            crackTypes = new Dictionary<CommandOptions, Action<IGameData, string>>
             {
                 { CommandOptions.wep, CrackWep },
                 { CommandOptions.wpa, CrackWpa },
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgumentAndOption())
             {
@@ -45,22 +45,22 @@ namespace Assets.Scripts.Commands
 
         #region CrackCommands
 
-        private void CrackWpa2(GameData game, string ssid)
+        private void CrackWpa2(IGameData game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA2);
         }
 
-        private void CrackWpa(GameData game, string ssid)
+        private void CrackWpa(IGameData game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WPA);
         }
 
-        private void CrackWep(GameData game, string ssid)
+        private void CrackWep(IGameData game, string ssid)
         {
             CrackNetwork(game, ssid, ProtectionType.WEP);
         }
 
-        private void CrackNetwork(GameData game, string ssid, ProtectionType protection)
+        private void CrackNetwork(IGameData game, string ssid, ProtectionType protection)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 

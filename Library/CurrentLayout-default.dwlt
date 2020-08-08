@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 392}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1857
     height: 1037
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -112,8 +112,8 @@ MonoBehaviour:
     y: 30
     width: 1857
     height: 987
-  m_MinSize: {x: 679, y: 492}
-  m_MaxSize: {x: 14002, y: 14042}
+  m_MinSize: {x: 504, y: 342}
+  m_MaxSize: {x: 12004, y: 8042}
   vertical: 0
   controlID: 55
 --- !u!114 &6
@@ -137,10 +137,10 @@ MonoBehaviour:
     y: 0
     width: 1280
     height: 987
-  m_MinSize: {x: 403, y: 492}
-  m_MaxSize: {x: 10001, y: 14042}
+  m_MinSize: {x: 403, y: 342}
+  m_MaxSize: {x: 8003, y: 8042}
   vertical: 1
-  controlID: 56
+  controlID: 118
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 57
+  controlID: 119
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,8 +185,8 @@ MonoBehaviour:
     y: 0
     width: 420
     height: 597
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -211,8 +211,8 @@ MonoBehaviour:
     y: 0
     width: 860
     height: 597
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 15}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -238,14 +238,14 @@ MonoBehaviour:
     y: 597
     width: 1280
     height: 390
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 16}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -265,14 +265,14 @@ MonoBehaviour:
     y: 0
     width: 577
     height: 987
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 18}
   - {fileID: 12}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -293,22 +293,22 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1083.2001
-    y: 73.6
-    width: 451
-    height: 750
+    x: 1343
+    y: 73
+    width: 576
+    height: 966
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
     ID: 139
     splitterInitialOffset: 0
     currentActiveSplitter: -1
-    realSizes: fe010000aa000000
+    realSizes: a0020000e0000000
     relativeSizes:
     - 0.75
     - 0.25
     minSizes: 2000000020000000
     maxSizes: 0000000000000000
-    lastTotalSize: 680
+    lastTotalSize: 896
     splitSize: 6
     xOffset: 0
   m_TestTypeToolbarIndex: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
       name: FirstIdleAttempt
       fullName: FirstIdleAttempt
       resultStatus: 1
-      duration: 0.6660922
+      duration: 0.4295686
       messages: 
       output: 
       stacktrace: 
@@ -331,12 +331,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1004
-      uniqueId: '[C:/Users/Florin/Documents/UNITY/FirstIdleAttempt/Library/ScriptAssemblies/UnitTests.dll][suite]'
+    - id: 1009
+      uniqueId: '[UnitTests.dll][suite]'
       name: UnitTests.dll
-      fullName: C:/Users/Florin/Documents/UNITY/FirstIdleAttempt/Library/ScriptAssemblies/UnitTests.dll
+      fullName: C:/Users/flest/Documents/GitHub/FirstIdleAttempt/Library/ScriptAssemblies/UnitTests.dll
       resultStatus: 1
-      duration: 0.6072099
+      duration: 0.3844905
       messages: 
       output: 
       stacktrace: 
@@ -352,7 +352,7 @@ MonoBehaviour:
       name: Assets
       fullName: Assets
       resultStatus: 1
-      duration: 0.5813434
+      duration: 0.3729017
       messages: 
       output: 
       stacktrace: 
@@ -363,44 +363,12 @@ MonoBehaviour:
       categories: []
       parentId: 1007
       parentUniqueId: '[C:/Users/Florin/Documents/UNITY/FirstIdleAttempt/Library/ScriptAssemblies/UnitTests.dll][suite]'
-    - id: 1009
-      uniqueId: UnitTests.dll/Assets/[Assets.Scripts][suite]
+    - id: 1011
+      uniqueId: UnitTests.dll/Assets/[Scripts][suite]
       name: Scripts
       fullName: Assets.Scripts
       resultStatus: 1
-      duration: 0.5665699
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1008
-      parentUniqueId: UnitTests.dll/[Assets][suite]
-    - id: 1010
-      uniqueId: UnitTests.dll/Assets/Scripts/[Assets.Scripts.UnitTests][suite]
-      name: UnitTests
-      fullName: Assets.Scripts.UnitTests
-      resultStatus: 1
-      duration: 0.5542965
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1009
-      parentUniqueId: UnitTests.dll/Assets/[Assets.Scripts][suite]
-    - id: 1011
-      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/[Assets.Scripts.UnitTests.Commands][suite]
-      name: Commands
-      fullName: Assets.Scripts.UnitTests.Commands
-      resultStatus: 1
-      duration: 0.5429586
+      duration: 0.3627436
       messages: 
       output: 
       stacktrace: 
@@ -410,13 +378,45 @@ MonoBehaviour:
       isSuite: 1
       categories: []
       parentId: 1010
-      parentUniqueId: UnitTests.dll/Assets/Scripts/[Assets.Scripts.UnitTests][suite]
+      parentUniqueId: UnitTests.dll/[Assets][suite]
+    - id: 1012
+      uniqueId: UnitTests.dll/Assets/Scripts/[UnitTests][suite]
+      name: UnitTests
+      fullName: Assets.Scripts.UnitTests
+      resultStatus: 1
+      duration: 0.3526514
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1011
+      parentUniqueId: UnitTests.dll/Assets/[Scripts][suite]
+    - id: 1013
+      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/[UnitTests][Assets.Scripts.UnitTests.Commands][suite]
+      name: Commands
+      fullName: Assets.Scripts.UnitTests.Commands
+      resultStatus: 1
+      duration: 0.3445334
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: UnitTests.dll/Assets/Scripts/[UnitTests][suite]
     - id: 1001
       uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.BuyTests][suite]
       name: BuyTests
       fullName: Assets.Scripts.UnitTests.Commands.BuyTests
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0443256
       messages: 
       output: 
       stacktrace: 
@@ -431,8 +431,8 @@ MonoBehaviour:
       uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/BuyTests/[UnitTests][Assets.Scripts.UnitTests.Commands.BuyTests.BuySoftware_EnablesTheProperOptionOfTheExistingCommand]
       name: BuySoftware_EnablesTheProperOptionOfTheExistingCommand
       fullName: Assets.Scripts.UnitTests.Commands.BuyTests.BuySoftware_EnablesTheProperOptionOfTheExistingCommand
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0101261
       messages: 
       output: 
       stacktrace: 
@@ -449,7 +449,7 @@ MonoBehaviour:
       name: ScanTests
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests
       resultStatus: 1
-      duration: 0.5149662
+      duration: 0.3288007
       messages: 
       output: 
       stacktrace: 
@@ -465,19 +465,9 @@ MonoBehaviour:
       name: ScanNetworkPresentsAllDevicesInThatNetwork
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanNetworkPresentsAllDevicesInThatNetwork
       resultStatus: 1
-      duration: 0.4417197
+      duration: 0.2482303
       messages: 
-      output: 'You are trying to create a MonoBehaviour using the ''new'' keyword. 
-        This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-        You are trying to create a MonoBehaviour using the ''new''
-        keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -492,19 +482,9 @@ MonoBehaviour:
       name: ScanNetworkThatHasProtectionShowsAnError
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanNetworkThatHasProtectionShowsAnError
       resultStatus: 1
-      duration: 0.0058188
+      duration: 0.0023188
       messages: 
-      output: 'You are trying to create a MonoBehaviour using the ''new'' keyword. 
-        This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-        You are trying to create a MonoBehaviour using the ''new''
-        keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -519,46 +499,9 @@ MonoBehaviour:
       name: ScanNetworkWithWrongNameShowsAnError
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanNetworkWithWrongNameShowsAnError
       resultStatus: 1
-      duration: 0.0043607
+      duration: 0.0008164
       messages: 
-      output: 'You are trying to create a MonoBehaviour using the ''new'' keyword. 
-        This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-        You are trying to create a MonoBehaviour using the ''new''
-        keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
-    - id: 1002
-      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanWithoutParametersGeneratesNewNetworks]
-      name: ScanWithoutParametersGeneratesNewNetworks
-      fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanWithoutParametersGeneratesNewNetworks
-      resultStatus: 1
-      duration: 0.0048428
-      messages: 
-      output: 'You are trying to create a MonoBehaviour using the ''new'' keyword. 
-        This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-        You are trying to create a MonoBehaviour using the ''new''
-        keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -573,19 +516,9 @@ MonoBehaviour:
       name: ScanWithoutParametersGeneratesNewNetworksAndRemovesTheUnhackedOnes
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanWithoutParametersGeneratesNewNetworksAndRemovesTheUnhackedOnes
       resultStatus: 1
-      duration: 0.0118993
+      duration: 0.0122546
       messages: 
-      output: 'You are trying to create a MonoBehaviour using the ''new'' keyword. 
-        This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-        You are trying to create a MonoBehaviour using the ''new''
-        keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent().
-        Alternatively, your script can inherit from ScriptableObject or no base class
-        at all
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -595,13 +528,30 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
-    m_ResultText: ScanTests (0.515s)
+    - id: 1004
+      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanWithoutParametersTriggersARefreshOfNetworks]
+      name: ScanWithoutParametersTriggersARefreshOfNetworks
+      fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanWithoutParametersTriggersARefreshOfNetworks
+      resultStatus: 1
+      duration: 0.0235647
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
+    m_ResultText: ScanTests (0.329s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: b3943740
       m_LastClickedID: 1077384371
-      m_ExpandedIDs: 49743b8746ea87957f6743b251799fc1141e1fcc9d6465dccddb61e5b39437409f56da69ffffff7f
+      m_ExpandedIDs: 49743b8746ea87957f6743b251799fc1141e1fcc9d6465dca0c01ee3cddb61e5e09c14e6ae617602b39437401f4b66649f56da69ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -801,7 +751,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 4ee7ffff
+      m_ExpandedIDs: c0f4ffffd2f4ffff62f5ffff72f5ffff84f5fffff4f5ffff04f6ffff16f6ffffa6f6fffffef6ffff10f7ffffa0f7fffff8f7ffff0af8ffff9af8fffff2f8ffff04f9ffff74f9ffff84f9ffff96f9ffff06faffff5efaffff70faffffe4faffff62fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -990,9 +940,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 23}
-    m_SelectedIDs: 02430000
-    m_LastClickedID: 17154
-    m_ExpandedIDs: 0000000002430000044300000643000000ca9a3b
+    m_SelectedIDs: 84350000
+    m_LastClickedID: 13700
+    m_ExpandedIDs: 00000000843500008635000088350000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1020,7 +970,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000024300000443000006430000
+    m_ExpandedIDs: 00000000843500008635000088350000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -2,14 +2,13 @@
 using Assets.Scripts.Store;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 
 namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameData, string>> buyOptions;
+        private readonly Dictionary<CommandOptions, Action<IGameData, string>> buyOptions;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -20,14 +19,14 @@ namespace Assets.Scripts.Commands
 
         public BuyCommand()
         {
-            buyOptions = new Dictionary<CommandOptions, Action<GameData, string>>
+            buyOptions = new Dictionary<CommandOptions, Action<IGameData, string>>
             {
                 { CommandOptions.software, BuySoftware },
                 { CommandOptions.component, BuyComponent }
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.LongArgument)
             {
@@ -50,7 +49,7 @@ namespace Assets.Scripts.Commands
             buyOptions[command.Option](game, command.Argument);
         }
 
-        private void BuyComponent(GameData game, string componentName)
+        private void BuyComponent(IGameData game, string componentName)
         {
             StoreComponent component = game.Store.GetComponent(componentName);
 
@@ -66,7 +65,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void BuySoftware(GameData game, string softwareName)
+        private void BuySoftware(IGameData game, string softwareName)
         {
             Software software = game.Store.GetSoftware(softwareName);
 

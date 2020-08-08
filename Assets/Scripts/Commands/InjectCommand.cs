@@ -10,7 +10,7 @@ namespace Assets.Scripts.Commands
     {
         public override CommandNames Name => CommandNames.inject;
 
-        private readonly Dictionary<CommandOptions, Action<GameData, string>> injectTypes;
+        private readonly Dictionary<CommandOptions, Action<IGameData, string>> injectTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Commands
 
         public InjectCommand()
         {
-            injectTypes = new Dictionary<CommandOptions, Action<GameData, string>>
+            injectTypes = new Dictionary<CommandOptions, Action<IGameData, string>>
             {
                 { CommandOptions.miner, InjectMiner },
                 { CommandOptions.bot, InjectBot },
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgumentAndOption())
             {
@@ -50,25 +50,25 @@ namespace Assets.Scripts.Commands
 
         #region InjectCommands
 
-        private void InjectRansomware(GameData game, string identifier)
+        private void InjectRansomware(IGameData game, string identifier)
         {
             //TODO: implement this;
             SendMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectSpammer(GameData game, string identifier)
+        private void InjectSpammer(IGameData game, string identifier)
         {
             //TODO: implement this;
             SendMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectBot(GameData game, string identifier)
+        private void InjectBot(IGameData game, string identifier)
         {
             //TODO: implement this;
             SendMessage("Not implemented yet", MessageType.Warning);
         }
 
-        private void InjectMiner(GameData game, string identifier)
+        private void InjectMiner(IGameData game, string identifier)
         {
             Device device = game.GetDeviceByIp(identifier);
             if (device == null)

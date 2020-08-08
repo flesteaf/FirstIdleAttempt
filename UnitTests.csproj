@@ -57,7 +57,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\UnitTests\Commands\BuyTests.cs" />
      <Compile Include="Assets\Scripts\UnitTests\Commands\ScanTests.cs" />
-     <Compile Include="Assets\Scripts\UnitTests\SceneMocking.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

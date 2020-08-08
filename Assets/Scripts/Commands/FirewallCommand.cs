@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     internal class FirewallCommand : Command
     {
         public override CommandNames Name => CommandNames.firewall;
-        private readonly Dictionary<CommandOptions, Action<GameData, string>> firewallOptions;
+        private readonly Dictionary<CommandOptions, Action<IGameData, string>> firewallOptions;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,14 +19,14 @@ namespace Assets.Scripts.Commands
 
         public FirewallCommand()
         {
-            firewallOptions = new Dictionary<CommandOptions, Action<GameData, string>>
+            firewallOptions = new Dictionary<CommandOptions, Action<IGameData, string>>
             {
                 { CommandOptions.enable, EnableFirewall },
                 { CommandOptions.disable, DisableFirewall }
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgumentAndOption())
             {
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Commands
             firewallOptions[command.Option](game, command.Argument);
         }
 
-        private void DisableFirewall(GameData manager, string identifier)
+        private void DisableFirewall(IGameData manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
             if (device == null) { 
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void EnableFirewall(GameData manager, string identifier)
+        private void EnableFirewall(IGameData manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
             if (device == null)
@@ -70,7 +70,7 @@ namespace Assets.Scripts.Commands
             }
         }
         
-        private Device GetDevice(GameData manager, string identifier)
+        private Device GetDevice(IGameData manager, string identifier)
         {
             Device device = manager.GetDeviceByIp(identifier);
             if (device == null)

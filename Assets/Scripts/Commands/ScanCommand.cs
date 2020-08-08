@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     public class ScanCommand : Command
     {
         public override CommandNames Name => CommandNames.scan;
-        private readonly Dictionary<CommandOptions, Action<GameData, string>> scanTypes;
+        private readonly Dictionary<CommandOptions, Action<IGameData, string>> scanTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Commands
 
         public ScanCommand()
         {
-            scanTypes = new Dictionary<CommandOptions, Action<GameData, string>>
+            scanTypes = new Dictionary<CommandOptions, Action<IGameData, string>>
             {
                 { CommandOptions.network, ScanNetwork },
                 { CommandOptions.ip, ScanIp },
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgument())
             {
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Commands
 
         #region Scan commands
 
-        private void ScanIp(GameData game, string ip)
+        private void ScanIp(IGameData game, string ip)
         {
             Device device = game.GetDeviceByIp(ip);
 
@@ -63,10 +63,10 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
-            ProvideDeviceDetails(game, device);
+            ProvideDeviceDetails(device);
         }
 
-        private void ScanMac(GameData game, string mac)
+        private void ScanMac(IGameData game, string mac)
         {
             Device device = game.GetDeviceByMac(mac);
 
@@ -86,7 +86,7 @@ namespace Assets.Scripts.Commands
             SendMessage($"Firewall status is {firewallStatus}", MessageType.Info);
         }
 
-        private void ScanNetwork(GameData game, string ssid)
+        private void ScanNetwork(IGameData game, string ssid)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 

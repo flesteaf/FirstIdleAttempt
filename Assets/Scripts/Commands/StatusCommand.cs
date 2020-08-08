@@ -6,7 +6,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StatusCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameData>> statusTypes;
+        private readonly Dictionary<CommandOptions, Action<IGameData>> statusTypes;
 
         public override CommandNames Name => CommandNames.status;
         public override List<CommandOptions> Options
@@ -18,14 +18,14 @@ namespace Assets.Scripts.Commands
 
         public StatusCommand()
         {
-            statusTypes = new Dictionary<CommandOptions, Action<GameData>>
+            statusTypes = new Dictionary<CommandOptions, Action<IGameData>>
             {
                 { CommandOptions.computer, GetComputerStatus },
                 { CommandOptions.money, GetMoneyIncomeStatus }
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgumentAndNoOption())
             {
@@ -51,13 +51,13 @@ namespace Assets.Scripts.Commands
 
         #region StatusCommands
 
-        private void GetMoneyIncomeStatus(GameData game)
+        private void GetMoneyIncomeStatus(IGameData game)
         {
             //TODO: implement it
             return;
         }
 
-        private void GetComputerStatus(GameData game)
+        private void GetComputerStatus(IGameData game)
         {
             string computerDetails = game.Computer.ToString();
             foreach (var item in computerDetails.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))

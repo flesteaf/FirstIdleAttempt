@@ -14,7 +14,7 @@ namespace Assets.Scripts.Commands
         //public abstract string Description { get; }
         protected const string HelpOption = "?";
 
-        public abstract void Execute(GameData game, CommandLine command);
+        public abstract void Execute(IGameData game, CommandLine command);
         public CommandOptions GetOptionFromCommand(CommandLine command)
         {
             if (command.Option == CommandOptions.None)

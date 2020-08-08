@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     internal class ShowCommand : Command
     {
         public override CommandNames Name => CommandNames.show;
-        private readonly Dictionary<CommandOptions, Action<GameData>> showTypes;
+        private readonly Dictionary<CommandOptions, Action<IGameData>> showTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,14 +19,14 @@ namespace Assets.Scripts.Commands
 
         public ShowCommand()
         {
-            showTypes = new Dictionary<CommandOptions, Action<GameData>>
+            showTypes = new Dictionary<CommandOptions, Action<IGameData>>
             {
                 { CommandOptions.networks,  ShowNetworks },
                 { CommandOptions.ips, ShowDevices }
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgumentAndNoOption())
             {
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Commands
 
         #region ShowCommands
 
-        private void ShowDevices(GameData game)
+        private void ShowDevices(IGameData game)
         {
             IEnumerable<Device> devices = game.GetAllHackedDevices();
 
@@ -62,9 +62,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void ShowNetworks(GameData game)
+        private void ShowNetworks(IGameData game)
         {
-            IEnumerable<HackableNetwork> networks = game.GetAllFoundNetworks();
+            IEnumerable<HackableNetwork> networks = game.FoundNetworks;
 
             foreach (var item in networks)
             {

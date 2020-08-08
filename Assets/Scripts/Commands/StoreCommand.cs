@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StoreCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<GameData>> storeTypes;
+        private readonly Dictionary<CommandOptions, Action<IGameData>> storeTypes;
         public override CommandNames Name => CommandNames.store;
         public override List<CommandOptions> Options
         {
@@ -20,14 +20,14 @@ namespace Assets.Scripts.Commands
 
         public StoreCommand()
         {
-            storeTypes = new Dictionary<CommandOptions, Action<GameData>>
+            storeTypes = new Dictionary<CommandOptions, Action<IGameData>>
             {
                 { CommandOptions.software, PresentSoftware },
                 { CommandOptions.components, PresentComponents }
             };
         }
 
-        public override void Execute(GameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgument())
             {
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Commands
 
         #region StoreOptions
 
-        private void PresentComponents(GameData game)
+        private void PresentComponents(IGameData game)
         {
             ShowCPUs(game);
             ShowRAMs(game);
@@ -63,9 +63,9 @@ namespace Assets.Scripts.Commands
             ShowNetworkBoards(game);
         }
 
-        private void ShowCPUs(GameData game)
+        private void ShowCPUs(IGameData game)
         {
-            IEnumerable<CpuStore> cpus = game.GetStoreCpus();
+            IEnumerable<CpuStore> cpus = game.Store.CPUs;
 
             SendMessage("CPUs:", MessageType.Info);
             foreach (var item in cpus)
@@ -75,9 +75,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void ShowRAMs(GameData game)
+        private void ShowRAMs(IGameData game)
         {
-            IEnumerable<RamStore> rams = game.GetStoreRams();
+            IEnumerable<RamStore> rams = game.Store.RAMs;
 
             SendMessage("RAMs:", MessageType.Info);
             foreach (var item in rams)
@@ -87,9 +87,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void ShowGPUs(GameData game)
+        private void ShowGPUs(IGameData game)
         {
-            IEnumerable<GpuStore> gpus = game.GetStoreGpus();
+            IEnumerable<GpuStore> gpus = game.Store.GPUs;
 
             SendMessage("GPUs:", MessageType.Info);
             foreach (var item in gpus)
@@ -99,9 +99,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void ShowHards(GameData game)
+        private void ShowHards(IGameData game)
         {
-            IEnumerable<HardStore> hards = game.GetStoreHards();
+            IEnumerable<HardStore> hards = game.Store.Hards;
 
             SendMessage("Hards:", MessageType.Info);
             foreach (var item in hards)
@@ -111,9 +111,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void ShowMotherboards(GameData game)
+        private void ShowMotherboards(IGameData game)
         {
-            IEnumerable<MotherboardStore> motherboards = game.GetStoreMotherboards();
+            IEnumerable<MotherboardStore> motherboards = game.Store.Motherboards;
 
             SendMessage("Motherboards:", MessageType.Info);
             foreach (var item in motherboards)
@@ -123,9 +123,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void ShowSources(GameData game)
+        private void ShowSources(IGameData game)
         {
-            IEnumerable<SourceStore> sources = game.GetStoreSources();
+            IEnumerable<SourceStore> sources = game.Store.Sources;
 
             SendMessage("Sources:", MessageType.Info);
             foreach (var item in sources)
@@ -135,9 +135,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void ShowNetworkBoards(GameData game)
+        private void ShowNetworkBoards(IGameData game)
         {
-            IEnumerable<NetworkBoardStore> networkBoards = game.GetStoreNetworkBoards();
+            IEnumerable<NetworkBoardStore> networkBoards = game.Store.Networks;
 
             SendMessage("NetworkBoards:", MessageType.Info);
             foreach (var item in networkBoards)
@@ -147,9 +147,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void PresentSoftware(GameData game)
+        private void PresentSoftware(IGameData game)
         {
-            IEnumerable<Software> softwares = game.GetAllSoftwares();
+            IEnumerable<Software> softwares = game.Store.Softwares;
 
             foreach (var item in softwares)
             {
@@ -160,7 +160,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void PresentStoreOptions(GameData game)
+        private void PresentStoreOptions(IGameData game)
         {
             SendMessage("store software - for buying new software", MessageType.Info);
             SendMessage("store components - for upgrading your computer", MessageType.Info);
