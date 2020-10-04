@@ -21,6 +21,7 @@ namespace Assets.Scripts.Commands
             StoreCommand store = new StoreCommand();
             BuyCommand buy = new BuyCommand();
             InvalidCommand invalid = new InvalidCommand();
+            ClearCommand clear = new ClearCommand();
 
             commands = new Dictionary<CommandNames, Command>
             {
@@ -34,7 +35,8 @@ namespace Assets.Scripts.Commands
                 { show.Name, show },
                 { store.Name, store },
                 { buy.Name, buy },
-                { invalid.Name, invalid }
+                { invalid.Name, invalid },
+                { clear.Name, clear }
             };
         }
 

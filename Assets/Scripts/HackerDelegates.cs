@@ -5,10 +5,11 @@ using UnityEditor;
 
 namespace Assets.Scripts
 {
-    public class HackerDelegates
+    public static class HackerDelegates
     {
         public delegate void NetworkHackedEventHandler(HackableNetwork hackedNetwork);
         public delegate void DeviceInfectedEventHandler(Device infectedDevice, InfectionType infectionType);
         public delegate void SendMessageEventHandler(string message, MessageType type);
+        public delegate void ClearConsoleEventHandler();
     }
 }

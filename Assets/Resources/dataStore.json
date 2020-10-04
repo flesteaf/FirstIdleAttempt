@@ -1,0 +1,193 @@
+{
+  "Softwares": [
+    {
+      "Description": "Software needed to crack WEP protection",
+      "Name": "Crack WEP",
+      "Price": 12.5,
+      "Provides":
+      [
+        {"CommandName": "crack", "Provide": "wep"}
+      ]
+    },
+    {
+      "Description": "Software needed to crack WPA protection",
+      "Name": "Crack WPA",
+      "Price": 15.5,
+      "Provides":
+      [
+        {"CommandName": "crack", "Provide": "wpa"}
+      ]
+    },
+    {
+      "Description": "Software needed to crack WPA2 protection",
+      "Name": "Crack WPA2",
+      "Price": 18.5,
+      "Provides":
+      [
+        {"CommandName": "crack", "Provide": "wpa2"}
+      ]
+    },
+    {
+      "Description": "Handle firewalls",
+      "Name": "Firewall",
+      "Price": 25.5,
+      "Provides":
+      [
+        {"CommandName": "firewall", "Provide": "enable"},
+        {"CommandName": "firewall", "Provide": "disable"}
+      ]
+    },
+    {
+      "Description": "Offers the possibility to inject bots",
+      "Name": "Bots",
+      "Price": 55.5,
+      "Provides":
+      [
+        {"CommandName": "inject", "Provide": "bot"}
+      ]
+    },
+    {
+      "Description": "Offers the possibility to inject spammers",
+      "Name": "Spammers",
+      "Price": 305.5,
+      "Provides":
+      [
+        {"CommandName": "inject", "Provide": "spammer"}
+      ]
+    },
+    {
+      "Description": "Offers the possibility to inject ransomware software",
+      "Name": "Ransomware",
+      "Price": 900,
+      "Provides": [
+        {
+          "CommandName": "inject",
+          "Provide": "ransomware"
+        },
+        {
+          "CommandName": "setRansomware",
+          "Provide": "None"
+        }
+      ]
+    },
+    {
+      "Description": "Press up for the last command to be prepared",
+      "Name": "Last command",
+      "Price": 50,
+      "Provides": [
+        {
+          "CommandName": "autocomplete",
+          "Provide": "Last"
+        }
+      ]
+    },
+    {
+      "Description": "Quickly fill in data based on the last scanned item (network or ip), by specifying NET, IP or MAC followed by its id. e.g. NET1, IP4 or MAC2",
+      "Name": "Identify faster",
+      "Price": 150,
+      "Provides": [
+        {
+          "CommandName": "Extract",
+          "Provide": "network"
+        },
+        {
+          "CommandName": "Extract",
+          "Provide": "ip"
+        },
+        {
+          "CommandName": "Extract",
+          "Provide":  "mac"
+        }
+      ]
+    }
+  ],
+  "CPUs": [
+    {
+        "CPU": {
+                "Name": "200MHz CPU",
+                "LoadUsage": 12,
+                "SpeedType": "MHz",
+                "Speed": 200.5
+            },
+        "Price": 15.5,
+        "Description": "The very first CPU you will have"
+    }
+  ],
+  "GPUs": [
+    {
+        "GPU": {
+                "Name": "Atari GPU",
+                "LoadUsage": 15,
+                "RamType": "DDR1",
+                "Size": 1.2,
+                "SizeType": "KB"
+            },        
+        "Price": 30,
+        "Description": "A basic GPU from the beginning of time"
+    }
+  ],
+  "Hards": [
+    {
+        "Hard": {
+                "Name": "Hard 1GB",
+                "LoadUsage": 1,
+                "HardType": "HDD",
+                "Size": 1.1,
+                "SizeType": "GB"
+            },        
+        "Price": 10,
+        "Description": "A small harddisk for basic storage"
+    }
+  ],
+  "Networks": [
+    {
+        "Network": {
+                "Name": "Dial-up Network",
+                "LoadUsage": 1,
+                "Speed": 12.5,
+                "SizeType": "KB"
+            },
+        "Price": 15,
+        "Description": "Dial-up network, you can't afford more in the beginning"
+    }
+  ],
+  "RAMs": [
+    {
+        "RAM": {
+                "Name": "Owa 10MB",
+                "LoadUsage": 1,
+                "RamType": "DDR1",
+                "Size": 10,
+                "SizeType": "MB"
+            },
+        "Price": 5,
+        "Description": "A slow RAM with little memory"
+    }
+  ],
+  "Sources": [
+    {
+        "Source": {
+                "Name": "Source 100W",
+                "LoadUsage": 0,
+                "ProvidedLoad": 100
+            },
+        "Price": 5,
+        "Description": "Good for the basic computers"
+    }
+  ],
+  "Motherboards": [
+    {
+        "Motherboard": {
+                "Name": "Minimum motherboard",
+                "LoadUsage": 1,
+                "AllowedCpus": 1,
+                "AllowedHards": 1,
+                "AllowedRams": 1,
+                "AllowedGpus": 0,
+                "AllowedNetworks": 1
+            },
+        "Price": 25,
+        "Description": "First motherboard to buy, small size"
+    }
+  ]
+}

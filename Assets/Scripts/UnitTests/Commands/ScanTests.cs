@@ -67,6 +67,7 @@ namespace Assets.Scripts.UnitTests.Commands
             console = new List<Tuple<string, MessageType>>();
             actualData.RefreshNetworks();
             HackableNetwork network = actualData.FoundNetworks.First();
+            network.HackNetwork(network.Protection);
             command.MessageNotification += ConsoleGathering;
             command.Execute(actualData, new CommandLine($"scan network {network.SSID}"));
 
@@ -108,6 +109,58 @@ namespace Assets.Scripts.UnitTests.Commands
             string consoleText = string.Join("", console.Select(x => x.Item1));
 
             Assert.IsTrue(consoleText.Contains("is protected"));
+        }
+
+        [Test]
+        public void ScanIpThatIsNotPresentShowsAnError()
+        {
+            console = new List<Tuple<string, MessageType>>();
+            command.MessageNotification += ConsoleGathering;
+            command.Execute(actualData, new CommandLine("scan ip 123.123.123.123"));
+
+            string consoleText = string.Join("", console.Select(x => x.Item1));
+
+            Assert.IsTrue(consoleText.Contains("not found"));
+        }
+
+        [Test]
+        public void ScanIpPresentsProperDeviceDetails()
+        {
+            Phone phone = new Phone(new DeviceIdentification("123.123.123.123", "12:34:56:78:90"));
+            actualData.AddNetwork(new HackableNetwork("test", new List<Device> { phone }, ProtectionType.None, NetworkType.Home));
+            console = new List<Tuple<string, MessageType>>();
+            command.MessageNotification += ConsoleGathering;
+            command.Execute(actualData, new CommandLine($"scan ip {phone.IP}"));
+
+            string consoleText = string.Join("", console.Select(x => x.Item1));
+
+            Assert.IsTrue(consoleText.Contains($"firewall {phone.HasFirewall}"));
+        }
+
+        [Test]
+        public void ScanMacThatIsNotPresentShowsAnError()
+        {
+            console = new List<Tuple<string, MessageType>>();
+            command.MessageNotification += ConsoleGathering;
+            command.Execute(actualData, new CommandLine("scan mac 123.123.123.123"));
+
+            string consoleText = string.Join("", console.Select(x => x.Item1));
+
+            Assert.IsTrue(consoleText.Contains("not found"));
+        }
+
+        [Test]
+        public void ScanMacPresentsProperDeviceDetails()
+        {
+            Phone phone = new Phone(new DeviceIdentification("123.123.123.123", "12:34:56:78:90"));
+            actualData.AddNetwork(new HackableNetwork("test", new List<Device> { phone }, ProtectionType.None, NetworkType.Home));
+            console = new List<Tuple<string, MessageType>>();
+            command.MessageNotification += ConsoleGathering;
+            command.Execute(actualData, new CommandLine($"scan mac {phone.MAC}"));
+
+            string consoleText = string.Join("", console.Select(x => x.Item1));
+
+            Assert.IsTrue(consoleText.Contains($"firewall {phone.HasFirewall}"));
         }
 
         private void ConsoleGathering(string message, MessageType type)

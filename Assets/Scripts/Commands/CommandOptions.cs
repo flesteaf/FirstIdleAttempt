@@ -5,23 +5,19 @@
         Invalid,
         None,
 
-        #region ScanOptions
-
+        #region Scan&ExtractOptions
         network,
         ip,
         mac,
-
-        #endregion ScanOptions
+        #endregion Scan&ExtractOptions
 
         #region CrackOptions
-
         wep,
         wpa,
         wpa2,
         #endregion CrackOptions
 
         #region InjectOptions
-
         miner,
         bot,
         spammer,
@@ -29,31 +25,28 @@
         #endregion InjectOptions
 
         #region FirewallOptions
-
         disable,
         enable,
         #endregion FirewallOptions
 
         #region ShowOptions
-
         networks,
         ips,
-
         #endregion ShowOptions
 
         #region StatusOptions
-
         computer,
         money,
-
         #endregion StatusOptions
 
         #region Store&BuyOptions
-
         software,
         components,
-        component
+        component,
         #endregion Store&BuyOptions
 
+        #region Autocomplete
+        Last
+        #endregion
     }
 }

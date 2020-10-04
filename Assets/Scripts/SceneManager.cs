@@ -2,6 +2,7 @@
 using Assets.Scripts.Commands;
 using Assets.Scripts.Store;
 using Newtonsoft.Json;
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ public class SceneManager : MonoBehaviour
         GameStore store = JsonConvert.DeserializeObject<GameStore>(dataAsset.text);
         Data = new GameData(store);
         Data.MessageSender += SendToConsole;
+        Data.ClearHandler += ClearConsole;
 
         Time.fixedDeltaTime = oneSecond;
     }
@@ -63,6 +65,11 @@ public class SceneManager : MonoBehaviour
         Console.AddMessage(message, type);
     }
 
+    private void ClearConsole()
+    {
+        Console.ClearConsole();
+    }
+
     private void FixedUpdate()
     {
         Data.AddProduction();
@@ -72,5 +79,6 @@ public class SceneManager : MonoBehaviour
     ~SceneManager()
     {
         Data.MessageSender -= SendToConsole;
+        Data.ClearHandler -= ClearConsole;
     }
 }

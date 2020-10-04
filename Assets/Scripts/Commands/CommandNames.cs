@@ -12,6 +12,9 @@
         setRansomware,
         show,
         status,
-        store    
+        store,
+        clear,
+        autocomplete,
+        extract
     }
 }

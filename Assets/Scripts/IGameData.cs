@@ -14,6 +14,9 @@ namespace Assets.Scripts
         List<CommandOptions> AvailableSoftwareOptions { get; }
         Computer Computer { get; }
         float CurrentProduction { get; }
+
+        void ClearConsole();
+
         List<HackableNetwork> FoundNetworks { get; }
         float MoneyAmmount { get; }
         IGameStore Store { get; }

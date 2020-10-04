@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1857
     height: 1037
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 392}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 504, y: 342}
   m_MaxSize: {x: 12004, y: 8042}
   vertical: 0
-  controlID: 55
+  controlID: 15
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 342}
   m_MaxSize: {x: 8003, y: 8042}
   vertical: 1
-  controlID: 118
+  controlID: 16
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 119
+  controlID: 17
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,8 +185,8 @@ MonoBehaviour:
     y: 0
     width: 420
     height: 597
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -211,8 +211,8 @@ MonoBehaviour:
     y: 0
     width: 860
     height: 597
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 15}
@@ -238,8 +238,8 @@ MonoBehaviour:
     y: 597
     width: 1280
     height: 390
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 16}
@@ -265,8 +265,8 @@ MonoBehaviour:
     y: 0
     width: 577
     height: 987
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 18}
@@ -299,7 +299,7 @@ MonoBehaviour:
     height: 966
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 139
+    ID: 151
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes: a0020000e0000000
@@ -460,6 +460,74 @@ MonoBehaviour:
       categories: []
       parentId: 1011
       parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/[Assets.Scripts.UnitTests.Commands][suite]
+    - id: 1010
+      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpPresentsProperDeviceDetails]
+      name: ScanIpPresentsProperDeviceDetails
+      fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpPresentsProperDeviceDetails
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
+    - id: 1009
+      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpThatIsNotPresentShowsAnError]
+      name: ScanIpThatIsNotPresentShowsAnError
+      fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpThatIsNotPresentShowsAnError
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
+    - id: 1012
+      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacPresentsProperDeviceDetails]
+      name: ScanMacPresentsProperDeviceDetails
+      fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacPresentsProperDeviceDetails
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
+    - id: 1011
+      uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacThatIsNotPresentShowsAnError]
+      name: ScanMacThatIsNotPresentShowsAnError
+      fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacThatIsNotPresentShowsAnError
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
     - id: 1004
       uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanNetworkPresentsAllDevicesInThatNetwork]
       name: ScanNetworkPresentsAllDevicesInThatNetwork
@@ -751,7 +819,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: c0f4ffffd2f4ffff62f5ffff72f5ffff84f5fffff4f5ffff04f6ffff16f6ffffa6f6fffffef6ffff10f7ffffa0f7fffff8f7ffff0af8ffff9af8fffff2f8ffff04f9ffff74f9ffff84f9ffff96f9ffff06faffff5efaffff70faffffe4faffff62fbffff
+      m_ExpandedIDs: 56fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

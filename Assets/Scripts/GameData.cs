@@ -28,6 +28,7 @@ namespace Assets.Scripts
         public IGameStore Store { get; }
 
         public event SendMessageEventHandler MessageSender;
+        public event ClearConsoleEventHandler ClearHandler;
 
         public GameData(IGameStore store)
         {
@@ -54,7 +55,8 @@ namespace Assets.Scripts
                     CommandNames.buy,
                     CommandNames.scan,
                     CommandNames.inject,
-                    CommandNames.show};
+                    CommandNames.show,
+                    CommandNames.clear};
 
             FoundNetworks = new List<HackableNetwork>();
             networkFactory = new NetworkFactory();
@@ -185,6 +187,11 @@ namespace Assets.Scripts
         private void SendMessage(string message, MessageType type)
         {
             MessageSender?.Invoke(message, type);
+        }
+
+        public void ClearConsole()
+        {
+            ClearHandler?.Invoke();
         }
 
         ~GameData()

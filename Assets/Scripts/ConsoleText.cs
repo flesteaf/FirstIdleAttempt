@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -60,5 +61,11 @@ public class ConsoleText : MonoBehaviour
         }
 
         consoleMessages.Enqueue(message);
+    }
+
+    internal void ClearConsole()
+    {
+        ConsoleMessages.Clear();
+        Console.text = string.Empty;
     }
 }
