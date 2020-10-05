@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 392}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1857
     height: 1037
-  m_MinSize: {x: 875, y: 392}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -112,10 +112,10 @@ MonoBehaviour:
     y: 30
     width: 1857
     height: 987
-  m_MinSize: {x: 504, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 503, y: 492}
+  m_MaxSize: {x: 14001, y: 14042}
   vertical: 0
-  controlID: 15
+  controlID: 55
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -137,10 +137,10 @@ MonoBehaviour:
     y: 0
     width: 1280
     height: 987
-  m_MinSize: {x: 403, y: 342}
-  m_MaxSize: {x: 8003, y: 8042}
+  m_MinSize: {x: 403, y: 492}
+  m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 16
+  controlID: 56
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 17
+  controlID: 57
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,8 +185,8 @@ MonoBehaviour:
     y: 0
     width: 420
     height: 597
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -238,14 +238,14 @@ MonoBehaviour:
     y: 597
     width: 1280
     height: 390
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 17}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -265,8 +265,8 @@ MonoBehaviour:
     y: 0
     width: 577
     height: 987
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 18}
@@ -299,7 +299,7 @@ MonoBehaviour:
     height: 966
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 151
+    ID: 139
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes: a0020000e0000000
@@ -320,7 +320,7 @@ MonoBehaviour:
       name: FirstIdleAttempt
       fullName: FirstIdleAttempt
       resultStatus: 1
-      duration: 0.4295686
+      duration: 0.4145258
       messages: 
       output: 
       stacktrace: 
@@ -336,7 +336,7 @@ MonoBehaviour:
       name: UnitTests.dll
       fullName: C:/Users/flest/Documents/GitHub/FirstIdleAttempt/Library/ScriptAssemblies/UnitTests.dll
       resultStatus: 1
-      duration: 0.3844905
+      duration: 0.3620417
       messages: 
       output: 
       stacktrace: 
@@ -352,7 +352,7 @@ MonoBehaviour:
       name: Assets
       fullName: Assets
       resultStatus: 1
-      duration: 0.3729017
+      duration: 0.3413
       messages: 
       output: 
       stacktrace: 
@@ -368,7 +368,7 @@ MonoBehaviour:
       name: Scripts
       fullName: Assets.Scripts
       resultStatus: 1
-      duration: 0.3627436
+      duration: 0.3305596
       messages: 
       output: 
       stacktrace: 
@@ -384,7 +384,7 @@ MonoBehaviour:
       name: UnitTests
       fullName: Assets.Scripts.UnitTests
       resultStatus: 1
-      duration: 0.3526514
+      duration: 0.3173543
       messages: 
       output: 
       stacktrace: 
@@ -400,7 +400,7 @@ MonoBehaviour:
       name: Commands
       fullName: Assets.Scripts.UnitTests.Commands
       resultStatus: 1
-      duration: 0.3445334
+      duration: 0.307729
       messages: 
       output: 
       stacktrace: 
@@ -449,7 +449,7 @@ MonoBehaviour:
       name: ScanTests
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests
       resultStatus: 1
-      duration: 0.3288007
+      duration: 0.2899285
       messages: 
       output: 
       stacktrace: 
@@ -464,8 +464,8 @@ MonoBehaviour:
       uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpPresentsProperDeviceDetails]
       name: ScanIpPresentsProperDeviceDetails
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpPresentsProperDeviceDetails
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.2052733
       messages: 
       output: 
       stacktrace: 
@@ -481,8 +481,8 @@ MonoBehaviour:
       uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpThatIsNotPresentShowsAnError]
       name: ScanIpThatIsNotPresentShowsAnError
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanIpThatIsNotPresentShowsAnError
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0010985
       messages: 
       output: 
       stacktrace: 
@@ -498,8 +498,8 @@ MonoBehaviour:
       uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacPresentsProperDeviceDetails]
       name: ScanMacPresentsProperDeviceDetails
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacPresentsProperDeviceDetails
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0015112
       messages: 
       output: 
       stacktrace: 
@@ -515,8 +515,8 @@ MonoBehaviour:
       uniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/ScanTests/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacThatIsNotPresentShowsAnError]
       name: ScanMacThatIsNotPresentShowsAnError
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanMacThatIsNotPresentShowsAnError
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0008225
       messages: 
       output: 
       stacktrace: 
@@ -533,7 +533,7 @@ MonoBehaviour:
       name: ScanNetworkPresentsAllDevicesInThatNetwork
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanNetworkPresentsAllDevicesInThatNetwork
       resultStatus: 1
-      duration: 0.2482303
+      duration: 0.0055447
       messages: 
       output: 
       stacktrace: 
@@ -550,7 +550,7 @@ MonoBehaviour:
       name: ScanNetworkThatHasProtectionShowsAnError
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanNetworkThatHasProtectionShowsAnError
       resultStatus: 1
-      duration: 0.0023188
+      duration: 0.0019572
       messages: 
       output: 
       stacktrace: 
@@ -567,7 +567,7 @@ MonoBehaviour:
       name: ScanNetworkWithWrongNameShowsAnError
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanNetworkWithWrongNameShowsAnError
       resultStatus: 1
-      duration: 0.0008164
+      duration: 0.0008848
       messages: 
       output: 
       stacktrace: 
@@ -584,7 +584,7 @@ MonoBehaviour:
       name: ScanWithoutParametersGeneratesNewNetworksAndRemovesTheUnhackedOnes
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanWithoutParametersGeneratesNewNetworksAndRemovesTheUnhackedOnes
       resultStatus: 1
-      duration: 0.0122546
+      duration: 0.0093513
       messages: 
       output: 
       stacktrace: 
@@ -601,7 +601,7 @@ MonoBehaviour:
       name: ScanWithoutParametersTriggersARefreshOfNetworks
       fullName: Assets.Scripts.UnitTests.Commands.ScanTests.ScanWithoutParametersTriggersARefreshOfNetworks
       resultStatus: 1
-      duration: 0.0235647
+      duration: 0.0229488
       messages: 
       output: 
       stacktrace: 
@@ -613,7 +613,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1003
       parentUniqueId: UnitTests.dll/Assets/Scripts/UnitTests/Commands/[UnitTests][Assets.Scripts.UnitTests.Commands.ScanTests][suite]
-    m_ResultText: ScanTests (0.329s)
+    m_ResultText: ScanTests (0.290s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
@@ -819,7 +819,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 56fbffff
+      m_ExpandedIDs: 6cf4ffff7ef4ffff2ef5ffff86f5ffff98f5ffff48f6ffffc8f6ffffdaf6ffff8af7ffff9af7ffffacf7ffff1cf8ffff2cf8ffff3ef8ffffaef8ffffbef8ffffd0f8ffff80f9ffff90faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -997,20 +997,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\flest\Documents\GitHub\FirstIdleAttempt
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 23}
-    m_SelectedIDs: 84350000
-    m_LastClickedID: 13700
-    m_ExpandedIDs: 00000000843500008635000088350000
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: fe350000
+    m_LastClickedID: 13822
+    m_ExpandedIDs: 00000000fc350000fe35000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1038,7 +1038,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000843500008635000088350000
+    m_ExpandedIDs: 00000000fc350000fe35000000360000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

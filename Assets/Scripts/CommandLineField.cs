@@ -28,6 +28,12 @@ public class CommandLineField : MonoBehaviour
         {
             AddCommand();
         }
+
+        if (Input.GetKeyUp(KeyCode.UpArrow) && InputField.isActiveAndEnabled)
+        {
+            InputField.text = line;
+            InputField.caretPosition = line.Length;
+        }
     }
 
     public void AddCommand()

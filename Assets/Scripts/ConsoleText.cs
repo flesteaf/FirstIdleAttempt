@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -9,7 +7,6 @@ using UnityEngine;
 public class ConsoleText : MonoBehaviour
 {
     public TextMeshProUGUI Console;
-    public List<string> ConsoleMessages { get => consoleMessages.ToList(); }
 
     private readonly Queue<string> consoleMessages = new Queue<string>();
     private int acceptedNoOfLines;
@@ -65,7 +62,7 @@ public class ConsoleText : MonoBehaviour
 
     internal void ClearConsole()
     {
-        ConsoleMessages.Clear();
+        consoleMessages.Clear();
         Console.text = string.Empty;
     }
 }

@@ -22,6 +22,7 @@ namespace Assets.Scripts
         IGameStore Store { get; }
 
         event HackerDelegates.SendMessageEventHandler MessageSender;
+        event HackerDelegates.ClearConsoleEventHandler ClearHandler;
 
         void AddNetwork(HackableNetwork network);
         void AddProduction();
