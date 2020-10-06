@@ -6,6 +6,10 @@
         {
         }
 
+        public PersonalComputer(DeviceIdentification identification, int designatedId) : base(identification, designatedId)
+        {
+        }
+
         public override bool HasFirewall => true;
         public override float EnergyLevel => 1f;
         public override float DiskSize => 5f;

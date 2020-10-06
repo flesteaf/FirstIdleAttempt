@@ -26,6 +26,7 @@ namespace Assets.Scripts
         public List<HackableNetwork> FoundNetworks { get; }
         public Computer Computer { get; }
         public IGameStore Store { get; }
+        public bool ApplyDesignatedId => AvailableSoftware.Contains(CommandNames.extract);
 
         public event SendMessageEventHandler MessageSender;
         public event ClearConsoleEventHandler ClearHandler;
@@ -107,9 +108,18 @@ namespace Assets.Scripts
             int noOfNetworksToDiscover = random.Next(1, 5);
             for (int i = 0; i < noOfNetworksToDiscover; i++)
             {
-                HackableNetwork item = networkFactory.GetRandomNetwork(NetworkType.Medium);
+                HackableNetwork item;
+                if (ApplyDesignatedId)
+                {
+                    item = networkFactory.GetRandomNetwork(NetworkType.Medium, true);
+                }
+                else
+                {
+                    item = networkFactory.GetRandomNetwork(NetworkType.Medium);
+                }
+
                 AddNetwork(item);
-                SendMessage(item.ToString(), MessageType.Info);
+                SendMessage(item.ToString(ApplyDesignatedId), MessageType.Info);
             }
         }
 
@@ -121,12 +131,30 @@ namespace Assets.Scripts
         public Device GetDeviceByIp(string ip)
         {
             Device[] devices = FoundNetworks.SelectMany(n => n.Devices).ToArray();
-            return Array.Find(devices, d => d.IP == ip);
+            Device device = Array.Find(devices, d => d.IP == ip);
+
+            if (device == null && ApplyDesignatedId) 
+            {
+                if (int.TryParse(ip.Substring(2), out int desiredId))
+                {
+                    device = Array.Find(devices, d => d.DesignatedId == desiredId);
+                }
+            }
+
+            return device;
         }
 
         public HackableNetwork GetNetworkBySSID(string ssid)
         {
             HackableNetwork network = FoundNetworks.Find(n => n.SSID.Equals(ssid, StringComparison.OrdinalIgnoreCase));
+            if (network == null && ApplyDesignatedId)
+            {
+                if (int.TryParse(ssid.Substring(3), out int desiredId))
+                {
+                    network = FoundNetworks.Find(n => n.DesignatedId == desiredId);
+                }
+            }
+
             if (network != null && network.Protection == ProtectionType.None && !network.WasHacked)
             {
                 network.HackNetwork(ProtectionType.None);
@@ -138,7 +166,17 @@ namespace Assets.Scripts
         public Device GetDeviceByMac(string mac)
         {
             Device[] devices = FoundNetworks.SelectMany(n => n.Devices).ToArray();
-            return Array.Find(devices, d => d.MAC == mac);
+            Device device = Array.Find(devices, d => d.MAC == mac);
+
+            if (device == null && ApplyDesignatedId)
+            {
+                if (int.TryParse(mac.Substring(3), out int desiredId))
+                {
+                    device = Array.Find(devices, d => d.DesignatedId == desiredId);
+                }
+            }
+
+            return device;
         }
 
         #endregion Networks

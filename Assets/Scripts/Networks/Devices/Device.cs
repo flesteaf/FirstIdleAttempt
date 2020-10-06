@@ -7,6 +7,7 @@ namespace Assets.Scripts.Networks.Devices
     {
         private readonly DeviceIdentification identification;
 
+        public int DesignatedId { get; }
         public string IP { get => identification.Ip; }
         public string MAC { get => identification.Mac; }
         public bool FirewallIsActive { get; private set; }
@@ -27,6 +28,11 @@ namespace Assets.Scripts.Networks.Devices
             FirewallIsActive = false;
             InfectionType = InfectionType.None;
             ActivateFirewall();
+        }
+
+        public Device(DeviceIdentification identification, int designatedId) : this(identification)
+        {
+            DesignatedId = designatedId;
         }
 
         internal void DeactivateFirewall()
@@ -54,6 +60,16 @@ namespace Assets.Scripts.Networks.Devices
         public override string ToString()
         {
             return $"{IP} | {MAC}";
+        }
+
+        public string ToString(bool applyDesignatedId)
+        {
+            if (applyDesignatedId)
+            {
+                return $"{DesignatedId} - {this}";
+            }
+
+            return ToString();
         }
     }
 }

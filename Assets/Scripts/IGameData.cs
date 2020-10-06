@@ -14,9 +14,7 @@ namespace Assets.Scripts
         List<CommandOptions> AvailableSoftwareOptions { get; }
         Computer Computer { get; }
         float CurrentProduction { get; }
-
-        void ClearConsole();
-
+        bool ApplyDesignatedId { get; }
         List<HackableNetwork> FoundNetworks { get; }
         float MoneyAmmount { get; }
         IGameStore Store { get; }
@@ -35,5 +33,6 @@ namespace Assets.Scripts
         bool TryBuySoftware(Software software);
         void UpdateAmmount(float value);
         void UpdateCurrentProduction(float addValue);
+        void ClearConsole();
     }
 }

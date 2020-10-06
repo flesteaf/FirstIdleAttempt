@@ -88,15 +88,7 @@
       "Provides": [
         {
           "CommandName": "Extract",
-          "Provide": "network"
-        },
-        {
-          "CommandName": "Extract",
-          "Provide": "ip"
-        },
-        {
-          "CommandName": "Extract",
-          "Provide":  "mac"
+          "Provide": "None"
         }
       ]
     }

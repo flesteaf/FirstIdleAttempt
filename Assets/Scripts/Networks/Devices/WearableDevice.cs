@@ -6,6 +6,10 @@
         {
         }
 
+        public WearableDevice(DeviceIdentification identification, int designatedId) : base(identification, designatedId)
+        {
+        }
+
         public override bool HasFirewall => false;
 
         public override float EnergyLevel => 0.001f;

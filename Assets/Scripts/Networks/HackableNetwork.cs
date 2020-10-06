@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Networks.Devices;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static Assets.Scripts.HackerDelegates;
 
 namespace Assets.Scripts.Networks
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Networks
     public class HackableNetwork
     {
         public string SSID { get; }
-
+        public int DesignatedId { get; }
         public List<Device> Devices { get; }
         public ProtectionType Protection { get; private set; }
 
@@ -27,6 +28,13 @@ namespace Assets.Scripts.Networks
             WasHacked = false;
         }
 
+        public HackableNetwork(string ssid, List<Device> devices,
+                               ProtectionType protectionType, NetworkType networkSize,
+                               int designatedId) : this (ssid, devices, protectionType, networkSize)
+        {
+            DesignatedId = designatedId;
+        }
+
         public void HackNetwork(ProtectionType crackType)
         {
             if (crackType != Protection)
@@ -42,6 +50,16 @@ namespace Assets.Scripts.Networks
         public override string ToString()
         {
             return $"{SSID} | {Protection}";
+        }
+
+        public string ToString(bool applyDesignatedId)
+        {
+            if (applyDesignatedId)
+            {
+                return $"{DesignatedId} - {this}";
+            }
+
+            return ToString();
         }
     }
 }

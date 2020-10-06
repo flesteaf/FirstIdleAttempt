@@ -82,8 +82,8 @@ namespace Assets.Scripts.Commands
         private void ProvideDeviceDetails(Device device)
         {
             string firewallStatus = device.FirewallIsActive ? "enabled" : "disabled";
-            SendMessage($"Device has firewall {device.HasFirewall}", MessageType.Info);
-            SendMessage($"Firewall status is {firewallStatus}", MessageType.Info);
+            string hasFirewall = device.HasFirewall ? $"has firewall with status {firewallStatus}" : "doesn't have a firewall";
+            SendMessage($"Device {hasFirewall}", MessageType.Info);
         }
 
         private void ScanNetwork(IGameData game, string ssid)
@@ -105,7 +105,7 @@ namespace Assets.Scripts.Commands
             SendMessage($"Network {network} has the following devices:", MessageType.Info);
             foreach (Device item in network.Devices)
             {
-                SendMessage($"- {item} | {item.Type}", MessageType.Info);
+                SendMessage($"-> {item.ToString(game.ApplyDesignatedId)} | {item.Type}", MessageType.Info);
             }
         }
 

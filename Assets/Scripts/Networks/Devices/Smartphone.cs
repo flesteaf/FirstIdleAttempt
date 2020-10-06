@@ -6,6 +6,10 @@
         {
         }
 
+        public Smartphone(DeviceIdentification identification, int designatedId) : base(identification, designatedId)
+        {
+        }
+
         public override bool HasFirewall => true;
 
         public override float EnergyLevel => 0.1f;

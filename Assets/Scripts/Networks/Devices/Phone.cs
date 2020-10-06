@@ -6,6 +6,10 @@
         {
         }
 
+        public Phone(DeviceIdentification identification, int designatedId) : base(identification, designatedId)
+        {
+        }
+
         public override bool HasFirewall => false;
         public override float EnergyLevel => 0.01f;
         public override float DiskSize => 0.01f;
