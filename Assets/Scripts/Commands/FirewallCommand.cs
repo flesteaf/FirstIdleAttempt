@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Networks;
+﻿using Assets.Scripts.Computers.ComponentTypes;
 using Assets.Scripts.Networks.Devices;
 using System;
 using System.Collections.Generic;
@@ -6,16 +6,19 @@ using UnityEditor;
 
 namespace Assets.Scripts.Commands
 {
-    internal class FirewallCommand : Command
+    internal class FirewallCommand : CommandWithDelay
     {
-        public override CommandNames Name => CommandNames.firewall;
         private readonly Dictionary<CommandOptions, Action<IGameData, string>> firewallOptions;
+        private int delayExecutionTime;
+        public override CommandNames Name => CommandNames.firewall;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
                             CommandOptions.enable,
                             CommandOptions.disable };
         }
+
+        protected override int BaseExecutionTime => 5000;
 
         public FirewallCommand()
         {
@@ -26,8 +29,9 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command, int delayTime)
         {
+            delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
             {
                 SendMessage("The firewall command receives 2 parameters: action (enable or disable) and ip or mac of the device", MessageType.Warning);
@@ -83,6 +87,11 @@ namespace Assets.Scripts.Commands
             }
 
             return device;
+        }
+
+        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
+        {
+            return BaseExecutionTime / computerSpeed + (int)((long)Sizes.MB / networkSpeed);
         }
     }
 }

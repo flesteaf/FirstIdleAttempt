@@ -14,6 +14,7 @@ namespace Assets.Scripts
         List<CommandOptions> AvailableSoftwareOptions { get; }
         Computer Computer { get; }
         float CurrentProduction { get; }
+
         bool ApplyDesignatedId { get; }
         List<HackableNetwork> FoundNetworks { get; }
         float MoneyAmmount { get; }
@@ -34,5 +35,7 @@ namespace Assets.Scripts
         void UpdateAmmount(float value);
         void UpdateCurrentProduction(float addValue);
         void ClearConsole();
+        int GetComputerSpeed();
+        long GetNetworkSpeed();
     }
 }

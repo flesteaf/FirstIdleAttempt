@@ -232,6 +232,16 @@ namespace Assets.Scripts
             ClearHandler?.Invoke();
         }
 
+        public int GetComputerSpeed()
+        {
+            return Computer.GetExecutionSpeed();
+        }
+
+        public long GetNetworkSpeed()
+        {
+            return Computer.GetNetworkSpeed();
+        }
+
         ~GameData()
         {
             FoundNetworks.RemoveAll(hn => !hn.WasHacked);

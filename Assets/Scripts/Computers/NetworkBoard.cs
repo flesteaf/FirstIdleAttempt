@@ -5,7 +5,7 @@ namespace Assets.Scripts.Computers
     public class NetworkBoard : ComputerComponent
     {
         private float speed = -1;
-        private Sizes sizeType;
+        private Sizes sizeType = Sizes.None;
 
         public float Speed
         {
@@ -25,6 +25,11 @@ namespace Assets.Scripts.Computers
                 if (sizeType == Sizes.None)
                     sizeType = value;
             }
+        }
+
+        public long TotalSpeed()
+        {
+            return (long)(Speed * (long)sizeType);
         }
 
         public override string ToString()

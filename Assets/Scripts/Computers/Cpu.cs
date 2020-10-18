@@ -6,7 +6,7 @@ namespace Assets.Scripts.Computers
     {
         private int cores = -1;
         private float speed = -1;
-        private SpeedType speedType;
+        private SpeedType speedType = SpeedType.None;
 
         public int Cores
         {
@@ -38,9 +38,9 @@ namespace Assets.Scripts.Computers
             }
         }
 
-        public float TotalSpeed()
+        public int TotalSpeed()
         {
-            return Cores * Speed * (float)SpeedType;
+            return (int)(Cores * Speed * (int)SpeedType);
         }
 
         public override string ToString()

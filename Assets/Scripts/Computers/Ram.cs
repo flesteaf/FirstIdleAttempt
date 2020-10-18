@@ -4,9 +4,9 @@ namespace Assets.Scripts.Computers
 {
     public class Ram : ComputerComponent
     {
-        private RamType ramType;
+        private RamType ramType = RamType.None;
         private float size = -1;
-        private Sizes sizeType;
+        private Sizes sizeType = Sizes.None;
 
         public RamType RamType
         {

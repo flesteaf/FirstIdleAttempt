@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Commands\CommandLine.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandNames.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandOptions.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandWithDelay.cs" />
     <Compile Include="Assets\Scripts\Commands\CrackCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\FirewallCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\HelpCommand.cs" />

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Networks;
+﻿using Assets.Scripts.Computers.ComponentTypes;
+using Assets.Scripts.Networks;
 using Assets.Scripts.Networks.Devices;
 using System;
 using System.Collections.Generic;
@@ -6,10 +7,13 @@ using UnityEditor;
 
 namespace Assets.Scripts.Commands
 {
-    public class ScanCommand : Command
+    public class ScanCommand : CommandWithDelay
     {
-        public override CommandNames Name => CommandNames.scan;
         private readonly Dictionary<CommandOptions, Action<IGameData, string>> scanTypes;
+        private int delayExecutionTime;
+        private long networkCommunication = 5*(long)Sizes.KB;
+
+        public override CommandNames Name => CommandNames.scan;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -17,6 +21,8 @@ namespace Assets.Scripts.Commands
                             CommandOptions.ip,
                             CommandOptions.mac };
         }
+
+        protected override int BaseExecutionTime => 2000;
 
         public ScanCommand()
         {
@@ -28,10 +34,12 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command, int delayTime)
         {
+            delayExecutionTime = delayTime;
             if (!command.HasArgument())
             {
+                ExecuteDelay(delayTime);
                 game.RefreshNetworks();
                 return;
             }
@@ -63,6 +71,7 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
+            ExecuteDelay(delayExecutionTime+1000);
             ProvideDeviceDetails(device);
         }
 
@@ -76,6 +85,7 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
+            ExecuteDelay(delayExecutionTime+1000);
             ProvideDeviceDetails(device);
         }
 
@@ -96,6 +106,7 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
+            ExecuteDelay(delayExecutionTime+3000);
             if (network.Protection != ProtectionType.None)
             {
                 SendMessage($"The network {ssid} is protected. Crack the protection then try again.", MessageType.Warning);
@@ -110,5 +121,10 @@ namespace Assets.Scripts.Commands
         }
 
         #endregion Scan commands
+
+        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
+        {
+            return BaseExecutionTime / computerSpeed + (int)(networkCommunication / networkSpeed);
+        }
     }
 }

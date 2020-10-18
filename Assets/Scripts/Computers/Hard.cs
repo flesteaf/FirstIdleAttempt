@@ -4,9 +4,9 @@ namespace Assets.Scripts.Computers
 {
     public class Hard : ComputerComponent
     {
-        private HardType hardType;
+        private HardType hardType = HardType.None;
         private float size = -1;
-        private Sizes sizeType;
+        private Sizes sizeType = Sizes.None;
 
         public HardType HardType
         {

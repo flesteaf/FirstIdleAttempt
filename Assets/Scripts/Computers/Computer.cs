@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Computers.Motherboards;
 using Assets.Scripts.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -275,6 +276,16 @@ namespace Assets.Scripts.Computers
 
             Motherboard = motherboard;
             return true;
+        }
+
+        internal int GetExecutionSpeed()
+        {
+            return cpus.Sum(c => c.TotalSpeed());
+        }
+
+        internal long GetNetworkSpeed()
+        {
+            return networks.Sum(n => n.TotalSpeed());
         }
 
         #endregion ComponentUpdates

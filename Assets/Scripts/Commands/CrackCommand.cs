@@ -1,13 +1,16 @@
-﻿using Assets.Scripts.Networks;
+﻿using Assets.Scripts.Computers.ComponentTypes;
+using Assets.Scripts.Networks;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
 
 namespace Assets.Scripts.Commands
 {
-    internal class CrackCommand : Command
+    internal class CrackCommand : CommandWithDelay
     {
+        private static long NetworkDataForCrack = 10*(long)Sizes.MB;
         private readonly Dictionary<CommandOptions, Action<IGameData, string>> crackTypes;
+        private int delayExecutionTime;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
             get => new List<CommandOptions> { 
@@ -15,6 +18,8 @@ namespace Assets.Scripts.Commands
                             CommandOptions.wpa, 
                             CommandOptions.wpa2 }; 
         }
+
+        protected override int BaseExecutionTime => 100000;
 
         public CrackCommand()
         {
@@ -26,8 +31,9 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command)
+        public override void Execute(IGameData game, CommandLine command, int delayTime)
         {
+            delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
             {
                 SendMessage("The crack command receives 2 parameters: crack type (wep, wpa, wpa2) and the SSID of the network", MessageType.Warning);
@@ -70,6 +76,7 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
+            ExecuteDelay(delayExecutionTime + ((int)protection*1000));
             network.HackNetwork(protection);
 
             if (network.WasHacked)
@@ -83,5 +90,10 @@ namespace Assets.Scripts.Commands
         }
 
         #endregion CrackCommands
+
+        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
+        {
+            return BaseExecutionTime / computerSpeed + (int)(NetworkDataForCrack / networkSpeed);
+        }
     }
 }
