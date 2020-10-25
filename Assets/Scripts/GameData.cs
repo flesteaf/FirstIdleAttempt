@@ -183,14 +183,21 @@ namespace Assets.Scripts
 
         #region Store
 
-        public bool TryBuySoftware(Software software)
+        public bool TryBuySoftware(Software software, out string message)
         {
+            message = string.Empty;
             if (MoneyAmmount < software.Price)
             {
+                message = "Not enough money!";
                 return false;
             }
 
             Store.SoftwareBought(software);
+            if(!Computer.StoreSoftware(software))
+            {
+                message = $"Not enough space to store {software.Name}";
+                return false;
+            }
 
             foreach (var item in software.Provides)
             {
@@ -209,15 +216,16 @@ namespace Assets.Scripts
             return true;
         }
 
-        public bool TryBuyComponent(StoreComponent component)
+        public bool TryBuyComponent(StoreComponent component, out string message)
         {
             if (MoneyAmmount < component.Price)
             {
+                message = "Not enough money";
                 return false;
             }
 
             Store.ComponentBought(component);
-            return Computer.UpdateComponent(component.SoldComponent);
+            return Computer.UpdateComponent(component.SoldComponent, out message);
         }
 
         #endregion Store

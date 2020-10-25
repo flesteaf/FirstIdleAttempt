@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\Computers\NetworkBoard.cs" />
     <Compile Include="Assets\Scripts\Computers\Ram.cs" />
     <Compile Include="Assets\Scripts\Computers\Source.cs" />
+    <Compile Include="Assets\Scripts\Computers\SpaceManagement.cs" />
     <Compile Include="Assets\Scripts\Computers\Wireless.cs" />
     <Compile Include="Assets\Scripts\ConsoleText.cs" />
     <Compile Include="Assets\Scripts\Extensions\ListExtensions.cs" />

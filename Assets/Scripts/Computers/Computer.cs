@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Computers.Motherboards;
 using Assets.Scripts.Extensions;
+using Assets.Scripts.Softwares;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Computers
         private List<NetworkBoard> networks;
         private List<Source> sources;
         private Motherboard motherboard;
+        private SpaceManagement spaceManagement;
         private string name;
 
         #region PublicProperties
@@ -98,6 +100,8 @@ namespace Assets.Scripts.Computers
         public Computer()
         {
             SetupComputer();
+            hards.Sort();
+            spaceManagement = new SpaceManagement(hards);
         }
 
         protected virtual void SetupComputer()
@@ -168,8 +172,9 @@ namespace Assets.Scripts.Computers
 
         #region ComponentUpdates
 
-        internal bool UpdateComponent(ComputerComponent component)
+        internal bool UpdateComponent(ComputerComponent component, out string message)
         {
+            message = string.Empty;
             if (component is Cpu cpu)
             {
                 UpdateCpuComponent(cpu);
@@ -196,8 +201,8 @@ namespace Assets.Scripts.Computers
 
             if (component is Hard hard)
             {
-                UpdateHardComponent(hard);
-                return true;
+                return UpdateHardComponent(hard, out message);
+
             }
 
             if (component is Source source)
@@ -207,8 +212,16 @@ namespace Assets.Scripts.Computers
             }
 
             if (component is Motherboard motherboard)
-                return UpdateMotherboardComponent(motherboard);
+            {
+                bool result = UpdateMotherboardComponent(motherboard);
+                if (!result)
+                {
+                    message = "Cannot upgrade motherboard, provided component is weaker than the current one";
+                }
+                return result;
+            }
 
+            message = "Unidentified component! try again";
             return false;
         }
 
@@ -232,14 +245,30 @@ namespace Assets.Scripts.Computers
             Gpus.Add(gpu);
         }
 
-        internal void UpdateHardComponent(Hard hard)
+        internal bool UpdateHardComponent(Hard hard, out string message)
         {
+            bool hardRemoved = false;
+            message = string.Empty;
             if (Motherboard.AllowedHards == Hards.Count)
             {
+                if (hards[0] > hard)
+                {
+                    message = "You have reached the maximum ammount of disks and the disk you want to add cannot replace a bigger hard";
+                }
+
                 Hards.RemoveAt(0);
+                hardRemoved = true;
             }
 
             Hards.Add(hard);
+            hards.Sort();
+            spaceManagement.UpdateStorage(hard, hardRemoved);
+            return true;
+        }
+
+        public bool StoreSoftware(Software software)
+        {
+            return spaceManagement.TryStoreSoftware(software);
         }
 
         internal void UpdateNetworkComponent(NetworkBoard network)

@@ -30,8 +30,8 @@ namespace Assets.Scripts
         Device GetDeviceByMac(string mac);
         HackableNetwork GetNetworkBySSID(string ssid);
         void RefreshNetworks();
-        bool TryBuyComponent(StoreComponent component);
-        bool TryBuySoftware(Software software);
+        bool TryBuyComponent(StoreComponent component, out string message);
+        bool TryBuySoftware(Software software, out string message);
         void UpdateAmmount(float value);
         void UpdateCurrentProduction(float addValue);
         void ClearConsole();

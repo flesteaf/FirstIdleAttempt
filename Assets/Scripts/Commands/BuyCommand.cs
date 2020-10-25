@@ -59,9 +59,9 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
-            if (!game.TryBuyComponent(component))
+            if (!game.TryBuyComponent(component, out string message))
             {
-                SendMessage("Not enough many!", MessageType.Error);
+                SendMessage(message, MessageType.Error);
             }
         }
 
@@ -75,9 +75,9 @@ namespace Assets.Scripts.Commands
                 return;
             }
 
-            if (!game.TryBuySoftware(software))
+            if (!game.TryBuySoftware(software, out string message))
             {
-                SendMessage("Not enough money!", MessageType.Error);
+                SendMessage(message, MessageType.Error);
             }
         }
     }

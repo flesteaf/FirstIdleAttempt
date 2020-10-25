@@ -9,6 +9,7 @@ namespace Assets.Scripts.Softwares
         private string description;
         private float price = -1;
         private List<Provides> provides;
+        private long size = -1;
 
         public string Name
         {
@@ -49,6 +50,16 @@ namespace Assets.Scripts.Softwares
             {
                 provides = value;
             }
+        }
+
+        public long Size 
+        { 
+            get => size; 
+            set 
+            { 
+                if (size == -1)
+                    size = value; 
+            } 
         }
     }
 }
