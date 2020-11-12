@@ -19,6 +19,7 @@ namespace Assets.Scripts
         List<HackableNetwork> FoundNetworks { get; }
         float MoneyAmmount { get; }
         IGameStore Store { get; }
+        bool CommandUnderExecution { get; set; }
 
         event HackerDelegates.SendMessageEventHandler MessageSender;
         event HackerDelegates.ClearConsoleEventHandler ClearHandler;

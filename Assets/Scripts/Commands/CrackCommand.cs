@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Computers.ComponentTypes;
 using Assets.Scripts.Networks;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Commands
     internal class CrackCommand : CommandWithDelay
     {
         private static long NetworkDataForCrack = 10*(long)Sizes.MB;
-        private readonly Dictionary<CommandOptions, Action<IGameData, string>> crackTypes;
+        private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> crackTypes;
         private int delayExecutionTime;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
@@ -23,7 +24,7 @@ namespace Assets.Scripts.Commands
 
         public CrackCommand()
         {
-            crackTypes = new Dictionary<CommandOptions, Action<IGameData, string>>
+            crackTypes = new Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>>
             {
                 { CommandOptions.wep, CrackWep },
                 { CommandOptions.wpa, CrackWpa },
@@ -31,53 +32,52 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
             {
                 SendMessage("The crack command receives 2 parameters: crack type (wep, wpa, wpa2) and the SSID of the network", MessageType.Warning);
-                return;
+                yield break;
             }
 
             if (!crackTypes.ContainsKey(command.Option))
             {
                 SendMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
-                return;
+                yield break;
             }
 
-            crackTypes[command.Option](game, command.Argument);
+            yield return crackTypes[command.Option](game, command.Argument);
         }
 
         #region CrackCommands
 
-        private void CrackWpa2(IGameData game, string ssid)
+        private IEnumerator CrackWpa2(IGameData game, string ssid)
         {
-            CrackNetwork(game, ssid, ProtectionType.WPA2);
+            yield return CrackNetwork(game, ssid, ProtectionType.WPA2);
         }
 
-        private void CrackWpa(IGameData game, string ssid)
+        private IEnumerator CrackWpa(IGameData game, string ssid)
         {
-            CrackNetwork(game, ssid, ProtectionType.WPA);
+            yield return CrackNetwork(game, ssid, ProtectionType.WPA);
         }
 
-        private void CrackWep(IGameData game, string ssid)
+        private IEnumerator CrackWep(IGameData game, string ssid)
         {
-            CrackNetwork(game, ssid, ProtectionType.WEP);
+            yield return CrackNetwork(game, ssid, ProtectionType.WEP);
         }
 
-        private void CrackNetwork(IGameData game, string ssid, ProtectionType protection)
+        private IEnumerator CrackNetwork(IGameData game, string ssid, ProtectionType protection)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 
             if (network == null)
             {
                 SendMessage($"Unrecognized network {ssid}", MessageType.Error);
-                return;
+                yield break;
             }
 
-            ExecuteDelay(delayExecutionTime + ((int)protection*1000));
-            network.HackNetwork(protection);
+            yield return ExecuteDelay(delayExecutionTime + ((int)protection * 1000), network.HackNetwork, protection);
 
             if (network.WasHacked)
             {
@@ -87,6 +87,7 @@ namespace Assets.Scripts.Commands
             {
                 SendMessage($"Network {ssid} has protection {network.Protection}. Cannot crack it with {protection}.", MessageType.Error);
             }
+            yield break;
         }
 
         #endregion CrackCommands

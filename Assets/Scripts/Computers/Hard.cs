@@ -109,6 +109,21 @@ namespace Assets.Scripts.Computers
         #region operators >,<,>=,<=,==,!=
         public static bool operator >(Hard A, Hard B)
         {
+            if (A is null)
+            {
+                if (B is null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            if (B is null)
+            {
+                return true;
+            }
+
             if (A.totalSize > B.totalSize)
             {
                 return true;
@@ -119,6 +134,21 @@ namespace Assets.Scripts.Computers
 
         public static bool operator <(Hard A, Hard B)
         {
+            if (A is null)
+            {
+                if (B is null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            if (B is null)
+            {
+                return false;
+            }
+
             if (A.totalSize < B.totalSize)
             {
                 return true;
@@ -129,6 +159,21 @@ namespace Assets.Scripts.Computers
 
         public static bool operator >=(Hard A, Hard B)
         {
+            if (A is null)
+            {
+                if (B is null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (B is null)
+            {
+                return false;
+            }
+
             if (A.totalSize >= B.totalSize)
             {
                 return true;
@@ -139,6 +184,21 @@ namespace Assets.Scripts.Computers
 
         public static bool operator <=(Hard A, Hard B)
         {
+            if (A is null)
+            {
+                if (B is null)
+                {
+                    return true;
+                }
+
+                return true;
+            }
+
+            if (B is null)
+            {
+                return false;
+            }
+
             if (A.totalSize <= B.totalSize)
             {
                 return true;
@@ -149,6 +209,21 @@ namespace Assets.Scripts.Computers
 
         public static bool operator ==(Hard A, Hard B)
         {
+            if (A is null)
+            {
+                if (B is null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (B is null)
+            {
+                return false;
+            }
+
             if (A.totalSize == B.totalSize)
             {
                 return true;
@@ -159,6 +234,21 @@ namespace Assets.Scripts.Computers
 
         public static bool operator !=(Hard A, Hard B)
         {
+            if (A is null)
+            {
+                if (B is null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            if (B is null)
+            {
+                return true;
+            }
+
             if (A.totalSize != B.totalSize)
             {
                 return true;

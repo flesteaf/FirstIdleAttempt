@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Computers.ComponentTypes;
 using Assets.Scripts.Networks.Devices;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -8,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     internal class FirewallCommand : CommandWithDelay
     {
-        private readonly Dictionary<CommandOptions, Action<IGameData, string>> firewallOptions;
+        private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> firewallOptions;
         private int delayExecutionTime;
         public override CommandNames Name => CommandNames.firewall;
         public override List<CommandOptions> Options
@@ -22,56 +23,58 @@ namespace Assets.Scripts.Commands
 
         public FirewallCommand()
         {
-            firewallOptions = new Dictionary<CommandOptions, Action<IGameData, string>>
+            firewallOptions = new Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>>
             {
                 { CommandOptions.enable, EnableFirewall },
                 { CommandOptions.disable, DisableFirewall }
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
             {
                 SendMessage("The firewall command receives 2 parameters: action (enable or disable) and ip or mac of the device", MessageType.Warning);
-                return;
+                yield break;
             }
 
             if (!firewallOptions.ContainsKey(command.Option))
             {
                 SendMessage($"Wrong option selected. Option {command.Option} is unrecognized", MessageType.Error);
-                return;
+                yield break;
             }
 
-            firewallOptions[command.Option](game, command.Argument);
+            yield return firewallOptions[command.Option](game, command.Argument);
         }
 
-        private void DisableFirewall(IGameData manager, string identifier)
+        private IEnumerator DisableFirewall(IGameData manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
-            if (device == null) { 
-                return;
+            if (device == null) {
+                yield break;
             }
 
             if (device.FirewallIsActive)
             {
-                device.DeactivateFirewall();
+                yield return ExecuteDelay(delayExecutionTime, device.DeactivateFirewall);
             }
+            yield break;
         }
 
-        private void EnableFirewall(IGameData manager, string identifier)
+        private IEnumerator EnableFirewall(IGameData manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
             if (device == null)
             {
-                return;
+                yield break;
             }
 
             if (device.HasFirewall && !device.FirewallIsActive)
             {
-                device.DeactivateFirewall();
+                yield return ExecuteDelay(delayExecutionTime, device.DeactivateFirewall);
             }
+            yield break;
         }
         
         private Device GetDevice(IGameData manager, string identifier)

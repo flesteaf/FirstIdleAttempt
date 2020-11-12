@@ -7,10 +7,12 @@ namespace Assets.Scripts.Computers
 {
     internal class SpaceManagement
     {
+        //TODO: finalize usage of storage
         private Dictionary<Hard, List<Software>> storage;
 
         public SpaceManagement(List<Hard> hards)
         {
+            storage = new Dictionary<Hard, List<Software>>();
             foreach (var hard in hards)
             {
                 storage.Add(hard, new List<Software>());

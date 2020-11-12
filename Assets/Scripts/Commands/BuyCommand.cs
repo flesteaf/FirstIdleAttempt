@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Softwares;
 using Assets.Scripts.Store;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -26,27 +27,28 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameData game, CommandLine command)
         {
             if (!command.LongArgument)
             {
                 SendMessage($"The buy command requires to specify something to buy and only one", MessageType.Warning);
-                return;
+                yield break;
             }
 
             if (command.Option == CommandOptions.None)
             {
                 SendMessage($"The buy command requires to specify the type of things you want to buy", MessageType.Warning);
-                return;
+                yield break;
             }
 
             if (!buyOptions.ContainsKey(command.Option))
             {
                 SendMessage($"The buy option is not available", MessageType.Warning);
-                return;
+                yield break;
             }
 
             buyOptions[command.Option](game, command.Argument);
+            yield break;
         }
 
         private void BuyComponent(IGameData game, string componentName)

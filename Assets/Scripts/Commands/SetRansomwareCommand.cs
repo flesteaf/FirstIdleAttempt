@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Commands
@@ -11,9 +12,9 @@ namespace Assets.Scripts.Commands
 
         protected override int BaseExecutionTime => throw new NotImplementedException();
 
-        public override void Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
         {
-            throw new NotImplementedException();
+            yield break;
         }
 
         protected override int GetCommandDelay(int computerSpeed, long networkSpeed)

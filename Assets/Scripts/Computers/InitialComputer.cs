@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Computers.ComponentTypes;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Computers
 {
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Computers
             //TODO: set initial computer
             Rams = new List<Ram> { new Ram() };
             Hards = new List<Hard> { new Hard() };
-            Cpus = new List<Cpu> { new Cpu() };
+            Cpus = new List<Cpu> { new Cpu { Cores = 1, SpeedType = SpeedType.MHz, Speed = 1 } };
             Gpus = new List<Gpu> { new Gpu() };
             Networks = new List<NetworkBoard> { new NetworkBoard() };
             Sources = new List<Source> { new Source() };

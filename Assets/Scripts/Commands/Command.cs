@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using static Assets.Scripts.HackerDelegates;
 
@@ -10,11 +11,12 @@ namespace Assets.Scripts.Commands
         public abstract CommandNames Name { get; }
         public abstract List<CommandOptions> Options { get; }
         public event SendMessageEventHandler MessageNotification;
+        public event ActionProgressEventHandler ActionProgress;
 
         //public abstract string Description { get; }
         protected const string HelpOption = "?";
 
-        public abstract void Execute(IGameData data, CommandLine command);
+        public abstract IEnumerator Execute(IGameData data, CommandLine command);
 
         public CommandOptions GetOptionFromCommand(CommandLine command)
         {
@@ -34,6 +36,11 @@ namespace Assets.Scripts.Commands
         protected void SendMessage(string message, MessageType type)
         {
             MessageNotification?.Invoke(message, type);
+        }
+
+        protected void ProgressAction(int progress)
+        {
+            ActionProgress?.Invoke(progress);
         }
     }
 }

@@ -47,6 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.11f1</UnityVersion>
@@ -103,8 +104,8 @@
     <Compile Include="Assets\Scripts\Computers\SpaceManagement.cs" />
     <Compile Include="Assets\Scripts\Computers\Wireless.cs" />
     <Compile Include="Assets\Scripts\ConsoleText.cs" />
+    <Compile Include="Assets\Scripts\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\ListExtensions.cs" />
-    <Compile Include="Assets\Scripts\Extensions\QueueExtensions.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\Scripts\HackerDelegates.cs" />
     <Compile Include="Assets\Scripts\IGameData.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Assets\Scripts\Store\RamStore.cs" />
     <Compile Include="Assets\Scripts\Store\SourceStore.cs" />
     <Compile Include="Assets\Scripts\Store\StoreComponent.cs" />
+    <Compile Include="Assets\Scripts\UnityExtensions.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

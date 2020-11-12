@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Networks;
 using Assets.Scripts.Networks.Devices;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Commands
     internal class ShowCommand : Command
     {
         public override CommandNames Name => CommandNames.show;
-        private readonly Dictionary<CommandOptions, Action<IGameData>> showTypes;
+        private readonly Dictionary<CommandOptions, Func<IGameData, IEnumerator>> showTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -19,40 +20,40 @@ namespace Assets.Scripts.Commands
 
         public ShowCommand()
         {
-            showTypes = new Dictionary<CommandOptions, Action<IGameData>>
+            showTypes = new Dictionary<CommandOptions, Func<IGameData, IEnumerator>>
             {
                 { CommandOptions.networks,  ShowNetworks },
                 { CommandOptions.ips, ShowDevices }
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgumentAndNoOption())
             {
                 SendMessage("Show command provides details about either 'networks' or 'ips'.", MessageType.Warning);
                 SendMessage("Please provide the option to show, e.g. 'show networks'", MessageType.Warning);
-                return;
+                yield break;
             }
 
             if (command.HasArgumentAndOption())
             {
                 SendMessage("Show command receives only 1 option parameter from 'networks' or 'ips'", MessageType.Warning);
-                return;
+                yield break;
             }
 
             if (!showTypes.ContainsKey(command.ArgumentAsOption()))
             {
                 SendMessage($"Wrong option selected. Option {command.ArgumentAsOption()} is unrecognized", MessageType.Error);
-                return;
+                yield break;
             }
 
-            showTypes[command.ArgumentAsOption()](game);
+            yield return showTypes[command.ArgumentAsOption()](game);
         }
 
         #region ShowCommands
 
-        private void ShowDevices(IGameData game)
+        private IEnumerator ShowDevices(IGameData game)
         {
             IEnumerable<Device> devices = game.GetAllHackedDevices();
 
@@ -60,9 +61,11 @@ namespace Assets.Scripts.Commands
             {
                 SendMessage(item.ToString(), MessageType.Info);
             }
+
+            yield break;
         }
 
-        private void ShowNetworks(IGameData game)
+        private IEnumerator ShowNetworks(IGameData game)
         {
             IEnumerable<HackableNetwork> networks = game.FoundNetworks;
 
@@ -70,6 +73,8 @@ namespace Assets.Scripts.Commands
             {
                 SendMessage(item.ToString(), MessageType.Info);
             }
+
+            yield break;
         }
 
         #endregion ShowCommands

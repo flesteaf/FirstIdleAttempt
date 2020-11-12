@@ -18,6 +18,7 @@ namespace Assets.Scripts
         private readonly float moneyGenerationExponent = 2.912f;
         private readonly NetworkFactory networkFactory;
         private readonly Random random;
+        private static bool commandUnderExecution;
 
         public List<CommandNames> AvailableSoftware { get; }
         public List<CommandOptions> AvailableSoftwareOptions { get; }
@@ -27,6 +28,8 @@ namespace Assets.Scripts
         public Computer Computer { get; }
         public IGameStore Store { get; }
         public bool ApplyDesignatedId => AvailableSoftware.Contains(CommandNames.extract);
+
+        public bool CommandUnderExecution { get => commandUnderExecution; set => commandUnderExecution = value; }
 
         public event SendMessageEventHandler MessageSender;
         public event ClearConsoleEventHandler ClearHandler;
@@ -62,6 +65,7 @@ namespace Assets.Scripts
             FoundNetworks = new List<HackableNetwork>();
             networkFactory = new NetworkFactory();
             random = new Random();
+            commandUnderExecution = false;
         }
 
         public void UpdateCurrentProduction(float addValue)

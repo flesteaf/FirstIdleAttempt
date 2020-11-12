@@ -34,6 +34,20 @@ public class CommandLineField : MonoBehaviour
             InputField.text = line;
             InputField.caretPosition = line.Length;
         }
+
+        SetInputFiledStatus();
+    }
+
+    private void SetInputFiledStatus()
+    {
+        if (theGame.CommandUnderExecution)
+        {
+            InputField.DeactivateInputField(true);
+        }
+        else
+        {
+            InputField.ActivateInputField();
+        }
     }
 
     public void AddCommand()
@@ -48,6 +62,6 @@ public class CommandLineField : MonoBehaviour
         InputField.text = string.Empty;
         InputField.ActivateInputField();
         CommandLine command = new CommandLine(line);
-        theGame.ExecuteCommand(command);
+        StartCoroutine(theGame.ExecuteCommand(command));
     }
 }

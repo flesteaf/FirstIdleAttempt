@@ -2,6 +2,7 @@
 using Assets.Scripts.Softwares;
 using Assets.Scripts.Store;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StoreCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<IGameData>> storeTypes;
+        private readonly Dictionary<CommandOptions, Func<IGameData, IEnumerator>> storeTypes;
         public override CommandNames Name => CommandNames.store;
         public override List<CommandOptions> Options
         {
@@ -20,39 +21,39 @@ namespace Assets.Scripts.Commands
 
         public StoreCommand()
         {
-            storeTypes = new Dictionary<CommandOptions, Action<IGameData>>
+            storeTypes = new Dictionary<CommandOptions, Func<IGameData, IEnumerator>>
             {
                 { CommandOptions.software, PresentSoftware },
                 { CommandOptions.components, PresentComponents }
             };
         }
 
-        public override void Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameData game, CommandLine command)
         {
             if (!command.HasArgument())
             {
                 PresentStoreOptions(game);
-                return;
+                yield break;
             }
 
             if (!command.HasArgumentAndNoOption())
             {
                 SendMessage("Invalid command call, the store command takes 1 parameter at most. Check help command for store", MessageType.Error);
-                return;
+                yield break;
             }
 
             if (!storeTypes.ContainsKey(command.ArgumentAsOption()))
             {
                 SendMessage("Invalid parameter as input for store command, accepted are 'software' and 'components'", MessageType.Error);
-                return;
+                yield break;
             }
 
-            storeTypes[command.ArgumentAsOption()](game);
+            yield return storeTypes[command.ArgumentAsOption()](game);
         }
 
         #region StoreOptions
 
-        private void PresentComponents(IGameData game)
+        private IEnumerator PresentComponents(IGameData game)
         {
             ShowCPUs(game);
             ShowRAMs(game);
@@ -61,6 +62,8 @@ namespace Assets.Scripts.Commands
             ShowMotherboards(game);
             ShowSources(game);
             ShowNetworkBoards(game);
+
+            yield break;
         }
 
         private void ShowCPUs(IGameData game)
@@ -147,7 +150,7 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void PresentSoftware(IGameData game)
+        private IEnumerator PresentSoftware(IGameData game)
         {
             IEnumerable<Software> softwares = game.Store.Softwares;
 
@@ -158,6 +161,8 @@ namespace Assets.Scripts.Commands
 
                 SendMessage(text, MessageType.Info);
             }
+
+            yield break;
         }
 
         private void PresentStoreOptions(IGameData game)
