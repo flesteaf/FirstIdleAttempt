@@ -10,7 +10,7 @@ namespace Assets.Scripts.Commands
     internal class FirewallCommand : CommandWithDelay
     {
         private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> firewallOptions;
-        private int delayExecutionTime;
+        private long delayExecutionTime;
         public override CommandNames Name => CommandNames.firewall;
         public override List<CommandOptions> Options
         {
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Commands
                             CommandOptions.disable };
         }
 
-        protected override int BaseExecutionTime => 5000;
+        protected override int BaseExecutionTime => 2000;
 
         public FirewallCommand()
         {
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
@@ -92,9 +92,9 @@ namespace Assets.Scripts.Commands
             return device;
         }
 
-        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
+        protected override long GetCommandDelay(int computerSpeed, long networkSpeed)
         {
-            return BaseExecutionTime / computerSpeed + (int)((long)Sizes.MB / networkSpeed);
+            return BaseExecutionTime / computerSpeed + (long)Sizes.KB / networkSpeed;
         }
     }
 }

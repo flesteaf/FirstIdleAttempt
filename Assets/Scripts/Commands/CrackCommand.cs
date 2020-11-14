@@ -9,9 +9,9 @@ namespace Assets.Scripts.Commands
 {
     internal class CrackCommand : CommandWithDelay
     {
-        private static long NetworkDataForCrack = 10*(long)Sizes.MB;
+        private readonly long NetworkDataForCrack = (long)Sizes.MB;
         private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> crackTypes;
-        private int delayExecutionTime;
+        private long delayExecutionTime;
         public override CommandNames Name => CommandNames.crack;
         public override List<CommandOptions> Options { 
             get => new List<CommandOptions> { 
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Commands
                             CommandOptions.wpa2 }; 
         }
 
-        protected override int BaseExecutionTime => 100000;
+        protected override int BaseExecutionTime => 4000;
 
         public CrackCommand()
         {
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
@@ -92,9 +92,9 @@ namespace Assets.Scripts.Commands
 
         #endregion CrackCommands
 
-        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
+        protected override long GetCommandDelay(int computerSpeed, long networkSpeed)
         {
-            return BaseExecutionTime / computerSpeed + (int)(NetworkDataForCrack / networkSpeed);
+            return BaseExecutionTime / computerSpeed + NetworkDataForCrack / networkSpeed;
         }
     }
 }

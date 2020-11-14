@@ -10,9 +10,9 @@ namespace Assets.Scripts.Commands
 {
     internal class InjectCommand : CommandWithDelay
     {
-        private int delayExecutionTime;
+        private long delayExecutionTime;
         private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> injectTypes;
-        private readonly long networkCommunication = 10 * (long)Sizes.MB;
+        private readonly long networkCommunication = (long)Sizes.MB;
 
         public override CommandNames Name => CommandNames.inject;
         public override List<CommandOptions> Options
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
@@ -101,9 +101,9 @@ namespace Assets.Scripts.Commands
             yield return ExecuteDelay(delayExecutionTime, device.Infect, InfectionType.Miner);
         }
 
-        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
+        protected override long GetCommandDelay(int computerSpeed, long networkSpeed)
         {
-            return BaseExecutionTime / computerSpeed + (int)(networkCommunication / networkSpeed);
+            return BaseExecutionTime / computerSpeed + networkCommunication / networkSpeed;
         }
 
         #endregion InjectCommands

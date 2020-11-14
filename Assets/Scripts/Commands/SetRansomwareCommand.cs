@@ -4,22 +4,16 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Commands
 {
-    internal class SetRansomwareCommand : CommandWithDelay
+    internal class SetRansomwareCommand : Command
     {
         public override CommandNames Name => CommandNames.setRansomware;
 
         public override List<CommandOptions> Options => new List<CommandOptions> { CommandOptions.None };
 
-        protected override int BaseExecutionTime => throw new NotImplementedException();
-
-        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData data, CommandLine command)
         {
+            //TODO: implement this
             yield break;
-        }
-
-        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
-        {
-            throw new NotImplementedException();
         }
     }
 }

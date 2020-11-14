@@ -12,7 +12,7 @@ namespace Assets.Scripts.Commands
     {
         private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> scanTypes;
         private readonly float networkCommunication = 0.1f*(long)Sizes.KB;
-        private int delayExecutionTime;
+        private long delayExecutionTime;
 
         public override CommandNames Name => CommandNames.scan;
         public override List<CommandOptions> Options
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, int delayTime)
+        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgument())
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay(delayExecutionTime + 1000, ProvideDeviceDetails, device);
+            yield return ExecuteDelay((long)(delayExecutionTime*1.5), ProvideDeviceDetails, device);
         }
 
         private IEnumerator ScanMac(IGameData game, string mac)
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay(delayExecutionTime + 1000, ProvideDeviceDetails, device);
+            yield return ExecuteDelay((long)(delayExecutionTime * 1.5), ProvideDeviceDetails, device);
         }
 
         private void ProvideDeviceDetails(Device device)
@@ -110,7 +110,7 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay(delayExecutionTime + 3000, ListDevices, game, network);
+            yield return ExecuteDelay((long)(delayExecutionTime * 2), ListDevices, game, network);
         }
 
         private void ListDevices(IGameData game, HackableNetwork network)
@@ -124,9 +124,9 @@ namespace Assets.Scripts.Commands
 
         #endregion Scan commands
 
-        protected override int GetCommandDelay(int computerSpeed, long networkSpeed)
+        protected override long GetCommandDelay(int computerSpeed, long networkSpeed)
         {
-            return BaseExecutionTime / computerSpeed + (int)(networkCommunication / networkSpeed);
+            return BaseExecutionTime / computerSpeed + (long)(networkCommunication / networkSpeed);
         }
     }
 }
