@@ -2,20 +2,12 @@
 {
     public sealed class WearableDevice : Device
     {
-        public WearableDevice(DeviceIdentification identification) : base(identification)
+        public WearableDevice()
         {
+            HasFirewall = false;
+            EnergyLevel = 0.001f;
+            DiskSize = 0.001f;
+            Type = DeviceType.Wearable;
         }
-
-        public WearableDevice(DeviceIdentification identification, int designatedId) : base(identification, designatedId)
-        {
-        }
-
-        public override bool HasFirewall => false;
-
-        public override float EnergyLevel => 0.001f;
-
-        public override float DiskSize { get => 0.001f; }
-
-        public override DeviceType Type => DeviceType.Wearable;
     }
 }

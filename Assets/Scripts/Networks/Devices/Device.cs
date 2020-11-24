@@ -1,38 +1,43 @@
 ﻿using Assets.Scripts.Softwares;
+using Newtonsoft.Json;
 using static Assets.Scripts.HackerDelegates;
 
 namespace Assets.Scripts.Networks.Devices
 {
-    public abstract class Device
+    public class Device
     {
         private readonly DeviceIdentification identification;
+        private bool hasFirewall;
 
-        public int DesignatedId { get; }
-        public string IP { get => identification.Ip; }
-        public string MAC { get => identification.Mac; }
-        public bool FirewallIsActive { get; private set; }
+        public int DesignatedId { get; set; }
+        public string IP { get => identification.Ip; set => identification.Ip = value; }
+        public string MAC { get => identification.Mac; set => identification.Mac = value; }
+        public bool FirewallIsActive { get; set; }
+        public InfectionType InfectionType { get; set; } = InfectionType.None;
+        
+        [JsonIgnore]
         public bool CanBeInfected => FirewallIsActive == false;
+        [JsonIgnore]
         public bool IsInfected { get => InfectionType != InfectionType.None; }
-        public InfectionType InfectionType { get; private set; }
 
-        public abstract bool HasFirewall { get; }
-        public abstract float EnergyLevel { get; }
-        public abstract float DiskSize { get; }
-        public abstract DeviceType Type { get; }
+        public bool HasFirewall 
+        {
+            get => hasFirewall; 
+            set { 
+                hasFirewall = value; 
+                ActivateFirewall(); 
+            } 
+        }
+
+        public float EnergyLevel { get; set; }
+        public float DiskSize { get; set; }
+        public DeviceType Type { get; set; }
 
         public event DeviceInfectedEventHandler DeviceInfected; 
 
-        public Device(DeviceIdentification identification)
+        public Device()
         {
-            this.identification = identification;
-            FirewallIsActive = false;
-            InfectionType = InfectionType.None;
-            ActivateFirewall();
-        }
-
-        public Device(DeviceIdentification identification, int designatedId) : this(identification)
-        {
-            DesignatedId = designatedId;
+            identification = new DeviceIdentification();
         }
 
         internal void DeactivateFirewall()

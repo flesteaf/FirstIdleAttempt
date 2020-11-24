@@ -15,6 +15,7 @@
         store,
         clear,
         autocomplete,
-        extract
+        extract,
+        save
     }
 }

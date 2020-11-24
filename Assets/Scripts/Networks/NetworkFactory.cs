@@ -65,10 +65,22 @@ namespace Assets.Scripts.Networks
 
             if (applyDesignatedId)
             {
-                return new HackableNetwork(ssid, devices, ProtectionType.None, NetworkType.Home, lastNetworkId++);
+                return new HackableNetwork
+                {
+                    SSID = ssid,
+                    Devices = devices,
+                    Protection = ProtectionType.None,
+                    NetworkSize = NetworkType.Home,
+                    DesignatedId = lastNetworkId++
+                };
             }
 
-            return new HackableNetwork(ssid, devices, ProtectionType.None, NetworkType.Home);
+            return new HackableNetwork {
+                SSID = ssid, 
+                Devices = devices,
+                Protection = ProtectionType.None,
+                NetworkSize = NetworkType.Home
+            };
         }
 
         public HackableNetwork GetSmallNetwork(bool applyDesignatedId)
@@ -85,10 +97,23 @@ namespace Assets.Scripts.Networks
 
             if (applyDesignatedId)
             {
-                return new HackableNetwork(ssid, devices, ProtectionType.WEP, NetworkType.Small, lastNetworkId++);
+                return new HackableNetwork
+                {
+                    SSID = ssid,
+                    Devices = devices,
+                    Protection = ProtectionType.WEP,
+                    NetworkSize = NetworkType.Small,
+                    DesignatedId = lastNetworkId++
+                };
             }
 
-            return new HackableNetwork(ssid, devices, ProtectionType.WEP, NetworkType.Small);
+            return new HackableNetwork
+            {
+                SSID = ssid,
+                Devices = devices,
+                Protection = ProtectionType.WEP,
+                NetworkSize = NetworkType.Small
+            };
         }
 
         public HackableNetwork GetMediumNetwork(bool applyDesignatedId)
@@ -105,10 +130,23 @@ namespace Assets.Scripts.Networks
 
             if (applyDesignatedId)
             {
-                return new HackableNetwork(ssid, devices, ProtectionType.WPA, NetworkType.Small, lastNetworkId++);
+                return new HackableNetwork
+                {
+                    SSID = ssid,
+                    Devices = devices,
+                    Protection = ProtectionType.WPA,
+                    NetworkSize = NetworkType.Small,
+                    DesignatedId = lastNetworkId++
+                };
             }
 
-            return new HackableNetwork(ssid, devices, ProtectionType.WPA, NetworkType.Small);
+            return new HackableNetwork
+            {
+                SSID = ssid,
+                Devices = devices,
+                Protection = ProtectionType.WPA,
+                NetworkSize = NetworkType.Small
+            };
         }
 
         public HackableNetwork GetHugeNetwork(bool applyDesignatedId)
@@ -122,7 +160,7 @@ namespace Assets.Scripts.Networks
             string ip = GenerateIp();
             string mac = GenerateMac();
 
-            return new DeviceIdentification(ip, mac);
+            return new DeviceIdentification { Ip = ip, Mac = mac };
         }
 
         private string GenerateMac()

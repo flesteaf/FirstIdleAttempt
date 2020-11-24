@@ -25,8 +25,11 @@ namespace Assets.Scripts.UnitTests.Commands
             mockData = new Mock<IGameData>();
             data = mockData.Object;
 
-            Mock<IGameStore> mockStore = new Mock<IGameStore>();
-            actualData = new GameData(mockStore.Object);
+            Mock<GameStore> mockStore = new Mock<GameStore>();
+            actualData = new GameData
+            {
+                Store = mockStore.Object
+            };
         }
 
         [Test]
@@ -76,7 +79,7 @@ namespace Assets.Scripts.UnitTests.Commands
             for (int i = 0; i < network.Devices.Count; i++)
             {
                 Device item = network.Devices[i];
-                Assert.IsTrue(consoleText.Contains(item.ToString()), $"Device {i+1}/{network.Devices.Count} should have been present");
+                Assert.IsTrue(consoleText.Contains(item.ToString()), $"Device {i + 1}/{network.Devices.Count} should have been present");
             }
         }
 
@@ -126,8 +129,14 @@ namespace Assets.Scripts.UnitTests.Commands
         [Test]
         public void ScanIpPresentsProperDeviceDetails()
         {
-            Phone phone = new Phone(new DeviceIdentification("123.123.123.123", "12:34:56:78:90"));
-            actualData.AddNetwork(new HackableNetwork("test", new List<Device> { phone }, ProtectionType.None, NetworkType.Home));
+            Phone phone = new Phone { IP = "123.123.123.123", MAC = "12:34:56:78:90" };
+            HackableNetwork network = new HackableNetwork { 
+                                                    SSID = "test", 
+                                                    Devices = new List<Device> { phone }, 
+                                                    Protection = ProtectionType.None, 
+                                                    NetworkSize = NetworkType.Home };
+            
+            actualData.AddNetwork(network);
             console = new List<Tuple<string, MessageType>>();
             command.MessageNotification += ConsoleGathering;
             command.Execute(actualData, new CommandLine($"scan ip {phone.IP}"));
@@ -152,8 +161,16 @@ namespace Assets.Scripts.UnitTests.Commands
         [Test]
         public void ScanMacPresentsProperDeviceDetails()
         {
-            Phone phone = new Phone(new DeviceIdentification("123.123.123.123", "12:34:56:78:90"));
-            actualData.AddNetwork(new HackableNetwork("test", new List<Device> { phone }, ProtectionType.None, NetworkType.Home));
+            Phone phone = new Phone { IP = "123.123.123.123", MAC = "12:34:56:78:90" };
+            HackableNetwork network = new HackableNetwork
+            {
+                SSID = "test",
+                Devices = new List<Device> { phone },
+                Protection = ProtectionType.None,
+                NetworkSize = NetworkType.Home
+            };
+
+            actualData.AddNetwork(network);
             console = new List<Tuple<string, MessageType>>();
             command.MessageNotification += ConsoleGathering;
             command.Execute(actualData, new CommandLine($"scan mac {phone.MAC}"));

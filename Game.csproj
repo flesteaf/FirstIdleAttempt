@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\Computers\SpaceManagement.cs" />
     <Compile Include="Assets\Scripts\Computers\Wireless.cs" />
     <Compile Include="Assets\Scripts\ConsoleText.cs" />
+    <Compile Include="Assets\Scripts\DataSerializer.cs" />
     <Compile Include="Assets\Scripts\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\ListExtensions.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />

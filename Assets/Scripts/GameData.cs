@@ -10,6 +10,7 @@ using System.Linq;
 using UnityEditor;
 using static Assets.Scripts.HackerDelegates;
 using Random = System.Random;
+using Newtonsoft.Json;
 
 namespace Assets.Scripts
 {
@@ -20,13 +21,15 @@ namespace Assets.Scripts
         private readonly Random random;
         private static bool commandUnderExecution;
 
-        public List<CommandNames> AvailableSoftware { get; }
-        public List<CommandOptions> AvailableSoftwareOptions { get; }
-        public float CurrentProduction { get; private set; } = 0;
-        public float MoneyAmmount { get; private set; } = 0;
-        public List<HackableNetwork> FoundNetworks { get; }
-        public Computer Computer { get; }
-        public IGameStore Store { get; }
+        public List<CommandNames> AvailableSoftware { get; set; }
+        public List<CommandOptions> AvailableSoftwareOptions { get; set; }
+        public float CurrentProduction { get; set; } = 0;
+        public float MoneyAmmount { get; set; } = 0;
+        public List<HackableNetwork> FoundNetworks { get; set; }
+        public Computer Computer { get; set; }
+        public GameStore Store { get; set; }
+
+        [JsonIgnore]
         public bool ApplyDesignatedId => AvailableSoftware.Contains(CommandNames.extract);
 
         public bool CommandUnderExecution { get => commandUnderExecution; set => commandUnderExecution = value; }
@@ -34,9 +37,8 @@ namespace Assets.Scripts
         public event SendMessageEventHandler MessageSender;
         public event ClearConsoleEventHandler ClearHandler;
 
-        public GameData(IGameStore store)
+        public GameData()
         {
-            Store = store;
             Computer = new InitialComputer();
             AvailableSoftwareOptions = new List<CommandOptions> {
                     CommandOptions.None,
