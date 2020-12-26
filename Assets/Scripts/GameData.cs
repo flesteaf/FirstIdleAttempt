@@ -24,7 +24,7 @@ namespace Assets.Scripts
         public List<CommandNames> AvailableSoftware { get; set; }
         public List<CommandOptions> AvailableSoftwareOptions { get; set; }
         public float CurrentProduction { get; set; } = 0;
-        public float MoneyAmmount { get; set; } = 0;
+        public float MoneyAmount { get; set; } = 0;
         public List<HackableNetwork> FoundNetworks { get; set; }
         public Computer Computer { get; set; }
         public GameStore Store { get; set; }
@@ -75,14 +75,14 @@ namespace Assets.Scripts
             CurrentProduction += addValue * moneyGenerationExponent;
         }
 
-        public void UpdateAmmount(float value)
+        public void UpdateAmount(float value)
         {
-            MoneyAmmount += value;
+            MoneyAmount += value;
         }
 
         public void AddProduction()
         {
-            MoneyAmmount += CurrentProduction;
+            MoneyAmount += CurrentProduction;
         }
 
         #region Networks
@@ -192,7 +192,7 @@ namespace Assets.Scripts
         public bool TryBuySoftware(Software software, out string message)
         {
             message = string.Empty;
-            if (MoneyAmmount < software.Price)
+            if (MoneyAmount < software.Price)
             {
                 message = "Not enough money!";
                 return false;
@@ -218,13 +218,13 @@ namespace Assets.Scripts
                 }
             }
 
-            UpdateAmmount(-software.Price);
+            UpdateAmount(-software.Price);
             return true;
         }
 
         public bool TryBuyComponent(StoreComponent component, out string message)
         {
-            if (MoneyAmmount < component.Price)
+            if (MoneyAmount < component.Price)
             {
                 message = "Not enough money";
                 return false;

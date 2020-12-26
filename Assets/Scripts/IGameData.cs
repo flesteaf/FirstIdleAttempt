@@ -17,7 +17,7 @@ namespace Assets.Scripts
 
         bool ApplyDesignatedId { get; }
         List<HackableNetwork> FoundNetworks { get; }
-        float MoneyAmmount { get; }
+        float MoneyAmount { get; }
         GameStore Store { get; }
         bool CommandUnderExecution { get; set; }
 
@@ -33,7 +33,7 @@ namespace Assets.Scripts
         void RefreshNetworks();
         bool TryBuyComponent(StoreComponent component, out string message);
         bool TryBuySoftware(Software software, out string message);
-        void UpdateAmmount(float value);
+        void UpdateAmount(float value);
         void UpdateCurrentProduction(float addValue);
         void ClearConsole();
         int GetComputerSpeed();
