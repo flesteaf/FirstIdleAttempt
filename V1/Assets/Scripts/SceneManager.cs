@@ -22,7 +22,7 @@ public class SceneManager : MonoBehaviour
 
     private void Start()
     {
-        Money.UpdateText(Data.MoneyAmount);
+        Money.UpdateText(Data.MoneyAmmount);
     }
 
     private void Awake()
@@ -105,7 +105,7 @@ public class SceneManager : MonoBehaviour
     private void FixedUpdate()
     {
         Data.AddProduction();
-        Money.UpdateText(Data.MoneyAmount);
+        Money.UpdateText(Data.MoneyAmmount);
     }
 
     ~SceneManager()

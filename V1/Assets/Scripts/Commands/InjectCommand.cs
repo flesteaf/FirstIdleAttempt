@@ -99,7 +99,6 @@ namespace Assets.Scripts.Commands
             }
 
             yield return ExecuteDelay(delayExecutionTime, device.Infect, InfectionType.Miner);
-            SendMessage($"{identifier} has been successfully infected with a miner", MessageType.Info);
         }
 
         protected override long GetCommandDelay(int computerSpeed, long networkSpeed)
