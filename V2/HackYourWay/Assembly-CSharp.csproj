@@ -8,7 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>HackingYourWay</RootNamespace>
     <ProjectGuid>{D2D7936A-CCF0-5AFB-8E29-6F336D8A250C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -71,40 +71,82 @@
     <Compile Include="Assets\CommandTerminal\CommandShell.cs" />
     <Compile Include="Assets\CommandTerminal\RegisterCommandAttribute.cs" />
     <Compile Include="Assets\CommandTerminal\Terminal.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\Scripts\Commands\BuyCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\ClearCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\Command.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandFactory.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandLine.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandNames.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandOptions.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandWithDelay.cs" />
+    <Compile Include="Assets\Scripts\Commands\CrackCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\FirewallCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\HelpCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\InjectCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\InvalidCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\ScanCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\SetRansomwareCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\ShowCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\StatusCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\StoreCommand.cs" />
+    <Compile Include="Assets\Scripts\Computers\ComponentTypes\HardType.cs" />
+    <Compile Include="Assets\Scripts\Computers\ComponentTypes\RamType.cs" />
+    <Compile Include="Assets\Scripts\Computers\ComponentTypes\Sizes.cs" />
+    <Compile Include="Assets\Scripts\Computers\ComponentTypes\SpeedType.cs" />
+    <Compile Include="Assets\Scripts\Computers\ComponentTypes\WirelessType.cs" />
+    <Compile Include="Assets\Scripts\Computers\Computer.cs" />
+    <Compile Include="Assets\Scripts\Computers\ComputerComponent.cs" />
+    <Compile Include="Assets\Scripts\Computers\Cpu.cs" />
+    <Compile Include="Assets\Scripts\Computers\Gpu.cs" />
+    <Compile Include="Assets\Scripts\Computers\Hard.cs" />
+    <Compile Include="Assets\Scripts\Computers\InitialComputer.cs" />
+    <Compile Include="Assets\Scripts\Computers\Motherboard.cs" />
+    <Compile Include="Assets\Scripts\Computers\MotherboardExtensions\ComponentLoad.cs" />
+    <Compile Include="Assets\Scripts\Computers\MotherboardExtensions\MotherboardExtensions.cs" />
+    <Compile Include="Assets\Scripts\Computers\NetworkBoard.cs" />
+    <Compile Include="Assets\Scripts\Computers\Ram.cs" />
+    <Compile Include="Assets\Scripts\Computers\Source.cs" />
+    <Compile Include="Assets\Scripts\Computers\SpaceManagement.cs" />
+    <Compile Include="Assets\Scripts\Computers\Wireless.cs" />
+    <Compile Include="Assets\Scripts\Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Assets\Scripts\Extensions\ListExtensions.cs" />
+    <Compile Include="Assets\Scripts\GameData.cs" />
+    <Compile Include="Assets\Scripts\HackerDelegates.cs" />
+    <Compile Include="Assets\Scripts\IGameData.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\AdjustMissionBackground.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\Background.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\CommandLineField.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\ConsoleText.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\DataSerializer.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\MissionText.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\MoneyText.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\Device.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\DeviceFactory.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\DeviceIdentification.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\DeviceType.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\PersonalComputer.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\Phone.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\Smartphone.cs" />
+    <Compile Include="Assets\Scripts\Networks\Devices\WearableDevice.cs" />
+    <Compile Include="Assets\Scripts\Networks\HackableNetwork.cs" />
+    <Compile Include="Assets\Scripts\Networks\NetworkFactory.cs" />
+    <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
+    <Compile Include="Assets\Scripts\Networks\ProtectionType.cs" />
+    <Compile Include="Assets\Scripts\Softwares\InfectionType.cs" />
+    <Compile Include="Assets\Scripts\Softwares\Provides.cs" />
+    <Compile Include="Assets\Scripts\Softwares\Software.cs" />
+    <Compile Include="Assets\Scripts\Store\CpuStore.cs" />
+    <Compile Include="Assets\Scripts\Store\GameStore.cs" />
+    <Compile Include="Assets\Scripts\Store\GpuStore.cs" />
+    <Compile Include="Assets\Scripts\Store\HardStore.cs" />
+    <Compile Include="Assets\Scripts\Store\IGameStore.cs" />
+    <Compile Include="Assets\Scripts\Store\MotherboardStore.cs" />
+    <Compile Include="Assets\Scripts\Store\NetworkBoardStore.cs" />
+    <Compile Include="Assets\Scripts\Store\RamStore.cs" />
+    <Compile Include="Assets\Scripts\Store\SourceStore.cs" />
+    <Compile Include="Assets\Scripts\Store\StoreComponent.cs" />
+    <Compile Include="Assets\Scripts\UnityExtensions.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -312,8 +354,8 @@
     <Reference Include="UnityEditor">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/PackageCache/jillejr.newtonsoft.json-for-unity@77748af76a/Plugins/Newtonsoft.Json Editor/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -663,23 +705,11 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Animation.Runtime">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.PixelPerfect.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Path.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
@@ -687,56 +717,14 @@
     <Reference Include="Unity.Timeline">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Animation.Triangle.Runtime">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="PsdPlugin">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Psdimporter.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InternalAPIEngineBridge.001">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Common.Runtime">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Runtime">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.PixelPerfect">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Animation.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Common.Editor">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.001">
-      <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/flest/Documents/GitHub/FirstIdleAttempt/V2/HackYourWay/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
