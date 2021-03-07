@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Commands;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Assets.Scripts.Softwares
 {
@@ -52,14 +51,14 @@ namespace Assets.Scripts.Softwares
             }
         }
 
-        public long Size 
-        { 
-            get => size; 
-            set 
-            { 
+        public long Size
+        {
+            get => size;
+            set
+            {
                 if (size == -1)
-                    size = value; 
-            } 
+                    size = value;
+            }
         }
     }
 }

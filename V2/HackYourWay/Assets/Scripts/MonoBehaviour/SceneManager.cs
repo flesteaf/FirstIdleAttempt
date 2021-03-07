@@ -2,7 +2,6 @@
 using Assets.Scripts.Commands;
 using Assets.Scripts.Store;
 using Newtonsoft.Json;
-using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -18,7 +17,7 @@ public class SceneManager : MonoBehaviour
     public MoneyText Money { get; private set; }
     public GameData Data { get; set; }
 
-    public bool CommandUnderExecution => Data.CommandUnderExecution; 
+    public bool CommandUnderExecution => Data.CommandUnderExecution;
 
     private void Start()
     {
@@ -47,7 +46,7 @@ public class SceneManager : MonoBehaviour
         {
             Data = JsonConvert.DeserializeObject<GameData>(data);
         }
-        
+
         Data.MessageSender += SendToConsole;
         Data.ClearHandler += ClearConsole;
 

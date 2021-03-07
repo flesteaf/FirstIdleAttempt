@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Extensions;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -25,7 +24,7 @@ public class ConsoleText : MonoBehaviour
 
     public void PresentProgress(int progressPercent)
     {
-        if(progressPercent == -1)
+        if (progressPercent == -1)
         {
             if (consoleMessages[consoleMessages.Count - 1].Contains("%"))
                 consoleMessages.RemoveAt(consoleMessages.Count - 1);
@@ -74,7 +73,7 @@ public class ConsoleText : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (scrollbar.IsActive() && textChanged!=0)
+        if (scrollbar.IsActive() && textChanged != 0)
         {
             scrollbar.value = 0;
             textChanged--;

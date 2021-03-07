@@ -51,7 +51,8 @@ namespace Assets.Scripts.Commands
         private IEnumerator DisableFirewall(IGameData manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
-            if (device == null) {
+            if (device == null)
+            {
                 yield break;
             }
 
@@ -76,7 +77,7 @@ namespace Assets.Scripts.Commands
             }
             yield break;
         }
-        
+
         private Device GetDevice(IGameData manager, string identifier)
         {
             Device device = manager.GetDeviceByIp(identifier);

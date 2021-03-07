@@ -40,6 +40,7 @@ namespace Assets.Scripts
             Computer = new InitialComputer();
             AvailableSoftwareOptions = new List<CommandOptions> {
                     CommandOptions.None,
+                    CommandOptions.Invalid,
                     CommandOptions.ip,
                     CommandOptions.mac,
                     CommandOptions.network,
@@ -60,7 +61,8 @@ namespace Assets.Scripts
                     CommandNames.scan,
                     CommandNames.inject,
                     CommandNames.show,
-                    CommandNames.clear};
+                    CommandNames.clear,
+                    CommandNames.invalid};
 
             FoundNetworks = new List<HackableNetwork>();
             networkFactory = new NetworkFactory();
@@ -137,7 +139,7 @@ namespace Assets.Scripts
             Device[] devices = FoundNetworks.SelectMany(n => n.Devices).ToArray();
             Device device = Array.Find(devices, d => d.IP == ip);
 
-            if (device == null && ApplyDesignatedId) 
+            if (device == null && ApplyDesignatedId)
             {
                 if (int.TryParse(ip.Substring(2), out int desiredId))
                 {
@@ -197,7 +199,7 @@ namespace Assets.Scripts
             }
 
             Store.SoftwareBought(software);
-            if(!Computer.StoreSoftware(software))
+            if (!Computer.StoreSoftware(software))
             {
                 message = $"Not enough space to store {software.Name}";
                 return false;

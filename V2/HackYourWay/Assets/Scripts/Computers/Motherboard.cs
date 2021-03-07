@@ -123,7 +123,7 @@
             return hashCode;
         }
 
-        public static bool operator > (Motherboard obj1, Motherboard obj2)
+        public static bool operator >(Motherboard obj1, Motherboard obj2)
         {
             if (Compare(obj1, obj2) > 0)
                 return true;
@@ -131,7 +131,7 @@
             return false;
         }
 
-        public static bool operator < (Motherboard obj1, Motherboard obj2)
+        public static bool operator <(Motherboard obj1, Motherboard obj2)
         {
             if (Compare(obj1, obj2) < 0)
                 return true;
@@ -139,7 +139,7 @@
             return false;
         }
 
-        public static bool operator == (Motherboard obj1, Motherboard obj2)
+        public static bool operator ==(Motherboard obj1, Motherboard obj2)
         {
             if (Compare(obj1, obj2) == 0)
                 return true;

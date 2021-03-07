@@ -11,7 +11,7 @@ namespace Assets.Scripts.Commands
     public class ScanCommand : CommandWithDelay
     {
         private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> scanTypes;
-        private readonly float networkCommunication = 0.1f*(long)Sizes.KB;
+        private readonly float networkCommunication = 0.1f * (long)Sizes.KB;
         private long delayExecutionTime;
 
         public override CommandNames Name => CommandNames.scan;
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay((long)(delayExecutionTime*1.5), ProvideDeviceDetails, device);
+            yield return ExecuteDelay((long)(delayExecutionTime * 1.5), ProvideDeviceDetails, device);
         }
 
         private IEnumerator ScanMac(IGameData game, string mac)
@@ -110,7 +110,7 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay((long)(delayExecutionTime * 2), ListDevices, game, network);
+            yield return ExecuteDelay(delayExecutionTime * 2, ListDevices, game, network);
         }
 
         private void ListDevices(IGameData game, HackableNetwork network)

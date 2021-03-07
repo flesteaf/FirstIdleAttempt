@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Networks.Devices;
 using System.Collections.Generic;
-using System.Diagnostics;
 using static Assets.Scripts.HackerDelegates;
 
 namespace Assets.Scripts.Networks

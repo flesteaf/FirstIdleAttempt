@@ -75,8 +75,9 @@ namespace Assets.Scripts.Networks
                 };
             }
 
-            return new HackableNetwork {
-                SSID = ssid, 
+            return new HackableNetwork
+            {
+                SSID = ssid,
                 Devices = devices,
                 Protection = ProtectionType.None,
                 NetworkSize = NetworkType.Home

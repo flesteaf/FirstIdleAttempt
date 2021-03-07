@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Text;
 
 namespace Assets.Scripts.Commands
 {
     public class CommandLine
     {
         private readonly CommandNames commandName;
-        private readonly CommandOptions option;
+        private readonly CommandOptions option = CommandOptions.None;
+        private readonly string originalCommand;
 
         public CommandNames CommandName { get => commandName; }
         public CommandOptions Option { get => option; }
@@ -16,6 +16,7 @@ namespace Assets.Scripts.Commands
         public CommandLine(string command)
         {
             if (string.IsNullOrEmpty(command)) throw new ArgumentNullException($"{nameof(command)} should not be null or empty");
+            originalCommand = command;
 
             string[] segments = command.Split(new[] { '"' }, StringSplitOptions.RemoveEmptyEntries);
             string[] commandComponents = segments[0].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -25,8 +26,6 @@ namespace Assets.Scripts.Commands
                 commandName = CommandNames.invalid;
                 return;
             }
-
-            option = CommandOptions.None;
 
             int componentsLength = commandComponents.Length;
             if (segments.Length == 2)
@@ -41,7 +40,7 @@ namespace Assets.Scripts.Commands
             }
             else
             {
-                if (componentsLength > 1) Argument = commandComponents[componentsLength-1];
+                if (componentsLength > 1) Argument = commandComponents[componentsLength - 1];
                 if (componentsLength > 2 && !Enum.TryParse(commandComponents[1], out option))
                 {
                     throw new ArgumentException($"Command option {option} is unsupported for any command");
@@ -53,13 +52,7 @@ namespace Assets.Scripts.Commands
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(commandName);
-            if (option != CommandOptions.None) builder.Append($" {option}");
-            if (LongArgument) builder.Append($" \"{Argument}\"");
-            if (!LongArgument && !string.IsNullOrEmpty(Argument)) builder.Append($" {Argument}");
-
-            return builder.ToString();
+            return originalCommand;
         }
 
         #endregion Overrides

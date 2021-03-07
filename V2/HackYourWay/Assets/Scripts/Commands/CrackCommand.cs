@@ -13,11 +13,12 @@ namespace Assets.Scripts.Commands
         private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> crackTypes;
         private long delayExecutionTime;
         public override CommandNames Name => CommandNames.crack;
-        public override List<CommandOptions> Options { 
-            get => new List<CommandOptions> { 
-                            CommandOptions.wep, 
-                            CommandOptions.wpa, 
-                            CommandOptions.wpa2 }; 
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.wep,
+                            CommandOptions.wpa,
+                            CommandOptions.wpa2 };
         }
 
         protected override int BaseExecutionTime => 4000;

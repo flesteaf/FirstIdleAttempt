@@ -4,11 +4,13 @@ namespace CommandTerminal
 {
     public class CommandHistory
     {
-        List<string> history = new List<string>();
-        int position;
+        private readonly List<string> history = new List<string>();
+        private int position;
 
-        public void Push(string command_string) {
-            if (command_string == "") {
+        public void Push(string command_string)
+        {
+            if (command_string == "")
+            {
                 return;
             }
 
@@ -16,10 +18,12 @@ namespace CommandTerminal
             position = history.Count;
         }
 
-        public string Next() {
+        public string Next()
+        {
             position++;
 
-            if (position >= history.Count) {
+            if (position >= history.Count)
+            {
                 position = history.Count;
                 return "";
             }
@@ -27,21 +31,25 @@ namespace CommandTerminal
             return history[position];
         }
 
-        public string Previous() {
-            if (history.Count == 0) {
+        public string Previous()
+        {
+            if (history.Count == 0)
+            {
                 return "";
             }
 
             position--;
 
-            if (position < 0) {
+            if (position < 0)
+            {
                 position = 0;
             }
 
             return history[position];
         }
 
-        public void Clear() {
+        public void Clear()
+        {
             history.Clear();
             position = 0;
         }

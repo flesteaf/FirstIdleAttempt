@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Computers.Motherboards;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Softwares;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +16,7 @@ namespace Assets.Scripts.Computers
         private List<NetworkBoard> networks;
         private List<Source> sources;
         private Motherboard motherboard;
-        private SpaceManagement spaceManagement;
+        private readonly SpaceManagement spaceManagement;
         private string name;
 
         #region PublicProperties
