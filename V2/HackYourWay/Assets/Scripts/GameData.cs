@@ -17,7 +17,6 @@ namespace Assets.Scripts
     {
         private readonly float moneyGenerationExponent = 2.912f;
         private readonly NetworkFactory networkFactory;
-        private readonly Random random;
         private static bool commandUnderExecution;
 
         public List<CommandNames> AvailableSoftware { get; set; }
@@ -66,7 +65,6 @@ namespace Assets.Scripts
 
             FoundNetworks = new List<HackableNetwork>();
             networkFactory = new NetworkFactory();
-            random = new Random();
             commandUnderExecution = false;
         }
 
@@ -111,18 +109,11 @@ namespace Assets.Scripts
         {
             FoundNetworks.RemoveAll(n => !n.WasHacked);
 
-            int noOfNetworksToDiscover = random.Next(1, 5);
+            int noOfNetworksToDiscover = new Random().Next(1, 5);
             for (int i = 0; i < noOfNetworksToDiscover; i++)
             {
-                HackableNetwork item;
-                if (ApplyDesignatedId)
-                {
-                    item = networkFactory.GetRandomNetwork(NetworkType.Medium, true);
-                }
-                else
-                {
-                    item = networkFactory.GetRandomNetwork(NetworkType.Medium);
-                }
+                NetworkType type = networkFactory.GetRandomNetworkType();
+                HackableNetwork item = networkFactory.GetRandomNetwork(type, ApplyDesignatedId);
 
                 AddNetwork(item);
                 SendMessage(item.ToString(ApplyDesignatedId), MessageType.Info);

@@ -129,6 +129,11 @@
     <Compile Include="Assets\Scripts\Networks\Devices\Phone.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Smartphone.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\WearableDevice.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\HomeNetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\INetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\MediumNetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\SmallNetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\SmallOfficeNetworkGeneration.cs" />
     <Compile Include="Assets\Scripts\Networks\HackableNetwork.cs" />
     <Compile Include="Assets\Scripts\Networks\NetworkFactory.cs" />
     <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
