@@ -12,14 +12,15 @@ namespace Assets.Scripts.Networks
         private readonly DeviceFactory deviceFactory;
         private readonly Random random;
 
-        private readonly List<INetworkGeneration> networkData;
+        private readonly List<NetworkGeneration> networkData;
         private int lastNetworkId;
+        private List<string> generatedSsids = new List<string>();
 
         public NetworkFactory()
         {
             deviceFactory = new DeviceFactory();
             random = new Random();
-            networkData = new List<INetworkGeneration>
+            networkData = new List<NetworkGeneration>
             {
                 new HomeNetworkGeneration(),
                 new SmallNetworkGeneration(),
@@ -38,13 +39,13 @@ namespace Assets.Scripts.Networks
         private HackableNetwork GetNetwork(NetworkType netType, bool applyDesignatedId)
         {
             List<DeviceIdentification> deviceIdentifications = new List<DeviceIdentification>();
-            INetworkGeneration generationData = networkData.First(x => x.Type == netType);
+            NetworkGeneration generationData = networkData.First(x => x.Type == netType);
             for (int i = 0; i < generationData.NoOfDevices; i++)
             {
                 deviceIdentifications.Add(GetDeviceIdetification());
             }
 
-            string ssid = generationData.GetSSID();
+            string ssid = generationData.GetSSID(generatedSsids);
             List<Device> devices = deviceFactory.GetDevices(deviceIdentifications, applyDesignatedId);
 
             return new HackableNetwork
