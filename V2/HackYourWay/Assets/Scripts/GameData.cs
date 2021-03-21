@@ -112,8 +112,7 @@ namespace Assets.Scripts
             int noOfNetworksToDiscover = new Random().Next(1, 5);
             for (int i = 0; i < noOfNetworksToDiscover; i++)
             {
-                NetworkType type = networkFactory.GetRandomNetworkType();
-                HackableNetwork item = networkFactory.GetRandomNetwork(type, ApplyDesignatedId);
+                HackableNetwork item = networkFactory.GetRandomNetwork(ApplyDesignatedId);
 
                 AddNetwork(item);
                 SendMessage(item.ToString(ApplyDesignatedId), MessageType.Info);

@@ -28,10 +28,20 @@ namespace Assets.Scripts.Networks
             };
         }
 
-        public HackableNetwork GetRandomNetwork(NetworkType maxType, bool applyDesignatedId = false)
+        public HackableNetwork GetRandomNetwork(bool applyDesignatedId)
         {
-            int networkType = random.Next(0, (int)maxType);
-            NetworkType networkTypeToGenerate = (NetworkType)Enum.Parse(typeof(NetworkType), networkType.ToString());
+            int networkType = random.Next(0, 91);
+            NetworkType networkTypeToGenerate = NetworkType.Home;
+
+            //revert to switch when unity support C# 7.0
+            if (networkType >= 0 && networkType <= 40)
+                networkTypeToGenerate = NetworkType.Home;
+
+            if (networkType >= 41 && networkType <= 70) 
+                    networkTypeToGenerate = NetworkType.Small; 
+
+            if (networkType >= 71 && networkType <= 90)
+                    networkTypeToGenerate = NetworkType.SmallOffice; 
 
             return GetNetwork(networkTypeToGenerate, applyDesignatedId);
         }
@@ -56,12 +66,6 @@ namespace Assets.Scripts.Networks
                 NetworkSize = netType,
                 DesignatedId = applyDesignatedId ? lastNetworkId++ : 0
             };
-        }
-
-        internal NetworkType GetRandomNetworkType()
-        {
-            Array networkTypes = Enum.GetValues(typeof(NetworkType));
-            return (NetworkType)networkTypes.GetValue(random.Next(networkTypes.Length));
         }
 
         private DeviceIdentification GetDeviceIdetification()

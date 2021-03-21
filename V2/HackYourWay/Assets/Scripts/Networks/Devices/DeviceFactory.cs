@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Networks.Devices
 {
@@ -8,33 +9,42 @@ namespace Assets.Scripts.Networks.Devices
     {
         private readonly List<Type> Devices = new List<Type>();
         private int lastDeviceId;
+        private readonly System.Random random = new System.Random();
 
         public DeviceFactory()
         {
-            Devices.Add(typeof(PersonalComputer));
             Devices.Add(typeof(Phone));
-            Devices.Add(typeof(Smartphone));
             Devices.Add(typeof(WearableDevice));
+            Devices.Add(typeof(Smartphone));
+            Devices.Add(typeof(PersonalComputer));
         }
 
         public Device GetRandomDevice(DeviceIdentification identification, bool applyDesignatedId)
         {
-            int random = new Random().Next(0, Devices.Count - 1);
-            Type deviceType = Devices[random];
+            int randomNo = random.Next(0, 101);
+
+            if (randomNo >= 0 && randomNo <= 40)
+                randomNo = 0;
+
+            if (randomNo >= 41 && randomNo <= 70)
+                randomNo = 1;
+
+            if (randomNo >= 71 && randomNo <= 90)
+                randomNo = 2;
+
+            if (randomNo >= 91 && randomNo <= 100)
+                randomNo = 3;
+
+            Type deviceType = Devices[randomNo];
             Device device;
-
-            if (applyDesignatedId)
-            {
-                device = (Device)Activator.CreateInstance(deviceType);
-                device.IP = identification.Ip;
-                device.MAC = identification.Mac;
-                device.DesignatedId = lastDeviceId++;
-                return device;
-            }
-
             device = (Device)Activator.CreateInstance(deviceType);
             device.IP = identification.Ip;
             device.MAC = identification.Mac;
+
+            if (applyDesignatedId)
+            {
+                device.DesignatedId = lastDeviceId++;
+            }
 
             return device;
         }
