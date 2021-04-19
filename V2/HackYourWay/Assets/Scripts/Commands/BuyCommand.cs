@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<IGameData, string>> buyOptions;
+        private readonly Dictionary<CommandOptions, Action<IGameLogic, string>> buyOptions;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -20,14 +20,14 @@ namespace Assets.Scripts.Commands
 
         public BuyCommand()
         {
-            buyOptions = new Dictionary<CommandOptions, Action<IGameData, string>>
+            buyOptions = new Dictionary<CommandOptions, Action<IGameLogic, string>>
             {
                 { CommandOptions.software, BuySoftware },
                 { CommandOptions.component, BuyComponent }
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command)
         {
             if (!command.LongArgument)
             {
@@ -51,9 +51,9 @@ namespace Assets.Scripts.Commands
             yield break;
         }
 
-        private void BuyComponent(IGameData game, string componentName)
+        private void BuyComponent(IGameLogic game, string componentName)
         {
-            StoreComponent component = game.Store.GetComponent(componentName);
+            StoreComponent component = game.PlayerData.Store.GetComponent(componentName);
 
             if (component == null)
             {
@@ -67,9 +67,9 @@ namespace Assets.Scripts.Commands
             }
         }
 
-        private void BuySoftware(IGameData game, string softwareName)
+        private void BuySoftware(IGameLogic game, string softwareName)
         {
-            Software software = game.Store.GetSoftware(softwareName);
+            Software software = game.PlayerData.Store.GetSoftware(softwareName);
 
             if (software == null)
             {

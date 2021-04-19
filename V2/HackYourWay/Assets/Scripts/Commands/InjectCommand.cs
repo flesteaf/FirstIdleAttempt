@@ -11,7 +11,7 @@ namespace Assets.Scripts.Commands
     internal class InjectCommand : CommandWithDelay
     {
         private long delayExecutionTime;
-        private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> injectTypes;
+        private readonly Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>> injectTypes;
         private readonly long networkCommunication = (long)Sizes.MB;
 
         public override CommandNames Name => CommandNames.inject;
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Commands
 
         public InjectCommand()
         {
-            injectTypes = new Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>>
+            injectTypes = new Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>>
             {
                 { CommandOptions.miner, InjectMiner },
                 { CommandOptions.bot, InjectBot },
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
@@ -57,28 +57,28 @@ namespace Assets.Scripts.Commands
 
         #region InjectCommands
 
-        private IEnumerator InjectRansomware(IGameData game, string identifier)
+        private IEnumerator InjectRansomware(IGameLogic game, string identifier)
         {
             //TODO: implement this;
             SendMessage("Not implemented yet", MessageType.Warning);
             yield break;
         }
 
-        private IEnumerator InjectSpammer(IGameData game, string identifier)
+        private IEnumerator InjectSpammer(IGameLogic game, string identifier)
         {
             //TODO: implement this;
             SendMessage("Not implemented yet", MessageType.Warning);
             yield break;
         }
 
-        private IEnumerator InjectBot(IGameData game, string identifier)
+        private IEnumerator InjectBot(IGameLogic game, string identifier)
         {
             //TODO: implement this;
             SendMessage("Not implemented yet", MessageType.Warning);
             yield break;
         }
 
-        private IEnumerator InjectMiner(IGameData game, string identifier)
+        private IEnumerator InjectMiner(IGameLogic game, string identifier)
         {
             Device device = game.GetDeviceByIp(identifier);
             if (device == null)
@@ -98,7 +98,13 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay(delayExecutionTime, device.Infect, InfectionType.Miner);
+            yield return ExecuteDelay(delayExecutionTime, InjectDevice, device, InfectionType.Miner);
+        }
+
+        private void InjectDevice(Device device, InfectionType infectionType)
+        {
+            device.Infect(infectionType);
+            SendMessage($"Device {device.IP} has been infected successfully with a {infectionType}", MessageType.Info);
         }
 
         protected override long GetCommandDelay(int computerSpeed, long networkSpeed)

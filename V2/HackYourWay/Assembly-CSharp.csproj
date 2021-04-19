@@ -110,9 +110,9 @@
     <Compile Include="Assets\Scripts\Computers\Wireless.cs" />
     <Compile Include="Assets\Scripts\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\ListExtensions.cs" />
-    <Compile Include="Assets\Scripts\GameData.cs" />
+    <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\HackerDelegates.cs" />
-    <Compile Include="Assets\Scripts\IGameData.cs" />
+    <Compile Include="Assets\Scripts\IGameLogic.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\AdjustMissionBackground.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Background.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\CommandLineField.cs" />
@@ -138,6 +138,7 @@
     <Compile Include="Assets\Scripts\Networks\NetworkFactory.cs" />
     <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
     <Compile Include="Assets\Scripts\Networks\ProtectionType.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Softwares\InfectionType.cs" />
     <Compile Include="Assets\Scripts\Softwares\Provides.cs" />
     <Compile Include="Assets\Scripts\Softwares\Software.cs" />

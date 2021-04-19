@@ -10,7 +10,7 @@ namespace Assets.Scripts.Commands
     internal class ShowCommand : Command
     {
         public override CommandNames Name => CommandNames.show;
-        private readonly Dictionary<CommandOptions, Func<IGameData, IEnumerator>> showTypes;
+        private readonly Dictionary<CommandOptions, Func<IGameLogic, IEnumerator>> showTypes;
         public override List<CommandOptions> Options
         {
             get => new List<CommandOptions> {
@@ -20,14 +20,14 @@ namespace Assets.Scripts.Commands
 
         public ShowCommand()
         {
-            showTypes = new Dictionary<CommandOptions, Func<IGameData, IEnumerator>>
+            showTypes = new Dictionary<CommandOptions, Func<IGameLogic, IEnumerator>>
             {
                 { CommandOptions.networks,  ShowNetworks },
                 { CommandOptions.ips, ShowDevices }
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command)
         {
             if (!command.HasArgumentAndNoOption())
             {
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Commands
 
         #region ShowCommands
 
-        private IEnumerator ShowDevices(IGameData game)
+        private IEnumerator ShowDevices(IGameLogic game)
         {
             IEnumerable<Device> devices = game.GetAllHackedDevices();
 
@@ -65,9 +65,9 @@ namespace Assets.Scripts.Commands
             yield break;
         }
 
-        private IEnumerator ShowNetworks(IGameData game)
+        private IEnumerator ShowNetworks(IGameLogic game)
         {
-            IEnumerable<HackableNetwork> networks = game.FoundNetworks;
+            IEnumerable<HackableNetwork> networks = game.PlayerData.FoundNetworks;
 
             foreach (var item in networks)
             {

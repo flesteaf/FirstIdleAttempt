@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
 {
     internal class FirewallCommand : CommandWithDelay
     {
-        private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> firewallOptions;
+        private readonly Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>> firewallOptions;
         private long delayExecutionTime;
         public override CommandNames Name => CommandNames.firewall;
         public override List<CommandOptions> Options
@@ -23,14 +23,14 @@ namespace Assets.Scripts.Commands
 
         public FirewallCommand()
         {
-            firewallOptions = new Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>>
+            firewallOptions = new Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>>
             {
                 { CommandOptions.enable, EnableFirewall },
                 { CommandOptions.disable, DisableFirewall }
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
@@ -48,7 +48,7 @@ namespace Assets.Scripts.Commands
             yield return firewallOptions[command.Option](game, command.Argument);
         }
 
-        private IEnumerator DisableFirewall(IGameData manager, string identifier)
+        private IEnumerator DisableFirewall(IGameLogic manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
             if (device == null)
@@ -63,7 +63,7 @@ namespace Assets.Scripts.Commands
             yield break;
         }
 
-        private IEnumerator EnableFirewall(IGameData manager, string identifier)
+        private IEnumerator EnableFirewall(IGameLogic manager, string identifier)
         {
             Device device = GetDevice(manager, identifier);
             if (device == null)
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Commands
             yield break;
         }
 
-        private Device GetDevice(IGameData manager, string identifier)
+        private Device GetDevice(IGameLogic manager, string identifier)
         {
             Device device = manager.GetDeviceByIp(identifier);
             if (device == null)

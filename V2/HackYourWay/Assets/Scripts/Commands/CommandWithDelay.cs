@@ -9,7 +9,7 @@ namespace Assets.Scripts.Commands
     {
         protected abstract int BaseExecutionTime { get; }
 
-        public override IEnumerator Execute(IGameData data, CommandLine command)
+        public override IEnumerator Execute(IGameLogic data, CommandLine command)
         {
             long delayTime = GetCommandDelay(data.GetComputerSpeed(), data.GetNetworkSpeed());
 
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Commands
         }
 
         protected abstract long GetCommandDelay(int computerSpeed, long networkSpeed);
-        public abstract IEnumerator Execute(IGameData game, CommandLine command, long delayTime);
+        public abstract IEnumerator Execute(IGameLogic game, CommandLine command, long delayTime);
 
         protected internal IEnumerator ExecuteDelay(long delay, Action action)
         {

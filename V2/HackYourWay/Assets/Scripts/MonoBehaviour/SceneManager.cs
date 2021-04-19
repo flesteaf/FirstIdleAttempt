@@ -15,13 +15,13 @@ public class SceneManager : MonoBehaviour
     public ConsoleText Console { get; private set; }
     public MissionText Mission { get; private set; }
     public MoneyText Money { get; private set; }
-    public GameData Data { get; set; }
+    public IGameLogic Data { get; set; }
 
     public bool CommandUnderExecution => Data.CommandUnderExecution;
 
     private void Start()
     {
-        Money.UpdateText(Data.MoneyAmmount);
+        Money.UpdateText(Data.PlayerData.MoneyAmmount);
     }
 
     private void Awake()
@@ -37,14 +37,13 @@ public class SceneManager : MonoBehaviour
         {
             TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
             GameStore store = JsonConvert.DeserializeObject<GameStore>(dataAsset.text);
-            Data = new GameData
-            {
-                Store = store
-            };
+
+            Data = new GameLogic(ScriptableObject.CreateInstance<PlayerData>());
+            Data.PlayerData.Store = store;
         }
         else
         {
-            Data = JsonConvert.DeserializeObject<GameData>(data);
+            Data = JsonConvert.DeserializeObject<GameLogic>(data);
         }
 
         Data.MessageSender += SendToConsole;
@@ -65,14 +64,14 @@ public class SceneManager : MonoBehaviour
         }
 
         Command action = CommandFactory.GetCommand(command);
-        if (!Data.AvailableSoftware.Contains(action.Name))
+        if (!Data.PlayerData.AvailableSoftware.Contains(action.Name))
         {
             Console.AddMessage($"Command {action.Name} needs to be bought", MessageType.Error);
             yield break;
         }
 
         CommandOptions option = action.GetOptionFromCommand(command);
-        if (option == CommandOptions.Invalid || !Data.AvailableSoftwareOptions.Contains(option))
+        if (option == CommandOptions.Invalid || !Data.PlayerData.AvailableSoftwareOptions.Contains(option))
         {
             Console.AddMessage($"Option {option} of command {action.Name} needs to be bought", MessageType.Error);
             yield break;
@@ -104,7 +103,7 @@ public class SceneManager : MonoBehaviour
     private void FixedUpdate()
     {
         Data.AddProduction();
-        Money.UpdateText(Data.MoneyAmmount);
+        Money.UpdateText(Data.PlayerData.MoneyAmmount);
     }
 
     ~SceneManager()

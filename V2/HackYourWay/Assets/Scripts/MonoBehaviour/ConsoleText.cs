@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Extensions;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -29,6 +30,8 @@ public class ConsoleText : MonoBehaviour
             if (consoleMessages[consoleMessages.Count - 1].Contains("%"))
                 consoleMessages.RemoveAt(consoleMessages.Count - 1);
 
+            Console.text = consoleMessages.ToTextConsole();
+            textChanged++;
             return;
         }
 
@@ -61,7 +64,7 @@ public class ConsoleText : MonoBehaviour
     public void AddMessage(string text, MessageType type)
     {
         HandleMessage(text, type);
-
+         
         while (consoleMessages.Count > totalNoOfLines)
         {
             consoleMessages.RemoveAt(0);
@@ -71,8 +74,10 @@ public class ConsoleText : MonoBehaviour
         textChanged++;
     }
 
+    //private IEnumerator ScrollDown()
     private void LateUpdate()
     {
+        //yield return new WaitForEndOfFrame();
         if (scrollbar.IsActive() && textChanged != 0)
         {
             scrollbar.value = 0;
@@ -95,6 +100,7 @@ public class ConsoleText : MonoBehaviour
         }
 
         consoleMessages.Add(message);
+        textChanged++;
     }
 
     internal void ClearConsole()
