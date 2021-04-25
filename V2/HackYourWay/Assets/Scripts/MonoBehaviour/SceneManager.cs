@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Commands;
-using Assets.Scripts.Store;
 using Newtonsoft.Json;
 using System.Collections;
 using UnityEditor;
@@ -9,7 +8,7 @@ using UnityEngine;
 
 public class SceneManager : MonoBehaviour
 {
-    private const string GameDataKey = "GameData";
+    private const string PlayerDataKey = "PlayerData";
     private readonly float oneSecond = 1;
 
     public ConsoleText Console { get; private set; }
@@ -30,26 +29,33 @@ public class SceneManager : MonoBehaviour
         Console = FindObjectOfType<ConsoleText>();
         Mission = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
+        Data = new GameLogic(GetPlayerData());
 
-        var data = DataSerializer.LoadString(GameDataKey);
-
-        if (string.IsNullOrEmpty(data))
-        {
-            TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
-            GameStore store = JsonConvert.DeserializeObject<GameStore>(dataAsset.text);
-
-            Data = new GameLogic(ScriptableObject.CreateInstance<PlayerData>());
-            Data.PlayerData.Store = store;
-        }
-        else
-        {
-            Data = JsonConvert.DeserializeObject<GameLogic>(data);
-        }
+        CalculateOfflineEarnings(Data.PlayerData);
 
         Data.MessageSender += SendToConsole;
         Data.ClearHandler += ClearConsole;
 
         Time.fixedDeltaTime = oneSecond;
+    }
+
+    private void CalculateOfflineEarnings(PlayerData playerData)
+    {
+        //TODO: this needed during load
+    }
+
+    private PlayerData GetPlayerData()
+    {
+        var playerData = DataSerializer.LoadString(PlayerDataKey);
+
+        if (string.IsNullOrEmpty(playerData))
+        {
+            return new PlayerData();
+        }
+        else
+        {
+            return JsonConvert.DeserializeObject<PlayerData>(playerData);
+        }
     }
 
     public IEnumerator ExecuteCommand(CommandLine command)
@@ -58,8 +64,8 @@ public class SceneManager : MonoBehaviour
 
         if (command.CommandName == CommandNames.save)
         {
-            var data = JsonConvert.SerializeObject(Data);
-            DataSerializer.SaveString(GameDataKey, data);
+            var playerData = JsonConvert.SerializeObject(Data.PlayerData);
+            DataSerializer.SaveString(PlayerDataKey, playerData);
             yield break;
         }
 

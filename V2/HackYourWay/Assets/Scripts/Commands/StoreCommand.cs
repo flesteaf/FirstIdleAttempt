@@ -11,6 +11,8 @@ namespace Assets.Scripts.Commands
     internal class StoreCommand : Command
     {
         private readonly Dictionary<CommandOptions, Func<IGameLogic, IEnumerator>> storeTypes;
+        private readonly GameStore store;
+
         public override CommandNames Name => CommandNames.store;
         public override List<CommandOptions> Options
         {
@@ -19,13 +21,14 @@ namespace Assets.Scripts.Commands
                             CommandOptions.components };
         }
 
-        public StoreCommand()
+        public StoreCommand(GameStore store)
         {
             storeTypes = new Dictionary<CommandOptions, Func<IGameLogic, IEnumerator>>
             {
                 { CommandOptions.software, PresentSoftware },
                 { CommandOptions.components, PresentComponents }
             };
+            this.store = store;
         }
 
         public override IEnumerator Execute(IGameLogic game, CommandLine command)
@@ -68,7 +71,7 @@ namespace Assets.Scripts.Commands
 
         private void ShowCPUs(IGameLogic game)
         {
-            IEnumerable<CpuStore> cpus = game.PlayerData.Store.CPUs;
+            IEnumerable<CpuStore> cpus = store.CPUs;
 
             SendMessage("CPUs:", MessageType.Info);
             foreach (var item in cpus)
@@ -80,7 +83,7 @@ namespace Assets.Scripts.Commands
 
         private void ShowRAMs(IGameLogic game)
         {
-            IEnumerable<RamStore> rams = game.PlayerData.Store.RAMs;
+            IEnumerable<RamStore> rams = store.RAMs;
 
             SendMessage("RAMs:", MessageType.Info);
             foreach (var item in rams)
@@ -92,7 +95,7 @@ namespace Assets.Scripts.Commands
 
         private void ShowGPUs(IGameLogic game)
         {
-            IEnumerable<GpuStore> gpus = game.PlayerData.Store.GPUs;
+            IEnumerable<GpuStore> gpus = store.GPUs;
 
             SendMessage("GPUs:", MessageType.Info);
             foreach (var item in gpus)
@@ -104,7 +107,7 @@ namespace Assets.Scripts.Commands
 
         private void ShowHards(IGameLogic game)
         {
-            IEnumerable<HardStore> hards = game.PlayerData.Store.Hards;
+            IEnumerable<HardStore> hards = store.Hards;
 
             SendMessage("Hards:", MessageType.Info);
             foreach (var item in hards)
@@ -116,7 +119,7 @@ namespace Assets.Scripts.Commands
 
         private void ShowMotherboards(IGameLogic game)
         {
-            IEnumerable<MotherboardStore> motherboards = game.PlayerData.Store.Motherboards;
+            IEnumerable<MotherboardStore> motherboards = store.Motherboards;
 
             SendMessage("Motherboards:", MessageType.Info);
             foreach (var item in motherboards)
@@ -128,7 +131,7 @@ namespace Assets.Scripts.Commands
 
         private void ShowSources(IGameLogic game)
         {
-            IEnumerable<SourceStore> sources = game.PlayerData.Store.Sources;
+            IEnumerable<SourceStore> sources = store.Sources;
 
             SendMessage("Sources:", MessageType.Info);
             foreach (var item in sources)
@@ -140,7 +143,7 @@ namespace Assets.Scripts.Commands
 
         private void ShowNetworkBoards(IGameLogic game)
         {
-            IEnumerable<NetworkBoardStore> networkBoards = game.PlayerData.Store.Networks;
+            IEnumerable<NetworkBoardStore> networkBoards = store.Networks;
 
             SendMessage("NetworkBoards:", MessageType.Info);
             foreach (var item in networkBoards)
@@ -152,7 +155,7 @@ namespace Assets.Scripts.Commands
 
         private IEnumerator PresentSoftware(IGameLogic game)
         {
-            IEnumerable<Software> softwares = game.PlayerData.Store.Softwares;
+            IEnumerable<Software> softwares = store.Softwares;
 
             foreach (var item in softwares)
             {

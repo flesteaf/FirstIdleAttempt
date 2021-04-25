@@ -183,7 +183,6 @@ namespace Assets.Scripts
                 return false;
             }
 
-            PlayerData.Store.SoftwareBought(software);
             if (!PlayerData.Computer.StoreSoftware(software))
             {
                 message = $"Not enough space to store {software.Name}";
@@ -215,7 +214,6 @@ namespace Assets.Scripts
                 return false;
             }
 
-            PlayerData.Store.ComponentBought(component);
             return PlayerData.Computer.UpdateComponent(component.SoldComponent, out message);
         }
 

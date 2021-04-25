@@ -317,6 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Console: {fileID: 467552027}
   scrollbar: {fileID: 981770549}
+  textChanged: 0
 --- !u!1 &270693596
 GameObject:
   m_ObjectHideFlags: 0

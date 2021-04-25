@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Store;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Commands
 {
-    internal static class CommandFactory
+    internal class CommandFactory
     {
         private static readonly Dictionary<CommandNames, Command> commands;
 
         static CommandFactory()
         {
+            TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
+            GameStore gameStore = JsonConvert.DeserializeObject<GameStore>(dataAsset.text);
+
             HelpCommand help = new HelpCommand();
             StatusCommand status = new StatusCommand();
             CrackCommand crack = new CrackCommand();
@@ -17,8 +23,8 @@ namespace Assets.Scripts.Commands
             ScanCommand scan = new ScanCommand();
             SetRansomwareCommand setRansomware = new SetRansomwareCommand();
             ShowCommand show = new ShowCommand();
-            StoreCommand store = new StoreCommand();
-            BuyCommand buy = new BuyCommand();
+            StoreCommand store = new StoreCommand(gameStore);
+            BuyCommand buy = new BuyCommand(gameStore);
             InvalidCommand invalid = new InvalidCommand();
             ClearCommand clear = new ClearCommand();
 

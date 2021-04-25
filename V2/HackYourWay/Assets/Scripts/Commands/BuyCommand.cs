@@ -1,15 +1,18 @@
 ﻿using Assets.Scripts.Softwares;
 using Assets.Scripts.Store;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
         private readonly Dictionary<CommandOptions, Action<IGameLogic, string>> buyOptions;
+        private readonly GameStore store;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -18,8 +21,9 @@ namespace Assets.Scripts.Commands
                             CommandOptions.component };
         }
 
-        public BuyCommand()
+        public BuyCommand(GameStore store)
         {
+            this.store = store;
             buyOptions = new Dictionary<CommandOptions, Action<IGameLogic, string>>
             {
                 { CommandOptions.software, BuySoftware },
@@ -53,11 +57,11 @@ namespace Assets.Scripts.Commands
 
         private void BuyComponent(IGameLogic game, string componentName)
         {
-            StoreComponent component = game.PlayerData.Store.GetComponent(componentName);
+            StoreComponent component = store.GetComponent(componentName);
 
             if (component == null)
             {
-                SendMessage($"Component {componentName} not found", MessageType.Error);
+                SendMessage($"Component \"{componentName}\" not found", MessageType.Error);
                 return;
             }
 
@@ -65,21 +69,31 @@ namespace Assets.Scripts.Commands
             {
                 SendMessage(message, MessageType.Error);
             }
+            else
+            {
+                store.ComponentBought(component);
+                SendMessage($"Component \"{componentName}\" successfuly bought!", MessageType.Info);
+            }
         }
 
         private void BuySoftware(IGameLogic game, string softwareName)
         {
-            Software software = game.PlayerData.Store.GetSoftware(softwareName);
+            Software software = store.GetSoftware(softwareName);
 
             if (software == null)
             {
-                SendMessage($"Software {softwareName} not found", MessageType.Error);
+                SendMessage($"Software \"{softwareName}\" not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuySoftware(software, out string message))
             {
                 SendMessage(message, MessageType.Error);
+            }
+            else
+            {
+                store.SoftwareBought(software);
+                SendMessage($"Software \"{softwareName}\" successfuly bought!", MessageType.Info);
             }
         }
     }

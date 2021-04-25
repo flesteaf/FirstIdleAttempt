@@ -138,7 +138,7 @@
     <Compile Include="Assets\Scripts\Networks\NetworkFactory.cs" />
     <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
     <Compile Include="Assets\Scripts\Networks\ProtectionType.cs" />
-    <Compile Include="Assets\Scripts\ScriptableObjects\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Softwares\InfectionType.cs" />
     <Compile Include="Assets\Scripts\Softwares\Provides.cs" />
     <Compile Include="Assets\Scripts\Softwares\Software.cs" />
