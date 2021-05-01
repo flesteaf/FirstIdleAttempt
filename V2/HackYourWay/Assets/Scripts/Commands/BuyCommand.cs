@@ -33,7 +33,7 @@ namespace Assets.Scripts.Commands
 
         public override IEnumerator Execute(IGameLogic game, CommandLine command)
         {
-            if (!command.LongArgument)
+            if (!command.TooManyArguments)
             {
                 SendMessage($"The buy command requires to specify something to buy and only one", MessageType.Warning);
                 yield break;

@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 public class PlayerData
 {
-    public TimeSpan Timestamp { get; set; }
+    public bool NewPlayer { get; set; } = true;
+    public DateTime Timestamp { get; set; }
     public List<CommandNames> AvailableSoftware { get; set; }
     public List<CommandOptions> AvailableSoftwareOptions { get; set; }
     public float CurrentProduction { get; set; } = 0;

@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Commands;
-using Newtonsoft.Json;
+using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class SceneManager : MonoBehaviour
 {
-    private const string PlayerDataKey = "PlayerData";
     private readonly float oneSecond = 1;
 
     public ConsoleText Console { get; private set; }
@@ -29,9 +28,15 @@ public class SceneManager : MonoBehaviour
         Console = FindObjectOfType<ConsoleText>();
         Mission = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
-        Data = new GameLogic(GetPlayerData());
 
-        CalculateOfflineEarnings(Data.PlayerData);
+        PlayerData playerData = SaveManager.LoadPlayerData();
+        bool newPlayer = playerData.NewPlayer;
+        Data = new GameLogic(playerData);
+
+        if (!newPlayer)
+        {
+            CalculateOfflineEarnings(Data.PlayerData);
+        }
 
         Data.MessageSender += SendToConsole;
         Data.ClearHandler += ClearConsole;
@@ -41,33 +46,15 @@ public class SceneManager : MonoBehaviour
 
     private void CalculateOfflineEarnings(PlayerData playerData)
     {
-        //TODO: this needed during load
-    }
-
-    private PlayerData GetPlayerData()
-    {
-        var playerData = DataSerializer.LoadString(PlayerDataKey);
-
-        if (string.IsNullOrEmpty(playerData))
-        {
-            return new PlayerData();
-        }
-        else
-        {
-            return JsonConvert.DeserializeObject<PlayerData>(playerData);
-        }
+        var currentDate = DateTime.UtcNow;
+        var timePassed = currentDate.Subtract(playerData.Timestamp);
+        Data.AddMultiProduction((float)timePassed.TotalSeconds);
+        Money.UpdateText(Data.PlayerData.MoneyAmmount);
     }
 
     public IEnumerator ExecuteCommand(CommandLine command)
     {
         Console.AddCommand(command.ToString(), MessageType.Info);
-
-        if (command.CommandName == CommandNames.save)
-        {
-            var playerData = JsonConvert.SerializeObject(Data.PlayerData);
-            DataSerializer.SaveString(PlayerDataKey, playerData);
-            yield break;
-        }
 
         Command action = CommandFactory.GetCommand(command);
         if (!Data.PlayerData.AvailableSoftware.Contains(action.Name))

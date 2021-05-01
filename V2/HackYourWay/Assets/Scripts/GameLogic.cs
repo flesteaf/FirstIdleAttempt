@@ -31,6 +31,18 @@ namespace Assets.Scripts
         public GameLogic(PlayerData playerData)
         {
             PlayerData = playerData;
+            
+            if (PlayerData.NewPlayer)
+            {
+                IntializeNewPlayer();
+            }
+
+            networkFactory = new NetworkFactory();
+            commandUnderExecution = false;
+        }
+
+        private void IntializeNewPlayer()
+        {
             PlayerData.Computer = new InitialComputer();
             PlayerData.AvailableSoftwareOptions = new List<CommandOptions> {
                     CommandOptions.None,
@@ -45,7 +57,8 @@ namespace Assets.Scripts
                     CommandOptions.computer,
                     CommandOptions.component,
                     CommandOptions.components,
-                    CommandOptions.software};
+                    CommandOptions.software,
+                    CommandOptions.clear};
 
             PlayerData.AvailableSoftware = new List<CommandNames> {
                     CommandNames.help,
@@ -56,11 +69,11 @@ namespace Assets.Scripts
                     CommandNames.inject,
                     CommandNames.show,
                     CommandNames.clear,
+                    CommandNames.save,
                     CommandNames.invalid};
 
             PlayerData.FoundNetworks = new List<HackableNetwork>();
-            networkFactory = new NetworkFactory();
-            commandUnderExecution = false;
+            PlayerData.NewPlayer = false;
         }
 
         public void UpdateCurrentProduction(float addValue)
@@ -76,6 +89,11 @@ namespace Assets.Scripts
         public void AddProduction()
         {
             PlayerData.MoneyAmmount += PlayerData.CurrentProduction;
+        }
+
+        public void AddMultiProduction(float times)
+        {
+            PlayerData.MoneyAmmount += (PlayerData.CurrentProduction * times);
         }
 
         #region Networks
@@ -214,7 +232,13 @@ namespace Assets.Scripts
                 return false;
             }
 
-            return PlayerData.Computer.UpdateComponent(component.SoldComponent, out message);
+            if (PlayerData.Computer.UpdateComponent(component.SoldComponent, out message))
+            {
+                UpdateAmmount(-component.Price);
+                return true;
+            }
+
+            return false;
         }
 
         #endregion Store
@@ -237,6 +261,16 @@ namespace Assets.Scripts
         public long GetNetworkSpeed()
         {
             return PlayerData.Computer.GetNetworkSpeed();
+        }
+
+        public void SavePlayerToCurrentSlot()
+        {
+            SaveManager.SavePlayer(PlayerData);
+        }
+
+        public void ClearSaveSlot()
+        {
+            SaveManager.ClearSlot();
         }
 
         ~GameLogic()

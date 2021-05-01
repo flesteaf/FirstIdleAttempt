@@ -32,5 +32,8 @@ namespace Assets.Scripts
         void ClearConsole();
         int GetComputerSpeed();
         long GetNetworkSpeed();
+        void SavePlayerToCurrentSlot();
+        void ClearSaveSlot();
+        void AddMultiProduction(float totalSeconds);
     }
 }

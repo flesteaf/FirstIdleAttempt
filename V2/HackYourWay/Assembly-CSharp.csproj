@@ -76,14 +76,18 @@
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandFactory.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandLine.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandLineExtensions.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandNames.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandOptions.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandSegments\CommandSegment.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandSegments\CommandSegmentFactory.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandWithDelay.cs" />
     <Compile Include="Assets\Scripts\Commands\CrackCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\FirewallCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\HelpCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\InjectCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\InvalidCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\SaveCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\ScanCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\SetRansomwareCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\ShowCommand.cs" />
@@ -120,6 +124,7 @@
     <Compile Include="Assets\Scripts\MonoBehaviour\DataSerializer.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\MissionText.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\MoneyText.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\SaveManager.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Device.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\DeviceFactory.cs" />
