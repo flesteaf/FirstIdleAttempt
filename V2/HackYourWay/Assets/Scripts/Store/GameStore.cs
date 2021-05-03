@@ -15,6 +15,8 @@ namespace Assets.Scripts.Store
         public List<SourceStore> Sources { get; set; }
         public List<MotherboardStore> Motherboards { get; set; }
 
+        //TODO: Update store status when loading
+
         public StoreComponent GetComponent(string componentName)
         {
             StoreComponent component;

@@ -7,7 +7,7 @@ namespace Assets.Scripts.Commands
 {
     internal class StatusCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Func<IGameData, IEnumerator>> statusTypes;
+        private readonly Dictionary<CommandOptions, Func<IGameLogic, IEnumerator>> statusTypes;
 
         public override CommandNames Name => CommandNames.status;
         public override List<CommandOptions> Options
@@ -19,14 +19,14 @@ namespace Assets.Scripts.Commands
 
         public StatusCommand()
         {
-            statusTypes = new Dictionary<CommandOptions, Func<IGameData, IEnumerator>>
+            statusTypes = new Dictionary<CommandOptions, Func<IGameLogic, IEnumerator>>
             {
                 { CommandOptions.computer, GetComputerStatus },
                 { CommandOptions.money, GetMoneyIncomeStatus }
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command)
         {
             if (!command.HasArgumentAndNoOption())
             {
@@ -52,15 +52,15 @@ namespace Assets.Scripts.Commands
 
         #region StatusCommands
 
-        private IEnumerator GetMoneyIncomeStatus(IGameData game)
+        private IEnumerator GetMoneyIncomeStatus(IGameLogic game)
         {
             //TODO: implement it
             yield break;
         }
 
-        private IEnumerator GetComputerStatus(IGameData game)
+        private IEnumerator GetComputerStatus(IGameLogic game)
         {
-            string computerDetails = game.Computer.ToString();
+            string computerDetails = game.PlayerData.Computer.ToString();
             foreach (var item in computerDetails.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 SendMessage(item, MessageType.Info);

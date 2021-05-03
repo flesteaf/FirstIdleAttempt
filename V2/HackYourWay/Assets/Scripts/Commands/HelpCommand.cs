@@ -10,7 +10,7 @@ namespace Assets.Scripts.Commands
 
         public override List<CommandOptions> Options => new List<CommandOptions> { CommandOptions.None };
 
-        public override IEnumerator Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command)
         {
             //TODO: improve to provide help for all commands
             SendMessage("The following commands are currently allowed:", MessageType.Info);

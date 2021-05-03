@@ -10,8 +10,8 @@ namespace Assets.Scripts.Commands
 {
     public class ScanCommand : CommandWithDelay
     {
-        private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> scanTypes;
-        private readonly float networkCommunication = 0.1f*(long)Sizes.KB;
+        private readonly Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>> scanTypes;
+        private readonly float networkCommunication = 0.1f * (long)Sizes.KB;
         private long delayExecutionTime;
 
         public override CommandNames Name => CommandNames.scan;
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Commands
 
         public ScanCommand()
         {
-            scanTypes = new Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>>
+            scanTypes = new Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>>
             {
                 { CommandOptions.network, ScanNetwork },
                 { CommandOptions.ip, ScanIp },
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgument())
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Commands
 
         #region Scan commands
 
-        private IEnumerator ScanIp(IGameData game, string ip)
+        private IEnumerator ScanIp(IGameLogic game, string ip)
         {
             Device device = game.GetDeviceByIp(ip);
 
@@ -71,10 +71,10 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay((long)(delayExecutionTime*1.5), ProvideDeviceDetails, device);
+            yield return ExecuteDelay((long)(delayExecutionTime * 1.5), ProvideDeviceDetails, device);
         }
 
-        private IEnumerator ScanMac(IGameData game, string mac)
+        private IEnumerator ScanMac(IGameLogic game, string mac)
         {
             Device device = game.GetDeviceByMac(mac);
 
@@ -94,13 +94,13 @@ namespace Assets.Scripts.Commands
             SendMessage($"Device {hasFirewall}", MessageType.Info);
         }
 
-        private IEnumerator ScanNetwork(IGameData game, string ssid)
+        private IEnumerator ScanNetwork(IGameLogic game, string ssid)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 
             if (network == null)
             {
-                SendMessage($"The provided SSID {ssid} was not found, please provide a different [SSID]", MessageType.Warning);
+                SendMessage($"The provided SSID [{ssid}] was not found, please provide a different [SSID]", MessageType.Warning);
                 yield break;
             }
 
@@ -110,10 +110,10 @@ namespace Assets.Scripts.Commands
                 yield break;
             }
 
-            yield return ExecuteDelay((long)(delayExecutionTime * 2), ListDevices, game, network);
+            yield return ExecuteDelay(delayExecutionTime * 2, ListDevices, game, network);
         }
 
-        private void ListDevices(IGameData game, HackableNetwork network)
+        private void ListDevices(IGameLogic game, HackableNetwork network)
         {
             SendMessage($"Network {network} has the following devices:", MessageType.Info);
             foreach (Device item in network.Devices)

@@ -8,18 +8,18 @@ namespace Assets.Scripts.Commands
     public abstract class CommandWithDelay : Command
     {
         protected abstract int BaseExecutionTime { get; }
-        
-        public override IEnumerator Execute(IGameData data, CommandLine command)
+
+        public override IEnumerator Execute(IGameLogic data, CommandLine command)
         {
             long delayTime = GetCommandDelay(data.GetComputerSpeed(), data.GetNetworkSpeed());
-            
+
             data.CommandUnderExecution = true;
             yield return Execute(data, command, delayTime);
             data.CommandUnderExecution = false;
         }
 
         protected abstract long GetCommandDelay(int computerSpeed, long networkSpeed);
-        public abstract IEnumerator Execute(IGameData game, CommandLine command, long delayTime);
+        public abstract IEnumerator Execute(IGameLogic game, CommandLine command, long delayTime);
 
         protected internal IEnumerator ExecuteDelay(long delay, Action action)
         {
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Commands
         {
             ProgressAction(0);
             Stopwatch watch = Stopwatch.StartNew();
-            yield return new WaitUntil(() => watch.ElapsedMilliseconds > delay/10);
+            yield return new WaitUntil(() => watch.ElapsedMilliseconds > delay / 10);
             for (int i = 1; i <= 9; ++i)
             {
                 ProgressAction(i * 10);

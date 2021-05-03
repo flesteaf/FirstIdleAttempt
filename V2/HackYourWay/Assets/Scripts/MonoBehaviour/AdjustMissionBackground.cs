@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
 
 public class AdjustMissionBackground : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI adjustAfter;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         RectTransform rect = GetComponent<RectTransform>();
 

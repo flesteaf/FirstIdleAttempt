@@ -12,7 +12,7 @@ namespace Assets.Scripts.Extensions
             List<string> listedQueue = queue.ToList();
 
             int startIndex = 0;
-           
+
             for (int i = startIndex; i < listedQueue.Count; i++)
             {
                 string item = listedQueue[i];

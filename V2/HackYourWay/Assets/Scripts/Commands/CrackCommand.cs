@@ -10,21 +10,22 @@ namespace Assets.Scripts.Commands
     internal class CrackCommand : CommandWithDelay
     {
         private readonly long NetworkDataForCrack = (long)Sizes.MB;
-        private readonly Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>> crackTypes;
+        private readonly Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>> crackTypes;
         private long delayExecutionTime;
         public override CommandNames Name => CommandNames.crack;
-        public override List<CommandOptions> Options { 
-            get => new List<CommandOptions> { 
-                            CommandOptions.wep, 
-                            CommandOptions.wpa, 
-                            CommandOptions.wpa2 }; 
+        public override List<CommandOptions> Options
+        {
+            get => new List<CommandOptions> {
+                            CommandOptions.wep,
+                            CommandOptions.wpa,
+                            CommandOptions.wpa2 };
         }
 
         protected override int BaseExecutionTime => 4000;
 
         public CrackCommand()
         {
-            crackTypes = new Dictionary<CommandOptions, Func<IGameData, string, IEnumerator>>
+            crackTypes = new Dictionary<CommandOptions, Func<IGameLogic, string, IEnumerator>>
             {
                 { CommandOptions.wep, CrackWep },
                 { CommandOptions.wpa, CrackWpa },
@@ -32,7 +33,7 @@ namespace Assets.Scripts.Commands
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command, long delayTime)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command, long delayTime)
         {
             delayExecutionTime = delayTime;
             if (!command.HasArgumentAndOption())
@@ -52,22 +53,22 @@ namespace Assets.Scripts.Commands
 
         #region CrackCommands
 
-        private IEnumerator CrackWpa2(IGameData game, string ssid)
+        private IEnumerator CrackWpa2(IGameLogic game, string ssid)
         {
             yield return CrackNetwork(game, ssid, ProtectionType.WPA2);
         }
 
-        private IEnumerator CrackWpa(IGameData game, string ssid)
+        private IEnumerator CrackWpa(IGameLogic game, string ssid)
         {
             yield return CrackNetwork(game, ssid, ProtectionType.WPA);
         }
 
-        private IEnumerator CrackWep(IGameData game, string ssid)
+        private IEnumerator CrackWep(IGameLogic game, string ssid)
         {
             yield return CrackNetwork(game, ssid, ProtectionType.WEP);
         }
 
-        private IEnumerator CrackNetwork(IGameData game, string ssid, ProtectionType protection)
+        private IEnumerator CrackNetwork(IGameLogic game, string ssid, ProtectionType protection)
         {
             HackableNetwork network = game.GetNetworkBySSID(ssid);
 

@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Networks.Devices;
+using HackingYourWay.Assets.Scripts.Networks.Generation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Assets.Scripts.Networks
@@ -9,150 +11,61 @@ namespace Assets.Scripts.Networks
     {
         private readonly DeviceFactory deviceFactory;
         private readonly Random random;
-        private readonly List<string> homeSsids = new List<string> { "MyHome", "PersonalSpace", "SmoothCriminal", "Alphabet", "Home" };
-        private readonly List<string> smallSsids = new List<string> { "Ghost", "IBD", "Sockass" };
-        private readonly List<string> mediumSsids = new List<string> { "OnlyPrinting", "Decisions", "The oners" };
-        private readonly int homeSsidsCount;
-        private readonly int smallSsidsCount;
-        private readonly int mediumSsidsCount;
+
+        private readonly List<NetworkGeneration> networkData;
         private int lastNetworkId;
+        private List<string> generatedSsids = new List<string>();
 
         public NetworkFactory()
         {
             deviceFactory = new DeviceFactory();
             random = new Random();
-
-            homeSsidsCount = homeSsids.Count;
-            smallSsidsCount = smallSsids.Count;
-            mediumSsidsCount = mediumSsids.Count;
-        }
-
-        public HackableNetwork GetRandomNetwork(NetworkType maxType, bool applyDesignatedId = false)
-        {
-            int networkType = random.Next(0, (int)maxType);
-            NetworkType networkTypeToGenerate = (NetworkType)Enum.Parse(typeof(NetworkType), networkType.ToString());
-
-            switch (networkTypeToGenerate)
+            networkData = new List<NetworkGeneration>
             {
-                case NetworkType.Home:
-                    return GetHomeNetwork(applyDesignatedId);
-
-                case NetworkType.Small:
-                    return GetSmallNetwork(applyDesignatedId);
-
-                case NetworkType.Medium:
-                    return GetMediumNetwork(applyDesignatedId);
-
-                case NetworkType.Huge:
-                    return GetHugeNetwork(applyDesignatedId);
-
-                default:
-                    return null;
-            }
-        }
-
-        public HackableNetwork GetHomeNetwork(bool applyDesignatedId)
-        {
-            int noOfDevices = 4;
-            List<DeviceIdentification> deviceIdentifications = new List<DeviceIdentification>();
-            for (int i = 0; i < noOfDevices; i++)
-            {
-                deviceIdentifications.Add(GetDeviceIdetification());
-            }
-
-            string ssid = GetHomeSSID();
-            List<Device> devices = deviceFactory.GetDevices(deviceIdentifications, applyDesignatedId);
-
-            if (applyDesignatedId)
-            {
-                return new HackableNetwork
-                {
-                    SSID = ssid,
-                    Devices = devices,
-                    Protection = ProtectionType.None,
-                    NetworkSize = NetworkType.Home,
-                    DesignatedId = lastNetworkId++
-                };
-            }
-
-            return new HackableNetwork {
-                SSID = ssid, 
-                Devices = devices,
-                Protection = ProtectionType.None,
-                NetworkSize = NetworkType.Home
+                new HomeNetworkGeneration(),
+                new SmallNetworkGeneration(),
+                new SmallOfficeNetworkGeneration()
             };
         }
 
-        public HackableNetwork GetSmallNetwork(bool applyDesignatedId)
+        public HackableNetwork GetRandomNetwork(bool applyDesignatedId)
         {
-            int noOfDevices = 8;
+            int networkType = random.Next(0, 91);
+            NetworkType networkTypeToGenerate = NetworkType.Home;
+
+            //revert to switch when unity support C# 7.0
+            if (networkType >= 0 && networkType <= 40)
+                networkTypeToGenerate = NetworkType.Home;
+
+            if (networkType >= 41 && networkType <= 70) 
+                    networkTypeToGenerate = NetworkType.Small; 
+
+            if (networkType >= 71 && networkType <= 90)
+                    networkTypeToGenerate = NetworkType.SmallOffice; 
+
+            return GetNetwork(networkTypeToGenerate, applyDesignatedId);
+        }
+
+        private HackableNetwork GetNetwork(NetworkType netType, bool applyDesignatedId)
+        {
             List<DeviceIdentification> deviceIdentifications = new List<DeviceIdentification>();
-            for (int i = 0; i < noOfDevices; i++)
+            NetworkGeneration generationData = networkData.First(x => x.Type == netType);
+            for (int i = 0; i < generationData.NoOfDevices; i++)
             {
                 deviceIdentifications.Add(GetDeviceIdetification());
             }
 
-            string ssid = GetSmallSSID();
+            string ssid = generationData.GetSSID(generatedSsids);
             List<Device> devices = deviceFactory.GetDevices(deviceIdentifications, applyDesignatedId);
-
-            if (applyDesignatedId)
-            {
-                return new HackableNetwork
-                {
-                    SSID = ssid,
-                    Devices = devices,
-                    Protection = ProtectionType.WEP,
-                    NetworkSize = NetworkType.Small,
-                    DesignatedId = lastNetworkId++
-                };
-            }
 
             return new HackableNetwork
             {
                 SSID = ssid,
                 Devices = devices,
-                Protection = ProtectionType.WEP,
-                NetworkSize = NetworkType.Small
+                Protection = generationData.Protection,
+                NetworkSize = netType,
+                DesignatedId = applyDesignatedId ? lastNetworkId++ : 0
             };
-        }
-
-        public HackableNetwork GetMediumNetwork(bool applyDesignatedId)
-        {
-            int noOfDevices = 18;
-            List<DeviceIdentification> deviceIdentifications = new List<DeviceIdentification>();
-            for (int i = 0; i < noOfDevices; i++)
-            {
-                deviceIdentifications.Add(GetDeviceIdetification());
-            }
-
-            string ssid = GetMediumSSID();
-            List<Device> devices = deviceFactory.GetDevices(deviceIdentifications, applyDesignatedId);
-
-            if (applyDesignatedId)
-            {
-                return new HackableNetwork
-                {
-                    SSID = ssid,
-                    Devices = devices,
-                    Protection = ProtectionType.WPA,
-                    NetworkSize = NetworkType.Small,
-                    DesignatedId = lastNetworkId++
-                };
-            }
-
-            return new HackableNetwork
-            {
-                SSID = ssid,
-                Devices = devices,
-                Protection = ProtectionType.WPA,
-                NetworkSize = NetworkType.Small
-            };
-        }
-
-        public HackableNetwork GetHugeNetwork(bool applyDesignatedId)
-        {
-            //TODO: implement
-            throw new NotImplementedException();
         }
 
         private DeviceIdentification GetDeviceIdetification()
@@ -179,21 +92,6 @@ namespace Assets.Scripts.Networks
         private string GenerateIp()
         {
             return $"{random.Next(1, 255)}.{random.Next(0, 255)}.{random.Next(0, 255)}.{random.Next(0, 255)}";
-        }
-
-        private string GetHomeSSID()
-        {
-            return homeSsids[random.Next(0, homeSsidsCount - 1)];
-        }
-
-        private string GetSmallSSID()
-        {
-            return smallSsids[random.Next(0, smallSsidsCount - 1)];
-        }
-
-        private string GetMediumSSID()
-        {
-            return mediumSsids[random.Next(0, mediumSsidsCount - 1)];
         }
     }
 }

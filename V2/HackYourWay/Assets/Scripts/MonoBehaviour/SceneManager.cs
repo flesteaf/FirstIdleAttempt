@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Commands;
-using Assets.Scripts.Store;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using UnityEditor;
@@ -10,19 +8,18 @@ using UnityEngine;
 
 public class SceneManager : MonoBehaviour
 {
-    private const string GameDataKey = "GameData";
     private readonly float oneSecond = 1;
 
     public ConsoleText Console { get; private set; }
     public MissionText Mission { get; private set; }
     public MoneyText Money { get; private set; }
-    public GameData Data { get; set; }
+    public IGameLogic Data { get; set; }
 
-    public bool CommandUnderExecution => Data.CommandUnderExecution; 
+    public bool CommandUnderExecution => Data.CommandUnderExecution;
 
     private void Start()
     {
-        Money.UpdateText(Data.MoneyAmmount);
+        Money.UpdateText(Data.PlayerData.MoneyAmmount);
     }
 
     private void Awake()
@@ -32,48 +29,42 @@ public class SceneManager : MonoBehaviour
         Mission = FindObjectOfType<MissionText>();
         Money = FindObjectOfType<MoneyText>();
 
-        var data = DataSerializer.LoadString(GameDataKey);
+        PlayerData playerData = SaveManager.LoadPlayerData();
+        bool newPlayer = playerData.NewPlayer;
+        Data = new GameLogic(playerData);
 
-        if (string.IsNullOrEmpty(data))
+        if (!newPlayer)
         {
-            TextAsset dataAsset = (TextAsset)Resources.Load("dataStore");
-            GameStore store = JsonConvert.DeserializeObject<GameStore>(dataAsset.text);
-            Data = new GameData
-            {
-                Store = store
-            };
+            CalculateOfflineEarnings(Data.PlayerData);
         }
-        else
-        {
-            Data = JsonConvert.DeserializeObject<GameData>(data);
-        }
-        
+
         Data.MessageSender += SendToConsole;
         Data.ClearHandler += ClearConsole;
 
         Time.fixedDeltaTime = oneSecond;
     }
 
+    private void CalculateOfflineEarnings(PlayerData playerData)
+    {
+        var currentDate = DateTime.UtcNow;
+        var timePassed = currentDate.Subtract(playerData.Timestamp);
+        Data.AddMultiProduction((float)timePassed.TotalSeconds);
+        Money.UpdateText(Data.PlayerData.MoneyAmmount);
+    }
+
     public IEnumerator ExecuteCommand(CommandLine command)
     {
         Console.AddCommand(command.ToString(), MessageType.Info);
 
-        if (command.CommandName == CommandNames.save)
-        {
-            var data = JsonConvert.SerializeObject(Data);
-            DataSerializer.SaveString(GameDataKey, data);
-            yield break;
-        }
-
         Command action = CommandFactory.GetCommand(command);
-        if (!Data.AvailableSoftware.Contains(action.Name))
+        if (!Data.PlayerData.AvailableSoftware.Contains(action.Name))
         {
             Console.AddMessage($"Command {action.Name} needs to be bought", MessageType.Error);
             yield break;
         }
 
         CommandOptions option = action.GetOptionFromCommand(command);
-        if (option == CommandOptions.Invalid || !Data.AvailableSoftwareOptions.Contains(option))
+        if (option == CommandOptions.Invalid || !Data.PlayerData.AvailableSoftwareOptions.Contains(option))
         {
             Console.AddMessage($"Option {option} of command {action.Name} needs to be bought", MessageType.Error);
             yield break;
@@ -105,7 +96,7 @@ public class SceneManager : MonoBehaviour
     private void FixedUpdate()
     {
         Data.AddProduction();
-        Money.UpdateText(Data.MoneyAmmount);
+        Money.UpdateText(Data.PlayerData.MoneyAmmount);
     }
 
     ~SceneManager()

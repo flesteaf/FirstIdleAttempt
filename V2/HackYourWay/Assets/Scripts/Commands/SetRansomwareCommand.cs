@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Commands
@@ -10,7 +9,7 @@ namespace Assets.Scripts.Commands
 
         public override List<CommandOptions> Options => new List<CommandOptions> { CommandOptions.None };
 
-        public override IEnumerator Execute(IGameData data, CommandLine command)
+        public override IEnumerator Execute(IGameLogic data, CommandLine command)
         {
             //TODO: implement this
             yield break;

@@ -1,15 +1,18 @@
 ﻿using Assets.Scripts.Softwares;
 using Assets.Scripts.Store;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 namespace Assets.Scripts.Commands
 {
     public class BuyCommand : Command
     {
-        private readonly Dictionary<CommandOptions, Action<IGameData, string>> buyOptions;
+        private readonly Dictionary<CommandOptions, Action<IGameLogic, string>> buyOptions;
+        private readonly GameStore store;
         public override CommandNames Name => CommandNames.buy;
         public override List<CommandOptions> Options
         {
@@ -18,18 +21,19 @@ namespace Assets.Scripts.Commands
                             CommandOptions.component };
         }
 
-        public BuyCommand()
+        public BuyCommand(GameStore store)
         {
-            buyOptions = new Dictionary<CommandOptions, Action<IGameData, string>>
+            this.store = store;
+            buyOptions = new Dictionary<CommandOptions, Action<IGameLogic, string>>
             {
                 { CommandOptions.software, BuySoftware },
                 { CommandOptions.component, BuyComponent }
             };
         }
 
-        public override IEnumerator Execute(IGameData game, CommandLine command)
+        public override IEnumerator Execute(IGameLogic game, CommandLine command)
         {
-            if (!command.LongArgument)
+            if (!command.TooManyArguments)
             {
                 SendMessage($"The buy command requires to specify something to buy and only one", MessageType.Warning);
                 yield break;
@@ -51,13 +55,13 @@ namespace Assets.Scripts.Commands
             yield break;
         }
 
-        private void BuyComponent(IGameData game, string componentName)
+        private void BuyComponent(IGameLogic game, string componentName)
         {
-            StoreComponent component = game.Store.GetComponent(componentName);
+            StoreComponent component = store.GetComponent(componentName);
 
             if (component == null)
             {
-                SendMessage($"Component {componentName} not found", MessageType.Error);
+                SendMessage($"Component \"{componentName}\" not found", MessageType.Error);
                 return;
             }
 
@@ -65,21 +69,31 @@ namespace Assets.Scripts.Commands
             {
                 SendMessage(message, MessageType.Error);
             }
+            else
+            {
+                store.ComponentBought(component);
+                SendMessage($"Component \"{componentName}\" successfuly bought!", MessageType.Info);
+            }
         }
 
-        private void BuySoftware(IGameData game, string softwareName)
+        private void BuySoftware(IGameLogic game, string softwareName)
         {
-            Software software = game.Store.GetSoftware(softwareName);
+            Software software = store.GetSoftware(softwareName);
 
             if (software == null)
             {
-                SendMessage($"Software {softwareName} not found", MessageType.Error);
+                SendMessage($"Software \"{softwareName}\" not found", MessageType.Error);
                 return;
             }
 
             if (!game.TryBuySoftware(software, out string message))
             {
                 SendMessage(message, MessageType.Error);
+            }
+            else
+            {
+                store.SoftwareBought(software);
+                SendMessage($"Software \"{softwareName}\" successfuly bought!", MessageType.Info);
             }
         }
     }

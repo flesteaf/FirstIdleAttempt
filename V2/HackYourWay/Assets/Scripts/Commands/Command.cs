@@ -16,7 +16,7 @@ namespace Assets.Scripts.Commands
         //public abstract string Description { get; }
         protected const string HelpOption = "?";
 
-        public abstract IEnumerator Execute(IGameData data, CommandLine command);
+        public abstract IEnumerator Execute(IGameLogic data, CommandLine command);
 
         public CommandOptions GetOptionFromCommand(CommandLine command)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -11,10 +10,12 @@ namespace Assets.Scripts
             try
             {
                 PlayerPrefs.SetString(key, value);
+                PlayerPrefs.Save();
                 return true;
             }
-            catch (PlayerPrefsException)
+            catch (PlayerPrefsException ex)
             {
+                Debug.LogError(ex);
                 return false;
             }
         }
@@ -29,9 +30,9 @@ namespace Assets.Scripts
             return null;
         }
 
-        public static void SaveValues()
+        internal static void ClearKey(string key)
         {
-            PlayerPrefs.Save();
+            PlayerPrefs.DeleteKey(key);
         }
     }
 }

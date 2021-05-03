@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>4.9.1.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2019.4.17f1</UnityVersion>
@@ -76,14 +76,18 @@
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandFactory.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandLine.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandLineExtensions.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandNames.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandOptions.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandSegments\CommandSegment.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandSegments\CommandSegmentFactory.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandWithDelay.cs" />
     <Compile Include="Assets\Scripts\Commands\CrackCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\FirewallCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\HelpCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\InjectCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\InvalidCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\SaveCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\ScanCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\SetRansomwareCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\ShowCommand.cs" />
@@ -110,9 +114,9 @@
     <Compile Include="Assets\Scripts\Computers\Wireless.cs" />
     <Compile Include="Assets\Scripts\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\ListExtensions.cs" />
-    <Compile Include="Assets\Scripts\GameData.cs" />
+    <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\HackerDelegates.cs" />
-    <Compile Include="Assets\Scripts\IGameData.cs" />
+    <Compile Include="Assets\Scripts\IGameLogic.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\AdjustMissionBackground.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Background.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\CommandLineField.cs" />
@@ -120,6 +124,7 @@
     <Compile Include="Assets\Scripts\MonoBehaviour\DataSerializer.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\MissionText.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\MoneyText.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\SaveManager.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Device.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\DeviceFactory.cs" />
@@ -129,10 +134,16 @@
     <Compile Include="Assets\Scripts\Networks\Devices\Phone.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\Smartphone.cs" />
     <Compile Include="Assets\Scripts\Networks\Devices\WearableDevice.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\HomeNetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\MediumNetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\NetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\SmallNetworkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Networks\Generation\SmallOfficeNetworkGeneration.cs" />
     <Compile Include="Assets\Scripts\Networks\HackableNetwork.cs" />
     <Compile Include="Assets\Scripts\Networks\NetworkFactory.cs" />
     <Compile Include="Assets\Scripts\Networks\NetworkType.cs" />
     <Compile Include="Assets\Scripts\Networks\ProtectionType.cs" />
+    <Compile Include="Assets\Scripts\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Softwares\InfectionType.cs" />
     <Compile Include="Assets\Scripts\Softwares\Provides.cs" />
     <Compile Include="Assets\Scripts\Softwares\Software.cs" />

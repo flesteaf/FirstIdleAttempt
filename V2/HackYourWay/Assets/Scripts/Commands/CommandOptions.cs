@@ -5,17 +5,16 @@
         Invalid,
         None,
 
-        #region Scan&ExtractOptions
-        network,
-        ip,
-        mac,
-        #endregion Scan&ExtractOptions
-
         #region CrackOptions
         wep,
         wpa,
         wpa2,
         #endregion CrackOptions
+
+        #region FirewallOptions
+        disable,
+        enable,
+        #endregion FirewallOptions
 
         #region InjectOptions
         miner,
@@ -24,10 +23,15 @@
         ransomware,
         #endregion InjectOptions
 
-        #region FirewallOptions
-        disable,
-        enable,
-        #endregion FirewallOptions
+        #region SaveOptions
+        clear,
+        #endregion
+
+        #region Scan&ExtractOptions
+        network,
+        ip,
+        mac,
+        #endregion Scan&ExtractOptions
 
         #region ShowOptions
         networks,

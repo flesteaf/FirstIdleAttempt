@@ -14,26 +14,27 @@ namespace Assets.Scripts.Networks.Devices
         public string MAC { get => identification.Mac; set => identification.Mac = value; }
         public bool FirewallIsActive { get; set; }
         public InfectionType InfectionType { get; set; } = InfectionType.None;
-        
+
         [JsonIgnore]
         public bool CanBeInfected => FirewallIsActive == false;
         [JsonIgnore]
         public bool IsInfected { get => InfectionType != InfectionType.None; }
 
-        public bool HasFirewall 
+        public bool HasFirewall
         {
-            get => hasFirewall; 
-            set { 
-                hasFirewall = value; 
-                ActivateFirewall(); 
-            } 
+            get => hasFirewall;
+            set
+            {
+                hasFirewall = value;
+                ActivateFirewall();
+            }
         }
 
         public float EnergyLevel { get; set; }
         public float DiskSize { get; set; }
         public DeviceType Type { get; set; }
 
-        public event DeviceInfectedEventHandler DeviceInfected; 
+        public event DeviceInfectedEventHandler DeviceInfected;
 
         public Device()
         {

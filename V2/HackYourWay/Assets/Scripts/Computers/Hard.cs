@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Computers.ComponentTypes;
-using System;
 
 namespace Assets.Scripts.Computers
 {
@@ -67,7 +66,7 @@ namespace Assets.Scripts.Computers
         }
 
         public void RemoveData(long fileSize)
-        {            
+        {
             availableSize += fileSize;
         }
 
@@ -81,7 +80,7 @@ namespace Assets.Scripts.Computers
         }
 
         public void SaveData(long fileSize)
-        {           
+        {
             availableSize -= fileSize;
         }
 

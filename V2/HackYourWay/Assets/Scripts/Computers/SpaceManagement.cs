@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Softwares;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace Assets.Scripts.Computers
     internal class SpaceManagement
     {
         //TODO: finalize usage of storage
-        private Dictionary<Hard, List<Software>> storage;
+        private readonly Dictionary<Hard, List<Software>> storage;
 
         public SpaceManagement(List<Hard> hards)
         {
@@ -49,7 +48,7 @@ namespace Assets.Scripts.Computers
 
         private bool TryStoreSoftware(int pos, Software software)
         {
-            if (pos+1 > storage.Count)
+            if (pos + 1 > storage.Count)
             {
                 return false;
             }

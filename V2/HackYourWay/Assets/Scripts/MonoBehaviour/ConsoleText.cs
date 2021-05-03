@@ -25,11 +25,13 @@ public class ConsoleText : MonoBehaviour
 
     public void PresentProgress(int progressPercent)
     {
-        if(progressPercent == -1)
+        if (progressPercent == -1)
         {
             if (consoleMessages[consoleMessages.Count - 1].Contains("%"))
                 consoleMessages.RemoveAt(consoleMessages.Count - 1);
 
+            Console.text = consoleMessages.ToTextConsole();
+            textChanged++;
             return;
         }
 
@@ -62,7 +64,7 @@ public class ConsoleText : MonoBehaviour
     public void AddMessage(string text, MessageType type)
     {
         HandleMessage(text, type);
-
+         
         while (consoleMessages.Count > totalNoOfLines)
         {
             consoleMessages.RemoveAt(0);
@@ -72,9 +74,11 @@ public class ConsoleText : MonoBehaviour
         textChanged++;
     }
 
+    //private IEnumerator ScrollDown()
     private void LateUpdate()
     {
-        if (scrollbar.IsActive() && textChanged!=0)
+        //yield return new WaitForEndOfFrame();
+        if (scrollbar.IsActive() && textChanged != 0)
         {
             scrollbar.value = 0;
             textChanged--;
@@ -96,6 +100,7 @@ public class ConsoleText : MonoBehaviour
         }
 
         consoleMessages.Add(message);
+        textChanged++;
     }
 
     internal void ClearConsole()
