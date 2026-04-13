@@ -4,8 +4,8 @@ First attempt at an idle game in Unity 2D
 ## Overview
 - [ ] [Instructions](#instructions)
 - [ ] [Commands](#commands)
-  - [x] [Scan](#scan)
-  - [x] [Show](#show)
+  - [ ] [Scan](#scan)
+  - [ ] [Show](#show)
   - [ ] [Crack](#crack)
   - [ ] [Inject](#inject)
   - [ ] [Firewall](#firewall)
