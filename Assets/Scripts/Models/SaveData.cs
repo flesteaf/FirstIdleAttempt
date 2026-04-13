@@ -1,0 +1,55 @@
+using System.Collections.Generic;
+
+namespace HackYourWay.Models
+{
+    /// <summary>
+    /// Top-level serialisable aggregate written to
+    /// <c>Application.persistentDataPath/save.json</c> via JsonUtility.
+    /// </summary>
+    [System.Serializable]
+    public class SaveData
+    {
+        /// <summary>Schema version; increment when adding breaking fields.</summary>
+        public int Version = 1;
+
+        public Player Player = new Player();
+
+        /// <summary>All locations the player has visited, with nested network/device state.</summary>
+        public List<LocationSaveData> Locations = new List<LocationSaveData>();
+
+        /// <summary>Sequential ID of the next location to generate when the player moves.</summary>
+        public int NextLocationId = 1;
+    }
+
+    [System.Serializable]
+    public class LocationSaveData
+    {
+        public string Id;
+        public string ConfigId;
+        public bool   IsVisited;
+        public List<NetworkSaveData> Networks = new List<NetworkSaveData>();
+    }
+
+    [System.Serializable]
+    public class NetworkSaveData
+    {
+        public string        Ssid;
+        public SecurityLevel SecurityLevel;
+        public bool          IsHacked;
+        public bool          IsScanned;
+        public List<DeviceSaveData> Devices = new List<DeviceSaveData>();
+    }
+
+    [System.Serializable]
+    public class DeviceSaveData
+    {
+        public string         Ip;
+        public string         Mac;
+        public FirewallStatus FirewallStatus;
+        public List<int>      OpenPorts    = new List<int>();
+        public Malware        ActiveMalware;
+        public bool           HasMalware;
+        public bool           IsScanned;
+        public List<DeviceFile> Files      = new List<DeviceFile>();
+    }
+}

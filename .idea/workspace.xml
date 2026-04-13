@@ -10,7 +10,9 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90d852b2-15e0-4646-b2a5-191ff5d88dd0" name="Changes" comment="" />
+    <list default="true" id="90d852b2-15e0-4646-b2a5-191ff5d88dd0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +60,7 @@
       <updated>1776086371956</updated>
       <workItem from="1776086398853" duration="859000" />
       <workItem from="1776087912929" duration="318000" />
+      <workItem from="1776091575827" duration="1978000" />
     </task>
     <servers />
   </component>
@@ -65,6 +68,9 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityProjectDiscoverer">
+    <option name="unityProjectFolder" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
