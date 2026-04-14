@@ -22,7 +22,7 @@ Tests MUST be written and confirmed FAILING before each implementation task.
 
 ## Phase 1: Enable Test Stub (Prerequisite — 1 word)
 
-- [ ] T002-000 Add `virtual` keyword to `GetCurrentLocation()` in
+- [X] T002-000 Add `virtual` keyword to `GetCurrentLocation()` in
   `Assets/Scripts/Services/LocationService.cs`:
 
   ```csharp
@@ -40,7 +40,7 @@ Tests MUST be written and confirmed FAILING before each implementation task.
 
 ## Phase 2: Tests (write first — must FAIL before Phase 3)
 
-- [ ] T002-001 Append new test cases to `Assets/Tests/EditMode/InjectCommandTests.cs`.
+- [X] T002-001 Append new test cases to `Assets/Tests/EditMode/InjectCommandTests.cs`.
 
   Add a second class `InjectCommandDirectInjectTests` **after** the closing `}` of the
   existing `InjectCommandTests` class, in the same file. Include a
@@ -94,7 +94,7 @@ Tests MUST be written and confirmed FAILING before each implementation task.
 
 ## Phase 3: Implementation
 
-- [ ] T002-002 Rewrite `Assets/Scripts/Services/Commands/InjectCommand.cs`:
+- [X] T002-002 Rewrite `Assets/Scripts/Services/Commands/InjectCommand.cs`:
 
   1. Add `private readonly LocationService _locationService;` field.
   2. Change constructor to `InjectCommand(Player player, LocationService locationService)`;
@@ -118,7 +118,7 @@ Tests MUST be written and confirmed FAILING before each implementation task.
 
   (verify T002-001 passes — all 9 new tests GREEN, all original tests still GREEN)
 
-- [ ] T002-003 Update `Assets/Scripts/Core/GameManager.cs` — `RegisterCommands()`:
+- [X] T002-003 Update `Assets/Scripts/Core/GameManager.cs` — `RegisterCommands()`:
 
   Change exactly one line:
   ```csharp
@@ -136,12 +136,12 @@ Tests MUST be written and confirmed FAILING before each implementation task.
 
 ## Phase 4: Polish
 
-- [ ] T002-004 [P] Audit all new error strings in `InjectCommand.cs` against
+- [X] T002-004 [P] Audit all new error strings in `InjectCommand.cs` against
   `specs/002-network-discovery-income/contracts/command-schema.md` v1.1.0.
   Verify exact string match for every error path.
   (Constitution Principle III)
 
-- [ ] T002-005 [P] Verify XML documentation is present and correct on all new
+- [X] T002-005 [P] Verify XML documentation is present and correct on all new
   constructor parameters and private methods added in T002-002.
   (Constitution Principle I)
 
