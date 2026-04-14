@@ -20,6 +20,17 @@ namespace HackYourWay.Services
         }
 
         /// <summary>
+        /// Returns a sorted, read-only list of all registered command verb strings.
+        /// Alphabetical order ensures deterministic autocomplete display (Constitution Principle III).
+        /// </summary>
+        public IReadOnlyList<string> GetRegisteredVerbs()
+        {
+            var verbs = new List<string>(_registry.Keys);
+            verbs.Sort(System.StringComparer.Ordinal);
+            return verbs;
+        }
+
+        /// <summary>
         /// Parses and executes a raw input string.
         /// Returns an error result for empty or unrecognised input.
         /// </summary>

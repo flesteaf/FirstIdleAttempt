@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace HackYourWay.UI
 
         // Cached builder — never reallocated after initialization.
         private readonly StringBuilder _buffer = new StringBuilder(4096);
+
+        // Guards against stacking multiple end-of-frame scroll coroutines (Constitution Principle IV).
+        private bool _scrollPending;
 
         /// <summary>Appends one line of text to the terminal and scrolls to bottom.</summary>
         public void AppendLine(string line)
@@ -45,11 +49,20 @@ namespace HackYourWay.UI
 
         private void ScrollToBottom()
         {
-            if (_scrollRect == null) return;
+            if (_scrollRect == null || _scrollPending) return;
 
-            // Deferred by one frame so layout has time to update before we scroll.
-            Canvas.ForceUpdateCanvases();
+            // Defer to end-of-frame so the layout rebuild for the new text completes
+            // before we set the scroll position. A pending guard prevents stacking
+            // multiple coroutines when several AppendLine calls arrive in one frame.
+            _scrollPending = true;
+            StartCoroutine(ScrollAtEndOfFrame());
+        }
+
+        private IEnumerator ScrollAtEndOfFrame()
+        {
+            yield return new WaitForEndOfFrame();
             _scrollRect.verticalNormalizedPosition = 0f;
+            _scrollPending = false;
         }
     }
 }
