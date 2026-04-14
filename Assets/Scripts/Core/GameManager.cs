@@ -144,7 +144,7 @@ namespace HackYourWay.Core
             CommandParser.Register("crack",    new CrackCommand(p, LocationService));
             CommandParser.Register("firewall", new FirewallCommand(p));
             CommandParser.Register("show",     new ShowCommand(p, LocationService));
-            CommandParser.Register("inject",   new InjectCommand(p));
+            CommandParser.Register("inject",   new InjectCommand(p, LocationService));
             CommandParser.Register("ls",       new LsCommand(p));
             CommandParser.Register("copy",     new CopyCommand(p));
         }
