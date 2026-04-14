@@ -41,7 +41,7 @@ namespace HackYourWay.Services
         }
 
         /// <summary>Returns the current location, generating it if needed.</summary>
-        public Location GetCurrentLocation()
+        public virtual Location GetCurrentLocation()
         {
             return GetOrCreateLocation(_currentLocationId);
         }
@@ -252,5 +252,8 @@ namespace HackYourWay.Services
         }
 
         public int NextLocationId => _nextLocationId;
+
+        /// <summary>Exposes the configuration so consumers (e.g. InjectCommand) can read designer values.</summary>
+        public Data.LocationConfigSO Config => _config;
     }
 }
