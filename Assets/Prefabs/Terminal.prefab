@@ -1791,6 +1791,7 @@ MonoBehaviour:
   _outputText: {fileID: 6215481769273093544}
   _scrollRect: {fileID: 2915173313516395826}
   _nodeId: NODE_47
+  _headerLabel: {fileID: 7395223748724247953}
   _systemColor: {r: 0.4, g: 0.85, b: 0.4, a: 1}
   _commandColor: {r: 0, g: 1, b: 0.25, a: 1}
   _outputColor: {r: 0.85, g: 0.95, b: 0.85, a: 1}
