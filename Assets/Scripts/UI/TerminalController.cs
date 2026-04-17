@@ -22,7 +22,10 @@ namespace HackYourWay.UI
         private void Start()
         {
             if (_inputField != null)
+            {
                 _inputField.onSubmit.AddListener(OnSubmit);
+                _inputField.ActivateInputField(); // grab focus immediately on scene load
+            }
         }
 
         private void OnDestroy()
@@ -50,18 +53,18 @@ namespace HackYourWay.UI
 
             _history.Add(input.Trim());
 
-            // Echo the command.
-            _outputView?.AppendLine($"> {input}");
+            // Echo the command in bright-green command colour.
+            _outputView?.AppendLine($"› {input}", TerminalLineType.Command);
 
             // Dispatch.
             if (GameManager.Instance != null)
             {
                 var result = GameManager.Instance.CommandParser.Parse(input);
-                _outputView?.AppendLine(result.Message);
+                _outputView?.AppendLine(result.Message, TerminalLineType.Output);
             }
             else
             {
-                _outputView?.AppendLine("Error: GameManager not initialised.");
+                _outputView?.AppendLine("Error: GameManager not initialised.", TerminalLineType.Error);
             }
 
             // Clear and re-focus.
