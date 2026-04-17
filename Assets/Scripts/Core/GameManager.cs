@@ -163,18 +163,18 @@ namespace HackYourWay.Core
 
         /// <summary>
         /// Finds a LocationConfigSO in the project (loaded via Resources).
-        /// Designers should place a "LocationConfig" asset in Assets/Resources/.
+        /// Designers should place a "LocationConfig" asset in Assets/Resources/Locations/.
         /// </summary>
         private static Data.LocationConfigSO FindLocationConfig()
         {
-            var config = Resources.Load<Data.LocationConfigSO>("LocationConfig");
+            var config = Resources.Load<Data.LocationConfigSO>("Locations/LocationConfig");
             if (config == null)
             {
                 // Fallback: create a runtime instance with default values so
                 // the game still boots in bare test scenes.
                 config = ScriptableObject.CreateInstance<Data.LocationConfigSO>();
-                Debug.LogWarning("[GameManager] No LocationConfig asset found in Resources/. " +
-                                 "Using default values. Create Assets/Resources/LocationConfig.asset.");
+                Debug.LogWarning("[GameManager] No LocationConfig asset found in Resources/Locations/. " +
+                                 "Using default values. Create Assets/Resources/Locations/LocationConfig.asset.");
             }
             return config;
         }

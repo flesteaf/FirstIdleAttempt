@@ -2,7 +2,8 @@
     "name": "HackYourWay",
     "rootNamespace": "HackYourWay",
     "references": [
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
