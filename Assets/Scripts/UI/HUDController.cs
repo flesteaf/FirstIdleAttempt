@@ -37,17 +37,18 @@ namespace HackYourWay.UI
 
         // ── Internal ──────────────────────────────────────────────────────────
 
+        private double _lastBtc = double.MinValue;
+
         private void Refresh()
         {
             if (GameManager.Instance == null) return;
 
-            Player player = GameManager.Instance.Player;
+            double btc = GameManager.Instance.Player.GetBalance(CurrencyType.Bitcoin);
+            if (btc == _lastBtc) return;
+            _lastBtc = btc;
 
             if (_bitcoinLabel != null)
-            {
-                double btc = player.GetBalance(CurrencyType.Bitcoin);
-                _bitcoinLabel.text = $"BTC: {btc:F6}";
-            }
+                _bitcoinLabel.text = $"BTC: {btc:F4}";
         }
     }
 }
