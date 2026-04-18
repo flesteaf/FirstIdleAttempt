@@ -147,6 +147,8 @@ namespace HackYourWay.Core
             CommandParser.Register("inject",   new InjectCommand(p, LocationService));
             CommandParser.Register("ls",       new LsCommand(p));
             CommandParser.Register("copy",     new CopyCommand(p));
+            // Registered last so GetRegisteredVerbs() returns the complete list.
+            CommandParser.Register("help",     new HelpCommand(CommandParser));
         }
 
         // ── Save ─────────────────────────────────────────────────────────────

@@ -548,6 +548,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5414684463330297073, guid: b0b3b6e84330d334ca99bcb4af455f31, type: 3}
+      propertyPath: _nodeId
+      value: NODE_77
+      objectReference: {fileID: 0}
     - target: {fileID: 6116289065756365240, guid: b0b3b6e84330d334ca99bcb4af455f31, type: 3}
       propertyPath: m_Pivot.x
       value: 0
