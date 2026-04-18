@@ -10,7 +10,18 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(gh pr *)",
-      "PowerShell(gh pr list --head feature/003-terminal-behaviour --repo flesteaf/FirstIdleAttempt)"
+      "PowerShell(gh pr list --head feature/003-terminal-behaviour --repo flesteaf/FirstIdleAttempt)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "PowerShell($env:PATH)",
+      "PowerShell(Get-ChildItem \"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\\\\GitHub CLI\\\\gh.exe\" -ErrorAction SilentlyContinue; Get-ChildItem \"C:\\\\ProgramData\\\\chocolatey\\\\bin\\\\gh.exe\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:USERPROFILE\\\\scoop\\\\shims\\\\gh.exe\" -ErrorAction SilentlyContinue)",
+      "PowerShell(cmd /c \"dir `\"C:\\\\Program Files\\\\PowerShell`\" /b\")",
+      "PowerShell(cmd /c \"dir `\"C:\\\\Program Files\\\\PowerShell\\\\7`\" /b\")",
+      "PowerShell(cmd /c \"wmic product where `\"name like '%PowerShell%'`\" get name,version,installlocation 2>nul\")",
+      "PowerShell(winget list --id Microsoft.PowerShell)",
+      "PowerShell(cmd /c \"where pwsh\")",
+      "PowerShell(cmd /c \"dir `\"C:\\\\Program Files\\\\PowerShell`\" /s /b\")",
+      "PowerShell(cmd /c \"C:\\\\Users\\\\flest\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\pwsh.exe\" --version 2>&1)"
     ]
   }
 }
