@@ -1,6 +1,6 @@
 # HackYourWay — Claude Guidance
 
-Auto-generated from all feature plans. Last updated: 2026-04-18
+Auto-generated from all feature plans. Last updated: 2026-04-25
 
 ## Active Technologies
 - C# 9 (.NET Standard 2.1, Unity 6 scripting runtime) + Unity 6 (6000.4.2f1), TextMeshPro, Unity Input System, Unity Test Framework (NUnit) (feature/003-terminal-behaviour)
@@ -25,6 +25,7 @@ Assets/Tests/
 C# 9 (.NET Standard 2.1, Unity 6 scripting runtime): Follow standard conventions
 
 ## Recent Changes
+- feature/006-command-hardware-latency: Added CommandLatencyService (per-command hardware-tier latency), HardwareStat enum, ICommand.GetLatency default interface method; Device.CpuTier/BandwidthTier; Player.CpuTier/InternetTier/GpuTier; SaveData v2→v3 migration; 11 new StoreItemSO hardware upgrade assets
 - develop: Added C# 9 (.NET Standard 2.1, Unity 6 scripting runtime) + Unity 6 (6000.4.2f1), TextMeshPro, Unity Input System, Unity Test Framework (NUnit)
 - feature/003-terminal-behaviour: Added C# 9 (.NET Standard 2.1, Unity 6 scripting runtime) + Unity 6 (6000.4.2f1), TextMeshPro, Unity Input System, Unity Test Framework (NUnit)
 
