@@ -24,8 +24,8 @@ The spec was revised from a resistance model to a **bottleneck model** (git: "re
 
 | Command | Current Spec (bottleneck) | Old Research (resistance) — SUPERSEDED |
 |---------|--------------------------|----------------------------------------|
-| `inject` | `min(playerInternetTier, targetBandwidthTier)` only. Player CPU and target CPU MUST NOT affect inject time (FR-010). | `4.0 × targetCpuResist × targetBwResist / (cpu_speedup × internet_speedup)` |
-| `firewall` | `min(playerInternetTier, targetBandwidthTier)` only. Target CPU MUST NOT affect firewall time (FR-011). | `2.5 × targetCpuResist / internet_speedup` |
+| `inject` | `min(player.BandwidthTier, targetBandwidthTier)` only. Player CPU and target CPU MUST NOT affect inject time (FR-010). | `4.0 × targetCpuResist × targetBwResist / (cpu_speedup × internet_speedup)` |
+| `firewall` | `min(player.BandwidthTier, targetBandwidthTier)` only. Target CPU MUST NOT affect firewall time (FR-011). | `2.5 × targetCpuResist / internet_speedup` |
 | `ls` | `min(playerInternetTier, targetBandwidthTier)` | Research had `targetBwSpeedup` as multiplier — direction is correct, formula differs |
 | `copy` | `min(playerInternetTier, targetBandwidthTier)` × file size | Same issue as ls |
 
@@ -97,7 +97,7 @@ Assets/Scripts/
 Assets/Tests/EditMode/
 └── CommandLatencyServiceTests.cs   # NEW: unit tests for all command categories + 20× ratio + bottleneck model
 
-Assets/Resources/StoreItems/        # 11 NEW StoreItemSO assets (CPU ×4, Internet ×4, GPU ×3)
+Assets/Resources/StoreItems/        # 11 NEW StoreItemSO assets (CPU ×4, Bandwidth ×4, GPU ×3)
 ```
 
 **Structure Decision**: Single-project Unity layout. All new files follow existing namespace/folder conventions. No new assembly definitions needed.
@@ -119,25 +119,27 @@ effectiveTime = Clamp(baseTime / (CpuSpeedup[playerCpuTier] × GpuSpeedup[player
 
 **All network-transfer commands** (inject, firewall, ls, copy, scan-ip/mac) — **bottleneck model** (FR-009–013, FR-021):
 ```
-effBw         = min(playerInternetTier, targetDevice.BandwidthTier)
-speedup       = InternetSpeedup[effBw]
+effBw         = min(player.BandwidthTier, targetDevice.BandwidthTier)
+speedup       = BandwidthSpeedup[effBw]
 effectiveTime = Clamp(baseTime / speedup, 0.05, maxCap)          // inject, firewall, ls
 effectiveTime = Clamp((baseCopy + fileSizeBytes / RefSize × ScaleFactor) / speedup, 0.05, maxCopy)  // copy
 ```
 
 **Area scan** (player bandwidth only, no target, FR-009):
 ```
-effectiveTime = Clamp(baseScan / InternetSpeedup[playerInternetTier], 0.05, maxScan)
+effectiveTime = Clamp(baseScan / BandwidthSpeedup[player.BandwidthTier], 0.05, maxScan)
 ```
 
 **Coefficient arrays** (from research.md Decision 2 — valid; resistance arrays discarded):
 ```
-CpuSpeedup[1..5]      = [1.0f, 1.5f, 2.5f, 3.5f, 5.0f]
-InternetSpeedup[1..5] = [1.0f, 1.5f, 2.3f, 3.2f, 4.0f]
-GpuSpeedup[0..3]      = [1.0f, 1.6f, 2.8f, 4.0f]
+CpuSpeedup[1..5]       = [1.0f, 1.5f, 2.5f, 3.5f, 5.0f]
+BandwidthSpeedup[1..5] = [1.0f, 1.5f, 2.3f, 3.2f, 4.0f]   // shared by player and target
+GpuSpeedup[0..3]       = [1.0f, 1.6f, 2.8f, 4.0f]
 ```
+
+**Naming note**: `research.md` and `data-model.md` call the player field `InternetTier`; `tasks.md` corrects this to `Player.BandwidthTier` (matching spec FR-005 wording and `Device.BandwidthTier`). Use `BandwidthTier` everywhere.
 
 **Max ratios** (FR-019, SC-003 verification):
 - Crack at CPU5+GPU3 vs CPU1+GPU0: `5.0 × 4.0 = 20×` ✓ (exactly 20×)
-- No single axis > 10×: CPU5=5×, GPU3=4×, Internet5=4× ✓
+- No single axis > 10×: CPU5=5×, GPU3=4×, BW5=4× ✓
 - Inject/ls/copy at effBw5 vs effBw1: `4.0 / 1.0 = 4×` (single bandwidth axis max = 4×, well under 10×) ✓
