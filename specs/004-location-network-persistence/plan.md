@@ -66,7 +66,7 @@ Assets/Scripts/
 │   └── Commands/
 │       ├── MoveCommand.cs           # new
 │       ├── ForgetCommand.cs         # new
-│       ├── DeviceSelector.cs        # new static helper
+│       ├── DeviceSelector.cs        # new static helper — AwaitDevice(LocationService, Action<Device>); uses TerminalController.Instance internally
 │       ├── ShowCommand.cs           # networks, ips, locations sub-commands
 │       ├── ScanCommand.cs           # remove double-scan; add no-location error
 │       ├── InjectCommand.cs         # interactive type + network selection

@@ -15,6 +15,19 @@ namespace HackYourWay.Core
     {
         public static GameManager Instance { get; private set; }
 
+        // ── Command latency ──────────────────────────────────────────────────
+
+        /// <summary>Base duration in seconds for command execution before any speed upgrades.</summary>
+        public const float BaseCommandLatencySeconds = 1.0f;
+
+        /// <summary>
+        /// Returns the effective command latency for the current session.
+        /// <c>BaseCommandLatencySeconds × (1 − Player.CommandSpeedUpgrade)</c>.
+        /// Returns 0 when the player has full instant-execution upgrades.
+        /// </summary>
+        public float GetCommandLatency() =>
+            BaseCommandLatencySeconds * (1f - Player.CommandSpeedUpgrade);
+
         // ── Public accessors ─────────────────────────────────────────────────
 
         /// <summary>The loaded (or default) save data for this session.</summary>

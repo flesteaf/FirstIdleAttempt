@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,6 +36,12 @@ namespace HackYourWay.UI
         private SelectionState? _selectionState;
         private int             _selectionCheckpoint = -1;
 
+        // ── Command execution latency ─────────────────────────────────────────
+
+        private Coroutine _pendingExecution;
+        private const float InstantThreshold = 0.05f;
+        private const int   ProgressBarWidth  = 20;
+
         // ── Unity lifecycle ───────────────────────────────────────────────────
 
         private void Awake()
@@ -56,6 +63,8 @@ namespace HackYourWay.UI
             if (Instance == this) Instance = null;
             if (_inputField != null)
                 _inputField.onSubmit.RemoveListener(OnSubmit);
+            if (_pendingExecution != null)
+                StopCoroutine(_pendingExecution);
         }
 
         private void Update()
@@ -101,22 +110,31 @@ namespace HackYourWay.UI
                 return;
             }
 
+            // Drop input silently while a command is already executing
+            if (_pendingExecution != null)
+            {
+                _inputField.text = string.Empty;
+                _inputField.ActivateInputField();
+                return;
+            }
+
             _history.Add(input.Trim());
             _outputView?.AppendLine($"› {input}", TerminalLineType.Command);
+            _inputField.text = string.Empty;
+            _inputField.ActivateInputField();
 
-            if (GameManager.Instance != null)
+            float latency = GameManager.Instance != null
+                ? GameManager.Instance.GetCommandLatency()
+                : 0f;
+
+            if (latency <= InstantThreshold)
             {
-                var result = GameManager.Instance.CommandParser.Parse(input);
-                if (!string.IsNullOrEmpty(result.Message))
-                    _outputView?.AppendLine(result.Message, TerminalLineType.Output);
+                ExecuteCommandImmediate(input.Trim());
             }
             else
             {
-                _outputView?.AppendLine("Error: GameManager not initialised.", TerminalLineType.Error);
+                _pendingExecution = StartCoroutine(ExecuteWithDelay(input.Trim(), latency));
             }
-
-            _inputField.text = string.Empty;
-            _inputField.ActivateInputField();
         }
 
         // ── Selection mode public API ─────────────────────────────────────────
@@ -148,6 +166,52 @@ namespace HackYourWay.UI
         {
             if (!string.IsNullOrEmpty(message))
                 _outputView?.AppendLine(message);
+        }
+
+        // ── Command execution ─────────────────────────────────────────────────
+
+        private void ExecuteCommandImmediate(string input)
+        {
+            if (GameManager.Instance != null)
+            {
+                var result = GameManager.Instance.CommandParser.Parse(input);
+                if (!string.IsNullOrEmpty(result.Message))
+                    _outputView?.AppendLine(result.Message, TerminalLineType.Output);
+            }
+            else
+            {
+                _outputView?.AppendLine("Error: GameManager not initialised.", TerminalLineType.Error);
+            }
+        }
+
+        private IEnumerator ExecuteWithDelay(string input, float latency)
+        {
+            int checkpoint = _outputView?.SaveCheckpoint() ?? -1;
+            float elapsed  = 0f;
+
+            while (elapsed < latency)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / latency);
+
+                if (checkpoint >= 0 && _outputView != null)
+                {
+                    int filled = Mathf.RoundToInt(t * ProgressBarWidth);
+                    _outputView.RestoreToCheckpoint(checkpoint);
+                    _outputView.AppendLineNoFlush(
+                        $"  [{new string('█', filled)}{new string('░', ProgressBarWidth - filled)}] {(int)(t * 100),3}%",
+                        TerminalLineType.System);
+                    _outputView.FlushNow();
+                }
+
+                yield return null;
+            }
+
+            if (checkpoint >= 0 && _outputView != null)
+                _outputView.RestoreToCheckpoint(checkpoint);
+
+            ExecuteCommandImmediate(input);
+            _pendingExecution = null;
         }
 
         // ── Selection internals ───────────────────────────────────────────────

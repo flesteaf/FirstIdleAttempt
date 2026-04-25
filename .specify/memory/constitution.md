@@ -1,15 +1,11 @@
 <!--
 SYNC IMPACT REPORT
-Version change: 1.0.0 → 1.0.1
+Version change: 1.0.1 → 1.0.2
 Modified principles:
-  - IV. Performance Requirements: FPS floor lowered from 60 to 45 (frame budget 16.67 ms → 22.22 ms)
-  - II. Testing Standards (rationale): Unity version updated to Unity 6 (6000.4.2f1)
+  - Dev Workflow — branch naming: HYW-{issue-number} prefix made optional; pattern simplified to feature/{short-description}
 Added sections: N/A
 Removed sections: N/A
-Templates requiring updates:
-  - .specify/templates/plan-template.md ✅ aligned
-  - .specify/templates/spec-template.md ✅ aligned
-  - .specify/templates/tasks-template.md ✅ aligned
+Templates requiring updates: N/A
 Follow-up TODOs: None.
 -->
 
@@ -78,7 +74,8 @@ Early profiling prevents costly architecture rewrites in later milestones.
 ## Development Workflow
 
 - All new features MUST be developed on a dedicated feature branch following
-  the naming pattern `feature/HYW-{issue-number}-{short-description}`.
+  the naming pattern `feature/{short-description}` (e.g. `feature/004-location-network-persistence`).
+  An issue-number prefix (e.g. `HYW-{N}`) is optional.
 - Every feature branch MUST target `develop`; direct pushes to `develop` or
   `main` are forbidden.
 - Pull requests MUST pass all quality gates and the Constitution Check before
@@ -119,4 +116,4 @@ Amendments require:
 All PRs and code reviews MUST verify compliance with this constitution. Added
 complexity MUST be justified; YAGNI principles apply throughout the project.
 
-**Version**: 1.0.1 | **Ratified**: 2026-04-13 | **Last Amended**: 2026-04-13
+**Version**: 1.0.2 | **Ratified**: 2026-04-13 | **Last Amended**: 2026-04-25

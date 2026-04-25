@@ -1,6 +1,6 @@
-﻿# HackYourWay — Claude Guidance
+# HackYourWay — Claude Guidance
 
-Auto-generated from all feature plans. Last updated: 2026-04-14
+Auto-generated from all feature plans. Last updated: 2026-04-18
 
 ## Active Technologies
 - C# 9 (.NET Standard 2.1, Unity 6 scripting runtime) + Unity 6 (6000.4.2f1), TextMeshPro, Unity Input System, Unity Test Framework (NUnit) (feature/003-terminal-behaviour)
@@ -25,6 +25,7 @@ Assets/Tests/
 C# 9 (.NET Standard 2.1, Unity 6 scripting runtime): Follow standard conventions
 
 ## Recent Changes
+- develop: Added C# 9 (.NET Standard 2.1, Unity 6 scripting runtime) + Unity 6 (6000.4.2f1), TextMeshPro, Unity Input System, Unity Test Framework (NUnit)
 - feature/003-terminal-behaviour: Added C# 9 (.NET Standard 2.1, Unity 6 scripting runtime) + Unity 6 (6000.4.2f1), TextMeshPro, Unity Input System, Unity Test Framework (NUnit)
 
 - develop: Added C# 9 (.NET Standard 2.1, Unity 6 scripting runtime) + Unity 6 (6000.4.2f1), URP 2D, TextMeshPro, Input System, Unity Test Framework (NUnit)
