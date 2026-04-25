@@ -160,7 +160,10 @@ namespace HackYourWay.Services.Commands
             _sb.Clear();
             _sb.AppendLine($"Scanning {foundDevice.Ip}...");
             _sb.AppendLine($"Firewall: {(foundDevice.FirewallStatus == FirewallStatus.Active ? "ACTIVE" : "DISABLED")}");
-            _sb.AppendLine($"CPU Tier: {foundDevice.CpuTier}/5");
+            if (foundDevice.GpuTier > 0)
+                _sb.AppendLine($"GPU Tier: {foundDevice.GpuTier}/3");
+            else
+                _sb.AppendLine($"CPU Tier: {foundDevice.CpuTier}/5");
             _sb.AppendLine($"BW Tier:  {foundDevice.BandwidthTier}/5");
 
             _sb.Append("Open ports: ");

@@ -28,6 +28,9 @@ namespace HackYourWay.Models
         /// <summary>Network bandwidth tier (1–5). Generated at creation; used in bottleneck calculations (FR-021).</summary>
         public int BandwidthTier = 1;
 
+        /// <summary>GPU tier (0 = none, 1–3 = present). Rare; shown in scan output instead of CPU tier when present.</summary>
+        public int GpuTier = 0;
+
         /// <summary>
         /// Whether malware injection is allowed. Firewall must be disabled,
         /// except on open networks (SecurityLevel.None) where the condition is waived.
