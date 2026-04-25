@@ -7,13 +7,11 @@ namespace HackYourWay.Services.Commands
     /// <summary>
     /// Implements the <c>scan</c> command family.
     /// <list type="bullet">
-    ///   <item><c>scan</c> — lists networks at current location (moves on second call).</item>
+    ///   <item><c>scan</c> — lists networks at current location. Does not change location.</item>
     ///   <item><c>scan network {SSID}</c> — lists devices on a known network.</item>
     ///   <item><c>scan ip {IP}</c> — shows firewall/ports for a device on an accessible network.</item>
     ///   <item><c>scan mac {MAC}</c> — same as scan ip but by MAC address.</item>
     /// </list>
-    /// Sets <see cref="Player.TargetedDevice"/> and <see cref="Player.TargetedNetwork"/>
-    /// when a device is found via ip/mac sub-commands.
     /// </summary>
     public class ScanCommand : ICommand
     {
@@ -50,18 +48,10 @@ namespace HackYourWay.Services.Commands
 
         private CommandResult ScanArea()
         {
+            if (!_locationService.HasCurrentLocation())
+                return CommandResult.Fail("No location available. Use 'move' to discover a location first.");
+
             Location loc = _locationService.GetCurrentLocation();
-
-            if (loc.IsVisited)
-            {
-                loc = _locationService.MoveToNextLocation();
-                _sb.Clear();
-                _sb.AppendLine("Moving to new area...");
-                AppendNetworkList(loc);
-                return CommandResult.Ok(_sb.ToString());
-            }
-
-            loc.IsVisited = true;
             _sb.Clear();
             AppendNetworkList(loc);
             return CommandResult.Ok(_sb.ToString());
@@ -144,10 +134,6 @@ namespace HackYourWay.Services.Commands
             }
 
             foundDevice.IsScanned = true;
-
-            // Set session target for subsequent firewall/inject commands.
-            _player.TargetedDevice  = foundDevice;
-            _player.TargetedNetwork = foundNet;
 
             _sb.Clear();
             _sb.AppendLine($"Scanning {foundDevice.Ip}...");

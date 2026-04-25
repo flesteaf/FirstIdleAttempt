@@ -9,6 +9,9 @@ namespace HackYourWay.Models
         /// <summary>Unique identifier; also used as PRNG seed for procedural generation.</summary>
         public string Id;
 
+        /// <summary>Human-readable name derived deterministically from <see cref="Id"/> (e.g. "node_77").</summary>
+        public string Name;
+
         /// <summary>Reference to the LocationConfigSO asset id used for generation.</summary>
         public string ConfigId;
 

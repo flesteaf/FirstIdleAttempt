@@ -71,10 +71,7 @@ namespace HackYourWay.UI
         /// </summary>
         public void AppendLine(string line, TerminalLineType type = TerminalLineType.Output)
         {
-            string hex = ColorUtility.ToHtmlStringRGB(ColorForType(type));
-            _buffer.Append("<color=#").Append(hex).Append('>')
-                   .Append(line)
-                   .AppendLine("</color>");
+            AppendLineNoFlush(line, type);
             Flush();
         }
 
@@ -85,6 +82,34 @@ namespace HackYourWay.UI
             if (_outputText != null)
                 _outputText.text = string.Empty;
         }
+
+        /// <summary>
+        /// Returns the current buffer length as a checkpoint that can be restored
+        /// to re-render the selection list in-place without growing the scrollback.
+        /// </summary>
+        public int SaveCheckpoint() => _buffer.Length;
+
+        /// <summary>
+        /// Truncates the buffer to <paramref name="checkpoint"/> without flushing.
+        /// Call <see cref="FlushNow"/> after appending replacement lines.
+        /// </summary>
+        public void RestoreToCheckpoint(int checkpoint)
+        {
+            if (checkpoint >= 0 && checkpoint <= _buffer.Length)
+                _buffer.Length = checkpoint;
+        }
+
+        /// <summary>Appends a line without flushing (batch with <see cref="FlushNow"/>).</summary>
+        public void AppendLineNoFlush(string line, TerminalLineType type = TerminalLineType.Output)
+        {
+            string hex = ColorUtility.ToHtmlStringRGB(ColorForType(type));
+            _buffer.Append("<color=#").Append(hex).Append('>')
+                   .Append(line)
+                   .AppendLine("</color>");
+        }
+
+        /// <summary>Pushes the current buffer to the TMP text component and scrolls to bottom.</summary>
+        public void FlushNow() => Flush();
 
         // ── Internal ──────────────────────────────────────────────────────────
 

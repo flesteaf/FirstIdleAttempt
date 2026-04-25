@@ -19,12 +19,17 @@ namespace HackYourWay.Models
 
         /// <summary>Sequential ID of the next location to generate when the player moves.</summary>
         public int NextLocationId = 1;
+
+        /// <summary>Name of the location the player was at on last save; restored on reload.</summary>
+        public string CurrentLocationName;
     }
 
     [System.Serializable]
     public class LocationSaveData
     {
         public string Id;
+        /// <summary>Human-readable location name (e.g. "node_77"); added in schema v2.</summary>
+        public string Name;
         public string ConfigId;
         public bool   IsVisited;
         public List<NetworkSaveData> Networks = new List<NetworkSaveData>();

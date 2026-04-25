@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HackYourWay.Interfaces;
 using HackYourWay.Models;
 
@@ -6,37 +7,20 @@ namespace HackYourWay.Services.Commands
     /// <summary>
     /// Implements the <c>inject</c> command family.
     /// <list type="bullet">
-    ///   <item><c>inject {type}</c> — injects into the currently targeted device
-    ///   (set via <c>scan ip</c> or <c>scan mac</c>). Schema v1.0.0.</item>
-    ///   <item><c>inject {type} {IP} {SSID}</c> — resolves target device directly from
-    ///   the current location without requiring a prior <c>scan ip</c>. Schema v1.1.0.</item>
+    ///   <item><c>inject {type} {IP} {SSID}</c> — injects directly, no prompts.</item>
+    ///   <item><c>inject {type}</c> — prompts for network selection.</item>
+    ///   <item><c>inject</c> — prompts for type then network selection.</item>
     /// </list>
-    /// All four malware types support both forms. IP and SSID are optional but
-    /// must both be present if either is given.
     /// </summary>
     public class InjectCommand : ICommand
     {
-        // Base income rates for freshly installed malware.
-        private const double MinerBaseRate    = 0.0012;
-        private const double SpammerBaseRate  = 0.0008;
-
-        // Fallback ransom when no LocationService is wired (e.g. unit tests).
+        private const double MinerBaseRate   = 0.0012;
+        private const double SpammerBaseRate = 0.0008;
         private const double DefaultRansomBtc = 0.05;
 
         private readonly Player          _player;
-        /// <param name="_locationService">Used for direct-inject device resolution and
-        /// designer-configured ransom amounts. Nullable — legacy path works without it.</param>
         private readonly LocationService _locationService;
 
-        /// <summary>
-        /// Initialises the inject command.
-        /// </summary>
-        /// <param name="player">Active player session — provides tool ownership and
-        /// session targeting (<see cref="Player.TargetedDevice"/>).</param>
-        /// <param name="locationService">Used to resolve devices by IP+SSID when the
-        /// optional direct-target arguments are supplied, and to read designer-configured
-        /// ransom amounts. Pass <c>null</c> only in test contexts that do not exercise
-        /// these paths.</param>
         public InjectCommand(Player player, LocationService locationService = null)
         {
             _player          = player;
@@ -46,39 +30,100 @@ namespace HackYourWay.Services.Commands
         /// <inheritdoc/>
         public CommandResult Execute(string[] args)
         {
-            if (args.Length < 1)
-                return CommandResult.Fail("Usage: inject {miner|bot|spammer|ransomware} [{IP} {SSID}]");
-
-            // Exactly one trailing arg is ambiguous — require both IP and SSID or neither.
-            if (args.Length == 2)
-                return CommandResult.Fail("Usage: inject {miner|bot|spammer|ransomware} [{IP} {SSID}]");
-
-            Device  dev;
-            Network net;
-
+            // Full direct path: inject {type} {IP} {SSID}
             if (args.Length >= 3)
             {
-                // Direct-resolve path (Schema v1.1.0): args[1] = IP, args[2] = SSID.
-                if (!TryResolveDevice(args[1], args[2], out dev, out net, out string resolveError))
-                    return CommandResult.Fail(resolveError);
+                if (!TryResolveDevice(args[1], args[2], out Device dev, out Network net, out string err))
+                    return CommandResult.Fail(err);
+                return DispatchInject(args[0], dev, net);
             }
-            else
+
+            // Partial direct path: inject {type} {IP_only} — ambiguous, require SSID too
+            if (args.Length == 2)
+                return CommandResult.Fail("Usage: inject {type} {IP} {SSID}");
+
+            // Interactive: inject {type} — skip type selection, go to network selection
+            if (args.Length == 1)
+                return BeginNetworkSelection(args[0]);
+
+            // Interactive: inject — begin type selection first
+            return BeginTypeSelection();
+        }
+
+        // ── Interactive type selection (inject with no args) ──────────────────
+
+        private CommandResult BeginTypeSelection()
+        {
+            var types = GetAvailableTypes();
+            if (types.Count == 0)
+                return CommandResult.Fail("No malware types available.");
+
+            string[] options = types.ToArray();
+            UI.TerminalController.Instance?.AwaitSelection(options, idx =>
             {
-                // Legacy path (Schema v1.0.0): use Player.TargetedDevice.
-                if (_player.TargetedDevice == null)
-                    return CommandResult.Fail("No device targeted. Run 'scan ip {IP}' first.");
+                if (idx < 0) return;
+                string chosen = options[idx];
+                var result = BeginNetworkSelection(chosen);
+                // If no interactive was started (e.g. error), show the message
+                if (!string.IsNullOrEmpty(result.Message))
+                    UI.TerminalController.Instance?.AppendOutput(result.Message);
+            });
+            return CommandResult.Ok("");
+        }
 
-                dev = _player.TargetedDevice;
-                net = _player.TargetedNetwork;
+        // ── Interactive network selection ─────────────────────────────────────
+
+        private CommandResult BeginNetworkSelection(string typeName)
+        {
+            if (_locationService == null)
+                return CommandResult.Fail("No location service available.");
+
+            if (!_locationService.HasCurrentLocation())
+                return CommandResult.Fail("No location available. Use 'move' to discover a location first.");
+
+            Location loc = _locationService.GetCurrentLocation();
+            var accessible = new List<Network>();
+            for (int n = 0; n < loc.Networks.Count; n++)
+            {
+                var net = loc.Networks[n];
+                if (net.IsHacked || net.SecurityLevel == SecurityLevel.None)
+                    accessible.Add(net);
             }
 
-            // Precondition: device must not already be infected (applies to both paths).
+            if (accessible.Count == 0)
+                return CommandResult.Fail("No accessible networks at current location. Crack a network first.");
+
+            string[] options = new string[accessible.Count];
+            for (int i = 0; i < accessible.Count; i++)
+                options[i] = accessible[i].Ssid;
+
+            UI.TerminalController.Instance?.AwaitSelection(options, idx =>
+            {
+                if (idx < 0) return;
+                Network chosen = accessible[idx];
+                Device  dev    = FindInjectableDevice(chosen);
+                if (dev == null)
+                {
+                    UI.TerminalController.Instance?.AppendOutput(
+                        $"Error: No injectable device found on '{chosen.Ssid}'.");
+                    return;
+                }
+                var result = DispatchInject(typeName, dev, chosen);
+                UI.TerminalController.Instance?.AppendOutput(result.Message);
+            });
+
+            return CommandResult.Ok("");
+        }
+
+        // ── Dispatch to specific malware injectors ────────────────────────────
+
+        private CommandResult DispatchInject(string typeName, Device dev, Network net)
+        {
             if (dev.ActiveMalware != null)
                 return CommandResult.Fail(
                     $"{dev.Ip} is already infected with a {dev.ActiveMalware.Type.ToString().ToLowerInvariant()}.");
 
-            string type = args[0].ToLowerInvariant();
-            switch (type)
+            switch (typeName.ToLowerInvariant())
             {
                 case "miner":      return InjectMiner(dev, net);
                 case "bot":        return InjectBot(dev, net);
@@ -86,23 +131,12 @@ namespace HackYourWay.Services.Commands
                 case "ransomware": return InjectRansomware(dev, net);
                 default:
                     return CommandResult.Fail(
-                        $"Unknown malware type '{args[0]}'. Use miner, bot, spammer, or ransomware.");
+                        $"Unknown malware type '{typeName}'. Use miner, bot, spammer, or ransomware.");
             }
         }
 
-        // ── Device resolution (direct-inject path) ────────────────────────────
+        // ── Device resolution ─────────────────────────────────────────────────
 
-        /// <summary>
-        /// Attempts to resolve a <see cref="Device"/> and its parent <see cref="Network"/>
-        /// by IP and SSID from the current location.
-        /// </summary>
-        /// <param name="ip">IP address to match.</param>
-        /// <param name="ssid">SSID of the containing network.</param>
-        /// <param name="device">Resolved device; <c>null</c> on failure.</param>
-        /// <param name="network">Resolved network; <c>null</c> on failure.</param>
-        /// <param name="error">Human-readable error on failure (without "Error:" prefix);
-        /// <c>null</c> on success.</param>
-        /// <returns><c>true</c> when both device and network are resolved.</returns>
         private bool TryResolveDevice(
             string ip, string ssid,
             out Device device, out Network network, out string error)
@@ -111,17 +145,18 @@ namespace HackYourWay.Services.Commands
             network = null;
             error   = null;
 
+            if (_locationService == null)
+            {
+                error = "No location service available.";
+                return false;
+            }
+
             Location loc = _locationService.GetCurrentLocation();
 
-            // Find the network by SSID — for loop, no LINQ (Constitution Principle IV).
             Network found = null;
             for (int n = 0; n < loc.Networks.Count; n++)
             {
-                if (loc.Networks[n].Ssid == ssid)
-                {
-                    found = loc.Networks[n];
-                    break;
-                }
+                if (loc.Networks[n].Ssid == ssid) { found = loc.Networks[n]; break; }
             }
 
             if (found == null)
@@ -130,22 +165,16 @@ namespace HackYourWay.Services.Commands
                 return false;
             }
 
-            // Network must be accessible: cracked or open.
             if (!found.IsHacked && found.SecurityLevel != SecurityLevel.None)
             {
                 error = $"Network '{ssid}' is not accessible. Crack it first or target an open network.";
                 return false;
             }
 
-            // Find the device by IP — for loop, no LINQ.
             Device foundDevice = null;
             for (int d = 0; d < found.Devices.Count; d++)
             {
-                if (found.Devices[d].Ip == ip)
-                {
-                    foundDevice = found.Devices[d];
-                    break;
-                }
+                if (found.Devices[d].Ip == ip) { foundDevice = found.Devices[d]; break; }
             }
 
             if (foundDevice == null)
@@ -159,7 +188,29 @@ namespace HackYourWay.Services.Commands
             return true;
         }
 
-        // ── Miner ─────────────────────────────────────────────────────────────
+        private static Device FindInjectableDevice(Network net)
+        {
+            for (int d = 0; d < net.Devices.Count; d++)
+            {
+                var dev = net.Devices[d];
+                if (dev.ActiveMalware == null && dev.CanInject(net.SecurityLevel))
+                    return dev;
+            }
+            return null;
+        }
+
+        // ── Helpers ───────────────────────────────────────────────────────────
+
+        private List<string> GetAvailableTypes()
+        {
+            var types = new List<string> { "miner" };
+            if (_player.HasTool(ToolType.BotSoftware))      types.Add("bot");
+            if (_player.HasTool(ToolType.SpammerSoftware))  types.Add("spammer");
+            if (_player.HasTool(ToolType.Ransomware))       types.Add("ransomware");
+            return types;
+        }
+
+        // ── Malware injectors ─────────────────────────────────────────────────
 
         private CommandResult InjectMiner(Device dev, Network net)
         {
@@ -174,12 +225,8 @@ namespace HackYourWay.Services.Commands
                 Currency            = CurrencyType.Bitcoin,
                 InstalledAtUtcTicks = System.DateTime.UtcNow.Ticks
             };
-
-            return CommandResult.Ok(
-                $"Injecting miner into {dev.Ip}...\nMiner installed. Generating {MinerBaseRate:F4} BTC/s.");
+            return CommandResult.Ok($"Injecting miner into {dev.Ip}...\nMiner installed. Generating {MinerBaseRate:F4} BTC/s.");
         }
-
-        // ── Bot ───────────────────────────────────────────────────────────────
 
         private CommandResult InjectBot(Device dev, Network net)
         {
@@ -197,12 +244,8 @@ namespace HackYourWay.Services.Commands
                 Currency            = CurrencyType.Bitcoin,
                 InstalledAtUtcTicks = System.DateTime.UtcNow.Ticks
             };
-
-            return CommandResult.Ok(
-                $"Injecting bot into {dev.Ip}...\nBot installed. Attack contracts are now available.");
+            return CommandResult.Ok($"Injecting bot into {dev.Ip}...\nBot installed. Attack contracts are now available.");
         }
-
-        // ── Spammer ───────────────────────────────────────────────────────────
 
         private CommandResult InjectSpammer(Device dev, Network net)
         {
@@ -220,12 +263,9 @@ namespace HackYourWay.Services.Commands
                 Currency            = CurrencyType.Bitcoin,
                 InstalledAtUtcTicks = System.DateTime.UtcNow.Ticks
             };
-
             return CommandResult.Ok(
                 $"Injecting spammer into {dev.Ip}...\nSpammer installed. Spam contracts are now available.\nGenerating {SpammerBaseRate:F4} BTC/s.");
         }
-
-        // ── Ransomware ────────────────────────────────────────────────────────
 
         private CommandResult InjectRansomware(Device dev, Network net)
         {
@@ -235,8 +275,6 @@ namespace HackYourWay.Services.Commands
             if (!_player.HasTool(ToolType.Ransomware))
                 return CommandResult.Fail("You do not own ransomware software. Visit the store to purchase it.");
 
-            // Use the designer-configured ransom range midpoint when available;
-            // fall back to the built-in constant when no LocationService is wired (e.g. tests).
             double ransom = DefaultRansomBtc;
             if (_locationService != null)
             {
@@ -253,7 +291,6 @@ namespace HackYourWay.Services.Commands
                 InstalledAtUtcTicks = System.DateTime.UtcNow.Ticks,
                 RansomAmount        = ransom
             };
-
             return CommandResult.Ok(
                 $"Injecting ransomware into {dev.Ip}...\nDevice encrypted. Ransom demand: {ransom:F4} BTC.\nAwaiting payment...");
         }

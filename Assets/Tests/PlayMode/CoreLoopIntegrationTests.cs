@@ -51,12 +51,13 @@ namespace HackYourWay.Tests.PlayMode
             var parser = new CommandParser();
             parser.Register("scan",     new HackYourWay.Services.Commands.ScanCommand(player, svc));
             parser.Register("crack",    new HackYourWay.Services.Commands.CrackCommand(player, svc));
-            parser.Register("firewall", new HackYourWay.Services.Commands.FirewallCommand(player));
-            parser.Register("inject",   new HackYourWay.Services.Commands.InjectCommand(player));
+            parser.Register("firewall", new HackYourWay.Services.Commands.FirewallCommand(player, svc));
+            parser.Register("inject",   new HackYourWay.Services.Commands.InjectCommand(player, svc));
 
             var incomeService = new IncomeService(player, svc);
 
             // --- Act: simulate player commands ---
+            svc.MoveToNextLocation(); // populate cache so scan has a current location
             parser.Parse("scan");
 
             var location = svc.GetCurrentLocation();
@@ -67,17 +68,13 @@ namespace HackYourWay.Tests.PlayMode
             parser.Parse($"crack WPA2 {network.Ssid}");
             Assert.IsTrue(network.IsHacked, "Network should be hacked after crack.");
 
-            // Scan the device IP to set target.
+            // Disable firewall using explicit IP (no implicit targeting).
             network.IsHacked = true;
-            player.TargetedDevice  = device;
-            player.TargetedNetwork = network;
-
-            // Disable firewall.
-            parser.Parse("firewall disable");
+            parser.Parse($"firewall disable {device.Ip}");
             Assert.AreEqual(FirewallStatus.Disabled, device.FirewallStatus);
 
-            // Inject miner.
-            parser.Parse("inject miner");
+            // Inject miner using direct path: inject {type} {IP} {SSID}.
+            parser.Parse($"inject miner {device.Ip} {network.Ssid}");
             Assert.IsNotNull(device.ActiveMalware, "Miner should be installed.");
 
             // Simulate two ticks via IncomeService.
