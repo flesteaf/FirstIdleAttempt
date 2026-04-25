@@ -8,7 +8,7 @@ namespace HackYourWay.Core
 {
     /// <summary>
     /// Singleton MonoBehaviour that bootstraps the game session.
-    /// Loads save data, applies offline income, and wires up all services.
+    /// Loads save data, applies offline income, runs v1→v2 migration, and wires all services.
     /// Saves on application quit and pause.
     /// </summary>
     public class GameManager : MonoBehaviour
@@ -73,22 +73,53 @@ namespace HackYourWay.Core
             // 1. Load save (returns default if no file exists).
             SaveData = _saveSystem.Load();
 
-            // 2. Apply offline income for all income-generating malware.
+            // 2. Run schema migration (v1 → v2) before anything reads location data.
+            MigrateIfNeeded();
+
+            // 3. Apply offline income for all income-generating malware.
             ApplyOfflineIncome();
 
-            // 3. Restore location service state from save.
+            // 4. Restore location service state from save.
             LocationService = new Services.LocationService(FindLocationConfig());
             if (SaveData.Locations.Count > 0)
+            {
                 LocationService.RestoreFromSave(SaveData.Locations, SaveData.NextLocationId);
+                if (!string.IsNullOrEmpty(SaveData.CurrentLocationName))
+                    LocationService.SetCurrentLocation(SaveData.CurrentLocationName);
+            }
 
-            // 4. Build command parser; commands registered by RegisterCommands().
+            // 5. Build command parser; commands registered by RegisterCommands().
             CommandParser = new CommandParser();
             RegisterCommands();
 
-            // 5. Create IncomeService and register with TickManager (T035/T037).
+            // 6. Create IncomeService and register with TickManager.
             var incomeService = new IncomeService(SaveData.Player, LocationService);
             if (_tickManager != null)
                 _tickManager.Register(incomeService);
+        }
+
+        // ── Schema migration ─────────────────────────────────────────────────
+
+        private void MigrateIfNeeded()
+        {
+            if (SaveData.Version >= 2) return;
+
+            // v1 → v2: back-fill location names from seeds; set CurrentLocationName.
+            const int nameMultiplier = 77;
+            const int nameModulus    = 1000;
+
+            for (int i = 0; i < SaveData.Locations.Count; i++)
+            {
+                var loc = SaveData.Locations[i];
+                if (string.IsNullOrEmpty(loc.Name) && int.TryParse(loc.Id, out int seed))
+                    loc.Name = $"node_{seed * nameMultiplier % nameModulus}";
+            }
+
+            if (string.IsNullOrEmpty(SaveData.CurrentLocationName) && SaveData.Locations.Count > 0)
+                SaveData.CurrentLocationName = SaveData.Locations[0].Name ?? "node_77";
+
+            SaveData.Version = 2;
+            _saveSystem.Save(SaveData);
         }
 
         // ── Offline income ───────────────────────────────────────────────────
@@ -132,21 +163,19 @@ namespace HackYourWay.Core
 
         // ── Command registration ─────────────────────────────────────────────
 
-        /// <summary>
-        /// Registers all built-in commands with the CommandParser.
-        /// US1 commands: scan, crack, firewall, show, inject.
-        /// </summary>
         private void RegisterCommands()
         {
             Player p = SaveData.Player;
 
             CommandParser.Register("scan",     new ScanCommand(p, LocationService));
             CommandParser.Register("crack",    new CrackCommand(p, LocationService));
-            CommandParser.Register("firewall", new FirewallCommand(p));
-            CommandParser.Register("show",     new ShowCommand(p, LocationService));
+            CommandParser.Register("firewall", new FirewallCommand(p, LocationService));
+            CommandParser.Register("show",     new ShowCommand(LocationService));
             CommandParser.Register("inject",   new InjectCommand(p, LocationService));
-            CommandParser.Register("ls",       new LsCommand(p));
-            CommandParser.Register("copy",     new CopyCommand(p));
+            CommandParser.Register("ls",       new LsCommand(LocationService));
+            CommandParser.Register("copy",     new CopyCommand(p, LocationService));
+            CommandParser.Register("move",     new MoveCommand(LocationService));
+            CommandParser.Register("forget",   new ForgetCommand(LocationService));
             // Registered last so GetRegisteredVerbs() returns the complete list.
             CommandParser.Register("help",     new HelpCommand(CommandParser));
         }
@@ -155,25 +184,19 @@ namespace HackYourWay.Core
 
         private void PersistSession()
         {
-            // Flush the current location cache back to SaveData before writing.
-            SaveData.Locations    = LocationService.ToSaveData();
-            SaveData.NextLocationId = LocationService.NextLocationId;
+            SaveData.Locations           = LocationService.ToSaveData();
+            SaveData.NextLocationId      = LocationService.NextLocationId;
+            SaveData.CurrentLocationName = LocationService.GetCurrentLocationName();
             _saveSystem.Save(SaveData);
         }
 
         // ── Helpers ──────────────────────────────────────────────────────────
 
-        /// <summary>
-        /// Finds a LocationConfigSO in the project (loaded via Resources).
-        /// Designers should place a "LocationConfig" asset in Assets/Resources/Locations/.
-        /// </summary>
         private static Data.LocationConfigSO FindLocationConfig()
         {
             var config = Resources.Load<Data.LocationConfigSO>("Locations/LocationConfig");
             if (config == null)
             {
-                // Fallback: create a runtime instance with default values so
-                // the game still boots in bare test scenes.
                 config = ScriptableObject.CreateInstance<Data.LocationConfigSO>();
                 Debug.LogWarning("[GameManager] No LocationConfig asset found in Resources/Locations/. " +
                                  "Using default values. Create Assets/Resources/Locations/LocationConfig.asset.");
@@ -184,11 +207,6 @@ namespace HackYourWay.Core
         // ── Test support ─────────────────────────────────────────────────────
 
 #if UNITY_INCLUDE_TESTS
-        /// <summary>
-        /// Test-only entry point: force-saves then re-loads save data to simulate
-        /// a session close/reopen without calling Application.Quit().
-        /// Used by T043 (offline income integration test).
-        /// </summary>
         public void SimulateLoad()
         {
             PersistSession();

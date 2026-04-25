@@ -11,26 +11,20 @@ namespace HackYourWay.Services.Commands
     /// </summary>
     public class HelpCommand : ICommand
     {
-        // ── Static usage catalogue ────────────────────────────────────────────
-
-        /// <summary>
-        /// One-line descriptions for every registered verb.
-        /// Keep in sync with <see cref="GameManager.RegisterCommands"/>.
-        /// </summary>
         private static readonly Dictionary<string, string> s_usage =
             new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase)
             {
-                { "help",     "help [command]         — show this list or detail for a command" },
-                { "scan",     "scan                   — discover networks at current location" },
-                { "crack",    "crack <ssid>           — break into a WEP/WPA network" },
-                { "firewall", "firewall <on|off>      — toggle your personal firewall" },
-                { "show",     "show <networks|ips>    — display known networks or infected devices" },
-                { "inject",   "inject <ip> <type>     — deploy malware onto a compromised device" },
-                { "ls",       "ls                     — list items in your current directory" },
-                { "copy",     "copy <src> <dst>       — copy a file between paths" },
+                { "help",     "help [command]                            — show this list or detail for a command" },
+                { "scan",     "scan                                      — discover networks at current location" },
+                { "crack",    "crack <ssid>                              — break into a WEP/WPA network" },
+                { "firewall", "firewall <disable|enable> [<IP>]          — toggle device firewall; omit IP to select interactively" },
+                { "show",     "show <networks|ips|locations>             — list known networks, infected IPs, or all locations" },
+                { "inject",   "inject [<type> [<IP> <SSID>]]            — guided type and network selection; inject <type> <IP> <SSID> to inject directly" },
+                { "ls",       "ls [<IP>]                                 — list files on a device; omit IP to select interactively" },
+                { "copy",     "copy <filename> [<IP>]                    — copy file from device; omit IP to select interactively" },
+                { "move",     "move                                      — discover a new location; move <name> — travel to a known location" },
+                { "forget",   "forget network <SSID> [at <location>]    — remove network and its IPs; forget ip <IP> — remove a single device" },
             };
-
-        // ── Dependencies ──────────────────────────────────────────────────────
 
         private readonly CommandParser _parser;
         private readonly StringBuilder _sb = new StringBuilder(512);
@@ -39,8 +33,6 @@ namespace HackYourWay.Services.Commands
         {
             _parser = parser;
         }
-
-        // ── ICommand ──────────────────────────────────────────────────────────
 
         /// <inheritdoc/>
         public CommandResult Execute(string[] args)
@@ -51,9 +43,6 @@ namespace HackYourWay.Services.Commands
             return ListAll();
         }
 
-        // ── Internal ──────────────────────────────────────────────────────────
-
-        /// <summary>Lists every registered verb with its one-line description.</summary>
         private CommandResult ListAll()
         {
             _sb.Clear();
@@ -73,7 +62,6 @@ namespace HackYourWay.Services.Commands
             return CommandResult.Ok(_sb.ToString());
         }
 
-        /// <summary>Shows the usage line for a specific verb.</summary>
         private CommandResult DetailFor(string verb)
         {
             if (s_usage.TryGetValue(verb, out string desc))

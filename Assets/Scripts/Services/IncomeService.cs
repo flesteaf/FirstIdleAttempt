@@ -4,10 +4,10 @@ using HackYourWay.Models;
 namespace HackYourWay.Services
 {
     /// <summary>
-    /// Drives passive income each tick for all income-generating malware.
+    /// Drives passive income each tick for all income-generating malware across ALL known locations.
     /// Registered with <see cref="HackYourWay.Core.TickManager"/> by GameManager.
-    /// Uses a <c>for</c>-loop (no LINQ) to avoid per-tick GC allocations
-    /// (Constitution Principle IV; Unity per-frame allocation guidance).
+    /// Uses a <c>for</c>-loop over the pre-allocated snapshot (no LINQ, no per-tick allocation —
+    /// Constitution Principle IV; Unity per-frame allocation guidance).
     /// </summary>
     public class IncomeService : ITickable
     {
@@ -23,21 +23,24 @@ namespace HackYourWay.Services
         /// <inheritdoc/>
         public void OnTick(double deltaSeconds)
         {
-            Location loc = _locationService.GetCurrentLocation();
+            var locations = _locationService.GetAllKnownLocations();
 
-            for (int n = 0; n < loc.Networks.Count; n++)
+            for (int l = 0; l < locations.Count; l++)
             {
-                var devices = loc.Networks[n].Devices;
-                for (int d = 0; d < devices.Count; d++)
+                var networks = locations[l].Networks;
+                for (int n = 0; n < networks.Count; n++)
                 {
-                    Malware m = devices[d].ActiveMalware;
-                    if (m == null || m.IncomeRate <= 0) continue;
+                    var devices = networks[n].Devices;
+                    for (int d = 0; d < devices.Count; d++)
+                    {
+                        Malware m = devices[d].ActiveMalware;
+                        if (m == null || m.IncomeRate <= 0) continue;
 
-                    // Only Miner and Spammer generate per-tick income.
-                    if (m.Type != MalwareType.Miner && m.Type != MalwareType.Spammer)
-                        continue;
+                        if (m.Type != MalwareType.Miner && m.Type != MalwareType.Spammer)
+                            continue;
 
-                    _player.AddBalance(m.Currency, m.IncomeRate * deltaSeconds);
+                        _player.AddBalance(m.Currency, m.IncomeRate * deltaSeconds);
+                    }
                 }
             }
         }

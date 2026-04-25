@@ -1,38 +1,80 @@
 using HackYourWay.Interfaces;
 using HackYourWay.Models;
+using HackYourWay.Services;
 
 namespace HackYourWay.Services.Commands
 {
     /// <summary>
-    /// Implements <c>copy {filename}</c> — copies a file from the targeted device
-    /// to <see cref="Player.CopiedFiles"/>.
+    /// Implements <c>copy {filename} [{IP}]</c> — copies a file from a device to
+    /// <see cref="Player.CopiedFiles"/>. If IP is omitted, interactive device selection
+    /// is presented via <see cref="UI.TerminalController.AwaitSelection"/>.
     /// </summary>
     public class CopyCommand : ICommand
     {
-        private readonly Player _player;
+        private readonly Player          _player;
+        private readonly LocationService _locationService;
 
-        public CopyCommand(Player player)
+        public CopyCommand(Player player, LocationService locationService)
         {
-            _player = player;
+            _player          = player;
+            _locationService = locationService;
         }
 
         /// <inheritdoc/>
         public CommandResult Execute(string[] args)
         {
-            if (_player.TargetedDevice == null)
-                return CommandResult.Fail("No device targeted. Run 'scan ip {IP}' first.");
-
             if (args.Length < 1)
-                return CommandResult.Fail("Usage: copy {filename}");
+                return CommandResult.Fail("Usage: copy {filename} [<IP>]");
 
-            string query  = args[0];
-            Device dev    = _player.TargetedDevice;
+            string filename = args[0];
 
+            if (args.Length >= 2)
+                return CopyFromIp(filename, args[1]);
+
+            return AwaitDeviceSelection(filename);
+        }
+
+        // ── Direct IP path ────────────────────────────────────────────────────
+
+        private CommandResult CopyFromIp(string filename, string ip)
+        {
+            Device dev = _locationService.FindDevice(ip);
+            if (dev == null)
+                return CommandResult.Fail($"Device '{ip}' not found at current location.");
+
+            return CopyFile(filename, dev);
+        }
+
+        // ── Interactive selection path ─────────────────────────────────────────
+
+        private CommandResult AwaitDeviceSelection(string filename)
+        {
+            var devices = _locationService.GetScannedDevicesAtCurrentLocation();
+            if (devices == null || devices.Count == 0)
+                return CommandResult.Fail("No devices discovered at current location. Use 'scan' first.");
+
+            string[] options = new string[devices.Count];
+            for (int i = 0; i < devices.Count; i++)
+                options[i] = devices[i].Ip;
+
+            UI.TerminalController.Instance?.AwaitSelection(options, idx =>
+            {
+                if (idx < 0) return;
+                var result = CopyFile(filename, devices[idx]);
+                UI.TerminalController.Instance?.AppendOutput(result.Message);
+            });
+
+            return CommandResult.Ok("");
+        }
+
+        // ── Shared logic ──────────────────────────────────────────────────────
+
+        private CommandResult CopyFile(string query, Device dev)
+        {
             DeviceFile found = null;
             for (int i = 0; i < dev.Files.Count; i++)
             {
                 var f = dev.Files[i];
-                // Match on full path or just the filename.
                 if (f.Path == query || f.Name == query)
                 {
                     found = f;

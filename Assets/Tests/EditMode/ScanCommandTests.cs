@@ -21,7 +21,9 @@ namespace HackYourWay.Tests.EditMode
             config.SecurityDistribution = new float[] { 0f, 0f, 0f, 1f }; // always WPA2
             config.MinRansomAmount = 0.01f;
             config.MaxRansomAmount = 0.10f;
-            return new Services.LocationService(config);
+            var svc = new Services.LocationService(config);
+            svc.MoveToNextLocation(); // populate cache so HasCurrentLocation() returns true
+            return svc;
         }
 
         [Test]
@@ -39,19 +41,17 @@ namespace HackYourWay.Tests.EditMode
         }
 
         [Test]
-        public void Scan_SecondCall_MovesToNewLocation()
+        public void Scan_SecondCall_DoesNotChangeLocation()
         {
             var svc    = BuildLocationService();
             var player = new Player();
             var cmd    = new ScanCommand(player, svc);
 
-            cmd.Execute(new string[0]);
             string firstId = svc.GetCurrentLocation().Id;
+            cmd.Execute(new string[0]);
+            cmd.Execute(new string[0]); // second call — must NOT move location
 
-            cmd.Execute(new string[0]); // second call — should move
-            string secondId = svc.GetCurrentLocation().Id;
-
-            Assert.AreNotEqual(firstId, secondId);
+            Assert.AreEqual(firstId, svc.GetCurrentLocation().Id);
         }
 
         [Test]

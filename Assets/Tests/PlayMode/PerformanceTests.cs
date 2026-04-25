@@ -80,7 +80,7 @@ namespace HackYourWay.Tests.PlayMode
         [UnityTest]
         public IEnumerator LsAndCopy_OneHundredFiles_NearZeroGcAllocation()
         {
-            // --- Setup a device with 100+ files ---
+            // --- Setup a device with 100+ files via a stub LocationService ---
             var player = new Player();
             var device = new Device { Ip = "192.168.99.1", FirewallStatus = FirewallStatus.Disabled };
             for (int f = 0; f < 120; f++)
@@ -93,22 +93,25 @@ namespace HackYourWay.Tests.PlayMode
                 });
             }
 
-            player.TargetedDevice  = device;
-            player.TargetedNetwork = new Network { Ssid = "TestNet", SecurityLevel = SecurityLevel.None };
+            var network  = new Network { Ssid = "TestNet", SecurityLevel = SecurityLevel.None };
+            network.Devices.Add(device);
+            var location = new Location { Id = "1", Name = "node_77" };
+            location.Networks.Add(network);
 
-            var lsCmd   = new LsCommand(player);
-            var copyCmd = new CopyCommand(player);
+            var svc     = new PerfStubLocationService(location);
+            var lsCmd   = new LsCommand(svc);
+            var copyCmd = new CopyCommand(player, svc);
 
             // Warm up (avoid JIT allocation noise).
-            lsCmd.Execute(new string[0]);
-            copyCmd.Execute(new[] { "file_000.txt" });
+            lsCmd.Execute(new[] { device.Ip });
+            copyCmd.Execute(new[] { "file_000.txt", device.Ip });
 
             // --- Measure GC allocations ---
             var gcRecorder = new ProfilerRecorder(ProfilerCategory.Memory, "GC Allocated In Frame", 16);
             gcRecorder.Start();
 
-            lsCmd.Execute(new string[0]);
-            copyCmd.Execute(new[] { "file_050.txt" });
+            lsCmd.Execute(new[] { device.Ip });
+            copyCmd.Execute(new[] { "file_050.txt", device.Ip });
 
             yield return null;
 
@@ -120,6 +123,20 @@ namespace HackYourWay.Tests.PlayMode
             const long toleranceBytes = 2048;
             Assert.Less(gcBytes, toleranceBytes,
                 $"LsCommand + CopyCommand allocated {gcBytes} bytes of GC; should be near zero.");
+        }
+
+        // ── Stub ──────────────────────────────────────────────────────────────
+
+        private class PerfStubLocationService : Services.LocationService
+        {
+            private readonly Models.Location _location;
+
+            public PerfStubLocationService(Models.Location location) : base(null)
+            {
+                _location = location;
+            }
+
+            public override Models.Location GetCurrentLocation() => _location;
         }
     }
 }

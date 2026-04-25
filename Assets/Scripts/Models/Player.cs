@@ -66,13 +66,6 @@ namespace HackYourWay.Models
             return false;
         }
 
-        // ── Session state (transient — not serialised) ───────────────────────
-
-        /// <summary>Device most recently targeted via 'scan ip' or 'scan mac'. Not saved.</summary>
-        [System.NonSerialized] public Device TargetedDevice;
-
-        /// <summary>Network that owns <see cref="TargetedDevice"/>. Not saved.</summary>
-        [System.NonSerialized] public Network TargetedNetwork;
     }
 
     /// <summary>JsonUtility-compatible currency/amount pair (replaces Dictionary).</summary>
