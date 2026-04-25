@@ -25,6 +25,11 @@ namespace HackYourWay.Data
         [Header("PC Component — Income Multiplier")]
         [Min(1f)] public double IncomeMultiplier = 1.0;
 
+        [Header("Hardware Upgrade")]
+        public bool         HasHardwareUpgrade;
+        public HardwareStat HardwareStatAffected;
+        public int          HardwareTierGranted;
+
         /// <summary>Converts this SO into a runtime <see cref="StoreItem"/> model.</summary>
         public StoreItem ToModel()
         {
@@ -38,9 +43,12 @@ namespace HackYourWay.Data
                 PriceCurrency     = PriceCurrency,
                 HasToolUnlock     = HasToolUnlock,
                 UnlocksToolType   = UnlocksToolType,
-                HasCurrencyUnlock = HasCurrencyUnlock,
-                UnlocksCurrency   = UnlocksCurrency,
-                IncomeMultiplier  = IncomeMultiplier
+                HasCurrencyUnlock    = HasCurrencyUnlock,
+                UnlocksCurrency     = UnlocksCurrency,
+                IncomeMultiplier    = IncomeMultiplier,
+                HasHardwareUpgrade  = HasHardwareUpgrade,
+                HardwareStatAffected = HardwareStatAffected,
+                HardwareTierGranted = HardwareTierGranted
             };
         }
     }

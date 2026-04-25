@@ -11,13 +11,39 @@ namespace HackYourWay.Services.Commands
     /// </summary>
     public class CopyCommand : ICommand
     {
-        private readonly Player          _player;
-        private readonly LocationService _locationService;
+        private readonly Player                _player;
+        private readonly LocationService       _locationService;
+        private readonly CommandLatencyService _latencyService;
 
-        public CopyCommand(Player player, LocationService locationService)
+        public CopyCommand(Player player, LocationService locationService,
+                           CommandLatencyService latencyService = null)
         {
             _player          = player;
             _locationService = locationService;
+            _latencyService  = latencyService;
+        }
+
+        /// <inheritdoc/>
+        public float GetLatency(string[] args)
+        {
+            if (_latencyService == null) return 0f;
+            Device target   = null;
+            long   fileSize = 0;
+            if (args.Length >= 2)
+            {
+                target = _locationService.FindDevice(args[1]);
+                if (target != null)
+                {
+                    string query = args[0];
+                    for (int i = 0; i < target.Files.Count; i++)
+                    {
+                        var f = target.Files[i];
+                        if (f.Path == query || f.Name == query) { fileSize = f.SizeBytes; break; }
+                    }
+                }
+            }
+            return _latencyService.CalculateLatency(
+                new CommandLatencyContext("copy", target: target, fileSize: fileSize));
         }
 
         /// <inheritdoc/>

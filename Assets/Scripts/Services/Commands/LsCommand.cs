@@ -12,12 +12,24 @@ namespace HackYourWay.Services.Commands
     /// </summary>
     public class LsCommand : ICommand
     {
-        private readonly LocationService _locationService;
-        private readonly StringBuilder   _sb = new StringBuilder(1024);
+        private readonly LocationService       _locationService;
+        private readonly CommandLatencyService _latencyService;
+        private readonly StringBuilder         _sb = new StringBuilder(1024);
 
-        public LsCommand(LocationService locationService)
+        public LsCommand(LocationService locationService, CommandLatencyService latencyService = null)
         {
             _locationService = locationService;
+            _latencyService  = latencyService;
+        }
+
+        /// <inheritdoc/>
+        public float GetLatency(string[] args)
+        {
+            if (_latencyService == null) return 0f;
+            Device target = null;
+            if (args.Length >= 1)
+                target = _locationService?.FindDevice(args[0]);
+            return _latencyService.CalculateLatency(new CommandLatencyContext("ls", target: target));
         }
 
         /// <inheritdoc/>

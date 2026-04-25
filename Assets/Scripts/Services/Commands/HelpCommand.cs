@@ -15,11 +15,11 @@ namespace HackYourWay.Services.Commands
             new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase)
             {
                 { "help",     "help [command]                            — show this list or detail for a command" },
-                { "scan",     "scan                                      — discover networks at current location" },
-                { "crack",    "crack <ssid>                              — break into a WEP/WPA network" },
+                { "scan",     "scan                                      — discover networks; scan ip/mac shows CPU+BW tier (bandwidth upgrades reduce time)" },
+                { "crack",    "crack <WEP|WPA|WPA2> <SSID>              — crack a network (CPU + GPU upgrades reduce time)" },
                 { "firewall", "firewall <disable|enable> [<IP>]          — toggle device firewall; omit IP to select interactively" },
                 { "show",     "show <networks|ips|locations>             — list known networks, infected IPs, or all locations" },
-                { "inject",   "inject [<type> [<IP> <SSID>]]            — guided type and network selection; inject <type> <IP> <SSID> to inject directly" },
+                { "inject",   "inject [<type> [<IP> <SSID>]]            — inject malware; miner yield scales with target CPU tier (bandwidth upgrades reduce time)" },
                 { "ls",       "ls [<IP>]                                 — list files on a device; omit IP to select interactively" },
                 { "copy",     "copy <filename> [<IP>]                    — copy file from device; omit IP to select interactively" },
                 { "move",     "move                                      — discover a new location; move <name> — travel to a known location" },

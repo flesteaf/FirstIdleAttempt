@@ -9,13 +9,25 @@ namespace HackYourWay.Services.Commands
     /// </summary>
     public class CrackCommand : ICommand
     {
-        private readonly Player          _player;
-        private readonly LocationService _locationService;
+        private readonly Player                 _player;
+        private readonly LocationService        _locationService;
+        private readonly CommandLatencyService  _latencyService;
 
-        public CrackCommand(Player player, LocationService locationService)
+        public CrackCommand(Player player, LocationService locationService,
+                            CommandLatencyService latencyService = null)
         {
             _player          = player;
             _locationService = locationService;
+            _latencyService  = latencyService;
+        }
+
+        /// <inheritdoc/>
+        public float GetLatency(string[] args)
+        {
+            if (_latencyService == null || args.Length < 1) return 0f;
+            return TryParseSecurityLevel(args[0].ToUpperInvariant(), out SecurityLevel level)
+                ? _latencyService.CalculateLatency(new CommandLatencyContext("crack", secLevel: level))
+                : 0f;
         }
 
         /// <inheritdoc/>

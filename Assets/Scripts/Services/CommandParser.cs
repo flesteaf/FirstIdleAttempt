@@ -19,6 +19,13 @@ namespace HackYourWay.Services
             _registry[verb.ToLowerInvariant()] = command;
         }
 
+        /// <summary>Returns the <see cref="ICommand"/> registered for <paramref name="verb"/>, or <c>null</c> if not found.</summary>
+        public ICommand GetCommand(string verb)
+        {
+            _registry.TryGetValue(verb.ToLowerInvariant(), out ICommand command);
+            return command;
+        }
+
         /// <summary>
         /// Returns a sorted, read-only list of all registered command verb strings.
         /// Alphabetical order ensures deterministic autocomplete display (Constitution Principle III).

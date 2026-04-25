@@ -15,16 +15,38 @@ namespace HackYourWay.Services.Commands
     /// </summary>
     public class ScanCommand : ICommand
     {
-        private readonly Player          _player;
-        private readonly LocationService _locationService;
+        private readonly Player                _player;
+        private readonly LocationService       _locationService;
+        private readonly CommandLatencyService _latencyService;
 
         // Reused builder — avoids per-call allocation (Constitution Principle IV).
         private readonly StringBuilder _sb = new StringBuilder(512);
 
-        public ScanCommand(Player player, LocationService locationService)
+        public ScanCommand(Player player, LocationService locationService,
+                           CommandLatencyService latencyService = null)
         {
             _player          = player;
             _locationService = locationService;
+            _latencyService  = latencyService;
+        }
+
+        /// <inheritdoc/>
+        public float GetLatency(string[] args)
+        {
+            if (_latencyService == null) return 0f;
+
+            if (args.Length >= 2)
+            {
+                string sub = args[0].ToLowerInvariant();
+                if (sub == "ip" || sub == "mac")
+                {
+                    Device target = FindDeviceByIdentifier(args[1], byMac: sub == "mac");
+                    return _latencyService.CalculateLatency(
+                        new CommandLatencyContext("scan", target: target));
+                }
+            }
+            // Area scan or scan network — no target device.
+            return _latencyService.CalculateLatency(new CommandLatencyContext("scan"));
         }
 
         /// <inheritdoc/>
@@ -138,6 +160,8 @@ namespace HackYourWay.Services.Commands
             _sb.Clear();
             _sb.AppendLine($"Scanning {foundDevice.Ip}...");
             _sb.AppendLine($"Firewall: {(foundDevice.FirewallStatus == FirewallStatus.Active ? "ACTIVE" : "DISABLED")}");
+            _sb.AppendLine($"CPU Tier: {foundDevice.CpuTier}/5");
+            _sb.AppendLine($"BW Tier:  {foundDevice.BandwidthTier}/5");
 
             _sb.Append("Open ports: ");
             for (int i = 0; i < foundDevice.OpenPorts.Count; i++)
@@ -162,6 +186,23 @@ namespace HackYourWay.Services.Commands
         {
             for (int i = 0; i < loc.Networks.Count; i++)
                 if (loc.Networks[i].Ssid == ssid) return loc.Networks[i];
+            return null;
+        }
+
+        private Device FindDeviceByIdentifier(string identifier, bool byMac)
+        {
+            if (!_locationService.HasCurrentLocation()) return null;
+            Location loc = _locationService.GetCurrentLocation();
+            for (int n = 0; n < loc.Networks.Count; n++)
+            {
+                var net = loc.Networks[n];
+                for (int d = 0; d < net.Devices.Count; d++)
+                {
+                    var dev   = net.Devices[d];
+                    bool match = byMac ? dev.Mac == identifier : dev.Ip == identifier;
+                    if (match) return dev;
+                }
+            }
             return null;
         }
     }

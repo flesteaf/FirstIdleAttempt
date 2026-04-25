@@ -123,9 +123,20 @@ namespace HackYourWay.UI
             _inputField.text = string.Empty;
             _inputField.ActivateInputField();
 
-            float latency = GameManager.Instance != null
-                ? GameManager.Instance.GetCommandLatency()
-                : 0f;
+            float latency = 0f;
+            if (GameManager.Instance != null)
+            {
+                string[] tokens = input.Trim().Split(' ');
+                string   verb   = tokens[0].ToLowerInvariant();
+                var      cmd    = GameManager.Instance.CommandParser.GetCommand(verb);
+                if (cmd != null)
+                {
+                    int      argCount = tokens.Length - 1;
+                    string[] args     = argCount > 0 ? new string[argCount] : System.Array.Empty<string>();
+                    for (int i = 0; i < argCount; i++) args[i] = tokens[i + 1];
+                    latency = cmd.GetLatency(args);
+                }
+            }
 
             if (latency <= InstantThreshold)
             {

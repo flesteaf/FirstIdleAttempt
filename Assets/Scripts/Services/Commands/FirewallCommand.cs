@@ -12,13 +12,26 @@ namespace HackYourWay.Services.Commands
     /// </summary>
     public class FirewallCommand : ICommand
     {
-        private readonly Player          _player;
-        private readonly LocationService _locationService;
+        private readonly Player                _player;
+        private readonly LocationService       _locationService;
+        private readonly CommandLatencyService _latencyService;
 
-        public FirewallCommand(Player player, LocationService locationService)
+        public FirewallCommand(Player player, LocationService locationService,
+                               CommandLatencyService latencyService = null)
         {
             _player          = player;
             _locationService = locationService;
+            _latencyService  = latencyService;
+        }
+
+        /// <inheritdoc/>
+        public float GetLatency(string[] args)
+        {
+            if (_latencyService == null) return 0f;
+            Device target = null;
+            if (args.Length >= 2)
+                target = _locationService.FindDevice(args[1]);
+            return _latencyService.CalculateLatency(new CommandLatencyContext("firewall", target: target));
         }
 
         /// <inheritdoc/>

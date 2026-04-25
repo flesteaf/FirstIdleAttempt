@@ -22,5 +22,12 @@ namespace HackYourWay.Interfaces
         /// <summary>Executes the command with the given tokenised arguments.</summary>
         /// <param name="args">Tokens after the command verb (may be empty).</param>
         CommandResult Execute(string[] args);
+
+        /// <summary>
+        /// Returns the effective execution time in seconds for this command.
+        /// Instant commands (show, help, forget, move) inherit this default and return 0.
+        /// Implementors MUST NOT modify state — this is a pure read-only latency query.
+        /// </summary>
+        float GetLatency(string[] args) => 0f;
     }
 }

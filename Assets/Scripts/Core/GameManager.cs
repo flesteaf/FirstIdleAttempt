@@ -15,19 +15,6 @@ namespace HackYourWay.Core
     {
         public static GameManager Instance { get; private set; }
 
-        // ── Command latency ──────────────────────────────────────────────────
-
-        /// <summary>Base duration in seconds for command execution before any speed upgrades.</summary>
-        public const float BaseCommandLatencySeconds = 1.0f;
-
-        /// <summary>
-        /// Returns the effective command latency for the current session.
-        /// <c>BaseCommandLatencySeconds × (1 − Player.CommandSpeedUpgrade)</c>.
-        /// Returns 0 when the player has full instant-execution upgrades.
-        /// </summary>
-        public float GetCommandLatency() =>
-            BaseCommandLatencySeconds * (1f - Player.CommandSpeedUpgrade);
-
         // ── Public accessors ─────────────────────────────────────────────────
 
         /// <summary>The loaded (or default) save data for this session.</summary>
@@ -41,6 +28,9 @@ namespace HackYourWay.Core
 
         /// <summary>Manages all locations (procedural generation + save/restore).</summary>
         public Services.LocationService LocationService { get; private set; }
+
+        /// <summary>Per-command latency calculator; uses the current player's hardware tiers.</summary>
+        public Services.CommandLatencyService CommandLatencyService { get; private set; }
 
         // ── Serialized references ────────────────────────────────────────────
 
@@ -92,7 +82,10 @@ namespace HackYourWay.Core
             // 3. Apply offline income for all income-generating malware.
             ApplyOfflineIncome();
 
-            // 4. Restore location service state from save.
+            // 4. Build latency service using the loaded player's hardware tiers.
+            CommandLatencyService = new Services.CommandLatencyService(SaveData.Player);
+
+            // 5. Restore location service state from save.
             LocationService = new Services.LocationService(FindLocationConfig());
             if (SaveData.Locations.Count > 0)
             {
@@ -101,11 +94,11 @@ namespace HackYourWay.Core
                     LocationService.SetCurrentLocation(SaveData.CurrentLocationName);
             }
 
-            // 5. Build command parser; commands registered by RegisterCommands().
+            // 6. Build command parser; commands registered by RegisterCommands().
             CommandParser = new CommandParser();
             RegisterCommands();
 
-            // 6. Create IncomeService and register with TickManager.
+            // 7. Create IncomeService and register with TickManager.
             var incomeService = new IncomeService(SaveData.Player, LocationService);
             if (_tickManager != null)
                 _tickManager.Register(incomeService);
@@ -115,24 +108,52 @@ namespace HackYourWay.Core
 
         private void MigrateIfNeeded()
         {
-            if (SaveData.Version >= 2) return;
-
-            // v1 → v2: back-fill location names from seeds; set CurrentLocationName.
-            const int nameMultiplier = 77;
-            const int nameModulus    = 1000;
-
-            for (int i = 0; i < SaveData.Locations.Count; i++)
+            if (SaveData.Version < 2)
             {
-                var loc = SaveData.Locations[i];
-                if (string.IsNullOrEmpty(loc.Name) && int.TryParse(loc.Id, out int seed))
-                    loc.Name = $"node_{seed * nameMultiplier % nameModulus}";
+                // v1 → v2: back-fill location names; set CurrentLocationName.
+                const int nameMultiplier = 77;
+                const int nameModulus    = 1000;
+
+                for (int i = 0; i < SaveData.Locations.Count; i++)
+                {
+                    var loc = SaveData.Locations[i];
+                    if (string.IsNullOrEmpty(loc.Name) && int.TryParse(loc.Id, out int seed))
+                        loc.Name = $"node_{seed * nameMultiplier % nameModulus}";
+                }
+
+                if (string.IsNullOrEmpty(SaveData.CurrentLocationName) && SaveData.Locations.Count > 0)
+                    SaveData.CurrentLocationName = SaveData.Locations[0].Name ?? "node_77";
+
+                SaveData.Version = 2;
+                _saveSystem.Save(SaveData);
             }
 
-            if (string.IsNullOrEmpty(SaveData.CurrentLocationName) && SaveData.Locations.Count > 0)
-                SaveData.CurrentLocationName = SaveData.Locations[0].Name ?? "node_77";
+            if (SaveData.Version < 3)
+            {
+                // v2 → v3: back-fill player hardware tiers and device hardware tiers.
+                // JsonUtility defaults missing int fields to 0; valid tier minimum is 1.
+                var p = SaveData.Player;
+                if (p.CpuTier       == 0) p.CpuTier       = 1;
+                if (p.BandwidthTier == 0) p.BandwidthTier  = 1;
+                // GpuTier 0 = no GPU — correct default, no migration needed.
 
-            SaveData.Version = 2;
-            _saveSystem.Save(SaveData);
+                for (int l = 0; l < SaveData.Locations.Count; l++)
+                {
+                    var nets = SaveData.Locations[l].Networks;
+                    for (int n = 0; n < nets.Count; n++)
+                    {
+                        var devs = nets[n].Devices;
+                        for (int d = 0; d < devs.Count; d++)
+                        {
+                            if (devs[d].CpuTier       == 0) devs[d].CpuTier       = 1;
+                            if (devs[d].BandwidthTier == 0) devs[d].BandwidthTier  = 1;
+                        }
+                    }
+                }
+
+                SaveData.Version = 3;
+                _saveSystem.Save(SaveData);
+            }
         }
 
         // ── Offline income ───────────────────────────────────────────────────
@@ -180,13 +201,13 @@ namespace HackYourWay.Core
         {
             Player p = SaveData.Player;
 
-            CommandParser.Register("scan",     new ScanCommand(p, LocationService));
-            CommandParser.Register("crack",    new CrackCommand(p, LocationService));
-            CommandParser.Register("firewall", new FirewallCommand(p, LocationService));
+            CommandParser.Register("scan",     new ScanCommand(p, LocationService, CommandLatencyService));
+            CommandParser.Register("crack",    new CrackCommand(p, LocationService, CommandLatencyService));
+            CommandParser.Register("firewall", new FirewallCommand(p, LocationService, CommandLatencyService));
             CommandParser.Register("show",     new ShowCommand(LocationService));
-            CommandParser.Register("inject",   new InjectCommand(p, LocationService));
-            CommandParser.Register("ls",       new LsCommand(LocationService));
-            CommandParser.Register("copy",     new CopyCommand(p, LocationService));
+            CommandParser.Register("inject",   new InjectCommand(p, LocationService, CommandLatencyService));
+            CommandParser.Register("ls",       new LsCommand(LocationService, CommandLatencyService));
+            CommandParser.Register("copy",     new CopyCommand(p, LocationService, CommandLatencyService));
             CommandParser.Register("move",     new MoveCommand(LocationService));
             CommandParser.Register("forget",   new ForgetCommand(LocationService));
             // Registered last so GetRegisteredVerbs() returns the complete list.
