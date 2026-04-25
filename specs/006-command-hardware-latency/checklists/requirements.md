@@ -32,6 +32,7 @@
 ## Notes
 
 - All items pass. Spec is ready for `/speckit.plan`.
-- FR-008 through FR-013 form the command-to-modifier mapping table — plan phase should produce a concrete table with numeric coefficients for each modifier.
-- SC-001 through SC-007 establish the tuning targets; implementation will need a balancing pass once base values are coded.
+- FR-008 through FR-013 form the command-to-modifier mapping table — plan phase should produce a concrete table with numeric coefficients for each modifier. All network commands (FR-009 ip/mac, FR-010–FR-013) use `min(player_bandwidth_tier, target_bandwidth_tier)` as the effective speed input.
+- FR-022 defines payload yield from target CPU — plan phase must address how this integrates with the existing miner/payload system.
+- SC-001 through SC-006 establish the tuning targets; implementation will need a balancing pass once base values are coded. SC-005 (target CPU overhead on inject) was removed — target CPU no longer affects execution time.
 - The assumption about `Player.CommandSpeedUpgrade` supersession should be confirmed with the developer before the plan phase begins.
