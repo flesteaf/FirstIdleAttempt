@@ -68,6 +68,25 @@ namespace HackYourWay.Services
 
             if (item.IncomeMultiplier > 1.0)
                 CurrentIncomeMultiplier *= item.IncomeMultiplier;
+
+            if (item.HasHardwareUpgrade)
+                ApplyHardwareTier(item.HardwareStatAffected, item.HardwareTierGranted);
+        }
+
+        private void ApplyHardwareTier(Models.HardwareStat stat, int tier)
+        {
+            switch (stat)
+            {
+                case Models.HardwareStat.CPU:
+                    if (tier > _player.CpuTier) _player.CpuTier = tier;
+                    break;
+                case Models.HardwareStat.Bandwidth:
+                    if (tier > _player.BandwidthTier) _player.BandwidthTier = tier;
+                    break;
+                case Models.HardwareStat.GPU:
+                    if (tier > _player.GpuTier) _player.GpuTier = tier;
+                    break;
+            }
         }
     }
 }

@@ -18,13 +18,26 @@ namespace HackYourWay.Services.Commands
         private const double SpammerBaseRate = 0.0008;
         private const double DefaultRansomBtc = 0.05;
 
-        private readonly Player          _player;
-        private readonly LocationService _locationService;
+        private readonly Player                _player;
+        private readonly LocationService       _locationService;
+        private readonly CommandLatencyService _latencyService;
 
-        public InjectCommand(Player player, LocationService locationService = null)
+        public InjectCommand(Player player, LocationService locationService = null,
+                             CommandLatencyService latencyService = null)
         {
             _player          = player;
             _locationService = locationService;
+            _latencyService  = latencyService;
+        }
+
+        /// <inheritdoc/>
+        public float GetLatency(string[] args)
+        {
+            if (_latencyService == null) return 0f;
+            Device target = null;
+            if (args.Length >= 3)
+                target = _locationService?.FindDevice(args[1]);
+            return _latencyService.CalculateLatency(new CommandLatencyContext("inject", target: target));
         }
 
         /// <inheritdoc/>
@@ -217,15 +230,16 @@ namespace HackYourWay.Services.Commands
             if (!dev.CanInject(net.SecurityLevel))
                 return CommandResult.Fail($"Firewall is active on {dev.Ip}. Disable it first.");
 
+            double incomeRate = MinerBaseRate * dev.CpuTier;
             dev.ActiveMalware = new Malware
             {
                 Type                = MalwareType.Miner,
                 DeviceIp            = dev.Ip,
-                IncomeRate          = MinerBaseRate,
+                IncomeRate          = incomeRate,
                 Currency            = CurrencyType.Bitcoin,
                 InstalledAtUtcTicks = System.DateTime.UtcNow.Ticks
             };
-            return CommandResult.Ok($"Injecting miner into {dev.Ip}...\nMiner installed. Generating {MinerBaseRate:F4} BTC/s.");
+            return CommandResult.Ok($"Injecting miner into {dev.Ip}...\nMiner installed. Generating {incomeRate:F4} BTC/s.");
         }
 
         private CommandResult InjectBot(Device dev, Network net)

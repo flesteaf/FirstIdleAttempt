@@ -23,12 +23,14 @@ namespace HackYourWay.Models
         /// <summary>UTC ticks at last save; used for offline income calculation.</summary>
         public long LastSaveUtcTicks;
 
-        /// <summary>
-        /// Accumulated speed upgrade from shop items [0.0 = no upgrades = full latency; 1.0 = instant].
-        /// Effective command latency = BaseCommandLatency × (1 − CommandSpeedUpgrade).
-        /// JsonUtility defaults missing field to 0, which is correct for saves without this field.
-        /// </summary>
-        public float CommandSpeedUpgrade = 0f;
+        /// <summary>CPU tier (1–5). 1 = base laptop; 5 = server rack. Reduces crack time.</summary>
+        public int CpuTier = 1;
+
+        /// <summary>Internet bandwidth tier (1–5). 1 = DSL; 5 = dedicated line. Reduces network command time.</summary>
+        public int BandwidthTier = 1;
+
+        /// <summary>GPU tier (0–3). 0 = none; 3 = compute cluster. Reduces crack time only.</summary>
+        public int GpuTier = 0;
 
         // ── Balance helpers ──────────────────────────────────────────────────
 

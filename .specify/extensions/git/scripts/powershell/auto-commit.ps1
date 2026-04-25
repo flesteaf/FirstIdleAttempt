@@ -9,7 +9,7 @@ param(
     [Parameter(Position = 0, Mandatory = $true)]
     [string]$EventName
 )
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 
 function Find-ProjectRoot {
     param([string]$StartDir)
@@ -117,9 +117,9 @@ if (-not $enabled) {
 }
 
 # Check if there are changes to commit
-$diffHead = git diff --quiet HEAD 2>$null; $d1 = $LASTEXITCODE
-$diffCached = git diff --cached --quiet 2>$null; $d2 = $LASTEXITCODE
-$untracked = git ls-files --others --exclude-standard 2>$null
+git diff --quiet HEAD 2>&1 | Out-Null; $d1 = $LASTEXITCODE
+git diff --cached --quiet 2>&1 | Out-Null; $d2 = $LASTEXITCODE
+$untracked = git ls-files --others --exclude-standard 2>&1 | Where-Object { $_ -is [string] }
 
 if ($d1 -eq 0 -and $d2 -eq 0 -and -not $untracked) {
     Write-Host "[specify] No changes to commit after $EventName" -ForegroundColor DarkGray
@@ -146,4 +146,4 @@ try {
     exit 1
 }
 
-Write-Host "✓ Changes committed $phase $commandName"
+Write-Host "[OK] Changes committed $phase $commandName"

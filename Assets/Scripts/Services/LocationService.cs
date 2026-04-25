@@ -293,6 +293,11 @@ namespace HackYourWay.Services
                         });
                     }
 
+                    device.CpuTier       = rng.Next(1, 6);
+                    device.BandwidthTier = rng.Next(1, 6);
+                    if (rng.Next(20) == 0) // ~5 % chance
+                        device.GpuTier = rng.Next(1, 4);
+
                     network.Devices.Add(device);
                 }
 
@@ -373,6 +378,9 @@ namespace HackYourWay.Services
                         dev.OpenPorts.AddRange(ds.OpenPorts);
                         dev.Files.AddRange(ds.Files);
                         if (ds.HasMalware) dev.ActiveMalware = ds.ActiveMalware;
+                        dev.CpuTier       = ds.CpuTier       > 0 ? ds.CpuTier       : 1;
+                        dev.BandwidthTier = ds.BandwidthTier > 0 ? ds.BandwidthTier : 1;
+                        dev.GpuTier       = ds.GpuTier;
                         net.Devices.Add(dev);
                     }
 
@@ -420,7 +428,10 @@ namespace HackYourWay.Services
                             FirewallStatus = dev.FirewallStatus,
                             IsScanned     = dev.IsScanned,
                             HasMalware    = dev.ActiveMalware != null,
-                            ActiveMalware = dev.ActiveMalware
+                            ActiveMalware = dev.ActiveMalware,
+                            CpuTier       = dev.CpuTier,
+                            BandwidthTier = dev.BandwidthTier,
+                            GpuTier       = dev.GpuTier
                         };
                         ds.OpenPorts.AddRange(dev.OpenPorts);
                         ds.Files.AddRange(dev.Files);

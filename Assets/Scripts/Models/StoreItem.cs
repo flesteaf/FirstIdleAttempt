@@ -21,5 +21,14 @@ namespace HackYourWay.Models
 
         /// <summary>Multiplier applied to all income rates (PCComponent items).</summary>
         public double IncomeMultiplier;
+
+        /// <summary>True when this item upgrades a player hardware tier.</summary>
+        public bool HasHardwareUpgrade;
+
+        /// <summary>Which hardware stat this item upgrades (CPU, Bandwidth, GPU).</summary>
+        public HardwareStat HardwareStatAffected;
+
+        /// <summary>The tier the player reaches on purchase (replaces current tier).</summary>
+        public int HardwareTierGranted;
     }
 }

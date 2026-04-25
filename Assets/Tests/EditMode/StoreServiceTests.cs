@@ -131,5 +131,102 @@ namespace HackYourWay.Tests.EditMode
 
             Assert.IsTrue(player.HasCurrency(CurrencyType.Monero));
         }
+
+        // ── Hardware tier tests ───────────────────────────────────────────────
+
+        private static StoreItem MakeHardwareItem(HardwareStat stat, int tier, double price = 1.0)
+            => new StoreItem
+            {
+                Id                   = $"hw_{stat}_{tier}",
+                DisplayName          = $"{stat} Tier {tier}",
+                Category             = StoreItemCategory.PCComponent,
+                Price                = price,
+                PriceCurrency        = CurrencyType.Bitcoin,
+                IncomeMultiplier     = 1.0,
+                HasHardwareUpgrade   = true,
+                HardwareStatAffected = stat,
+                HardwareTierGranted  = tier
+            };
+
+        // T022 — CPU tier
+
+        [Test]
+        public void Purchase_CpuTier2_SetsCpuTierTo2()
+        {
+            var player  = MakePlayer();
+            var item    = MakeHardwareItem(HardwareStat.CPU, 2);
+            var service = new StoreService(player);
+
+            service.Purchase(item);
+
+            Assert.AreEqual(2, player.CpuTier);
+        }
+
+        [Test]
+        public void Purchase_CpuLowerThanCurrent_TierUnchanged()
+        {
+            var player  = MakePlayer();
+            player.CpuTier = 4;
+            var item    = MakeHardwareItem(HardwareStat.CPU, 2, price: 0.01);
+            var service = new StoreService(player);
+
+            service.Purchase(item);
+
+            Assert.AreEqual(4, player.CpuTier);
+        }
+
+        // T024 — Bandwidth tier
+
+        [Test]
+        public void Purchase_BandwidthTier2_SetsBandwidthTierTo2()
+        {
+            var player  = MakePlayer();
+            var item    = MakeHardwareItem(HardwareStat.Bandwidth, 2);
+            var service = new StoreService(player);
+
+            service.Purchase(item);
+
+            Assert.AreEqual(2, player.BandwidthTier);
+        }
+
+        [Test]
+        public void Purchase_BandwidthLowerThanCurrent_TierUnchanged()
+        {
+            var player  = MakePlayer();
+            player.BandwidthTier = 3;
+            var item    = MakeHardwareItem(HardwareStat.Bandwidth, 2, price: 0.01);
+            var service = new StoreService(player);
+
+            service.Purchase(item);
+
+            Assert.AreEqual(3, player.BandwidthTier);
+        }
+
+        // T026 — GPU tier
+
+        [Test]
+        public void Purchase_GpuTier1_SetsGpuTierTo1()
+        {
+            var player  = MakePlayer();
+            var item    = MakeHardwareItem(HardwareStat.GPU, 1);
+            var service = new StoreService(player);
+
+            service.Purchase(item);
+
+            Assert.AreEqual(1, player.GpuTier);
+        }
+
+        [Test]
+        public void Purchase_GpuLowerThanCurrent_TierUnchanged()
+        {
+            var player  = MakePlayer();
+            player.GpuTier = 2;
+            var item    = MakeHardwareItem(HardwareStat.GPU, 1, price: 0.01);
+            var service = new StoreService(player);
+
+            service.Purchase(item);
+
+            Assert.AreEqual(2, player.GpuTier);
+        }
     }
 }

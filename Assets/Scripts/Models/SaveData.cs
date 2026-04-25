@@ -56,5 +56,14 @@ namespace HackYourWay.Models
         public bool           HasMalware;
         public bool           IsScanned;
         public List<DeviceFile> Files      = new List<DeviceFile>();
+
+        /// <summary>Device CPU tier (1–5). JsonUtility defaults missing field to 0; migration corrects to 1.</summary>
+        public int CpuTier;
+
+        /// <summary>Device bandwidth tier (1–5). JsonUtility defaults missing field to 0; migration corrects to 1.</summary>
+        public int BandwidthTier;
+
+        /// <summary>Device GPU tier (0 = none, 1–3). JsonUtility defaults missing field to 0; correct default — no migration needed.</summary>
+        public int GpuTier;
     }
 }
