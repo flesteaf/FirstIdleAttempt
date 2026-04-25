@@ -7,6 +7,7 @@
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 — Reload preserves all discovered networks and infected IPs (Priority: P1)
+<!-- Note: User Stories are ordered by implementation priority (P1 first), not by story number. US6 precedes US5 because it is higher priority (P2 vs P3). -->
 
 After restarting the game, the player can immediately see all previously discovered networks and all infected IPs — income continues seamlessly without having to re-scan anything.
 
@@ -148,7 +149,6 @@ The player can see all locations they have discovered, how many networks each ha
 - **FR-014**: Income service MUST aggregate income from infected devices across ALL known locations, not only the currently active location.
 - **FR-015**: `scan` MUST NOT trigger location movement under any circumstances; `move` is the sole location navigation mechanism.
 - **FR-016**: `scan` MUST return an error message if no current location is available (e.g., on a fresh game before the first `move` has been issued).
-- **FR-017**: When `forget network <SSID>` matches networks at multiple locations, the terminal MUST display a numbered list of those locations and await a number selection rather than returning an error.
 - **FR-018**: `inject` with no arguments MUST display a numbered list of the player's unlocked malware types and await a number selection before proceeding.
 - **FR-019**: After malware type is determined (by argument or selection), if no network is specified, `inject` MUST display a numbered list of accessible networks at the current location and await a number selection.
 - **FR-020**: Type selection (step 1) MUST always precede network selection (step 2) in the interactive inject flow.
