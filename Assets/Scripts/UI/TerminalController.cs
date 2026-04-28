@@ -110,6 +110,20 @@ namespace HackYourWay.UI
                 return;
             }
 
+            // ── Confirmation routing ──────────────────────────────────────────
+            // When a command is awaiting y/n, route all input to ConfirmationService.
+            // Any input other than "y" is treated as a cancel (per command-schema.md).
+            var confirmSvc = GameManager.Instance?.ConfirmationService;
+            if (confirmSvc != null && confirmSvc.IsPending)
+            {
+                _history.Add(input.Trim());
+                _outputView?.AppendLine($"› {input}", TerminalLineType.Command);
+                _inputField.text = string.Empty;
+                _inputField.ActivateInputField();
+                confirmSvc.Resolve(input.Trim().ToLower() == "y");
+                return;
+            }
+
             // Drop input silently while a command is already executing
             if (_pendingExecution != null)
             {

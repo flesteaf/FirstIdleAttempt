@@ -21,7 +21,7 @@
 
 **Purpose**: Create the data model types that all components depend on. No prerequisites — start immediately.
 
-- [ ] T001 Create `SaveSlotInfo` and `SaveSlotIndex` classes (`[System.Serializable]`, `JsonUtility`-compatible, XML doc comments on all public members) in `Assets/Scripts/Models/SaveSlotInfo.cs` per data-model.md Entities 1 and 2 (`SaveSlotInfo`: `SlotNumber int`, `IsOccupied bool`, `SavedAtUtcTicks long`; `SaveSlotIndex`: `Slots SaveSlotInfo[]` length=7, `Slots[i].SlotNumber == i+1` invariant)
+- [x] T001 Create `SaveSlotInfo` and `SaveSlotIndex` classes (`[System.Serializable]`, `JsonUtility`-compatible, XML doc comments on all public members) in `Assets/Scripts/Models/SaveSlotInfo.cs` per data-model.md Entities 1 and 2 (`SaveSlotInfo`: `SlotNumber int`, `IsOccupied bool`, `SavedAtUtcTicks long`; `SaveSlotIndex`: `Slots SaveSlotInfo[]` length=7, `Slots[i].SlotNumber == i+1` invariant)
 
 **Checkpoint**: Model types available — foundational phase can begin.
 
@@ -35,19 +35,19 @@
 
 ### API Stubs (required before test compilation)
 
-- [ ] T002 [P] Create `SlotSaveSystem` public API stub — all 6 public method signatures throwing `NotImplementedException`, with XML doc comments: `LoadSlot(int slot) : SaveData`, `SaveSlot(int slot, SaveData data)`, `DeleteSlot(int slot)`, `LoadIndex() : SaveSlotIndex`, `SaveIndex(SaveSlotIndex index)`, `MigrateLegacyIfNeeded()`; constructor accepts `string basePath` for test isolation — in `Assets/Scripts/Core/SlotSaveSystem.cs`
-- [ ] T003 [P] Create `ConfirmationService` public API stub — all public members returning defaults/no-ops with XML doc comments: `IsPending bool` property, `PendingPrompt string` property, `RequestConfirmation(string prompt, Action onConfirm, Action onCancel)`, `Resolve(bool confirmed)`, `Cancel()` — in `Assets/Scripts/Services/ConfirmationService.cs`
+- [x] T00X [P] Create `SlotSaveSystem` public API stub — all 6 public method signatures throwing `NotImplementedException`, with XML doc comments: `LoadSlot(int slot) : SaveData`, `SaveSlot(int slot, SaveData data)`, `DeleteSlot(int slot)`, `LoadIndex() : SaveSlotIndex`, `SaveIndex(SaveSlotIndex index)`, `MigrateLegacyIfNeeded()`; constructor accepts `string basePath` for test isolation — in `Assets/Scripts/Core/SlotSaveSystem.cs`
+- [x] T00X [P] Create `ConfirmationService` public API stub — all public members returning defaults/no-ops with XML doc comments: `IsPending bool` property, `PendingPrompt string` property, `RequestConfirmation(string prompt, Action onConfirm, Action onCancel)`, `Resolve(bool confirmed)`, `Cancel()` — in `Assets/Scripts/Services/ConfirmationService.cs`
 
 ### Red Phase — Failing Tests (write BEFORE implementation)
 
-- [ ] T004 Write `SlotSaveSystemTests`: save/load round-trip (slot 1–7), index reflects occupancy+timestamp after save, delete clears file and marks index empty, `MigrateLegacyIfNeeded` copies `save.json`→`save_1.json` when no slot files exist, slot 0 and slot 8 throw `ArgumentOutOfRangeException`; use `Path.GetTempPath()` subdirectory isolation per quickstart.md — in `Assets/Tests/EditMode/SlotSaveSystemTests.cs` (must compile and FAIL against T002 stub)
-- [ ] T005 [P] Write `ConfirmationServiceTests`: `IsPending` starts false; `RequestConfirmation` sets `IsPending=true` and stores prompt; `Resolve(true)` fires `onConfirm` and clears pending; `Resolve(false)` fires `onCancel` and clears pending; `Cancel()` clears without firing callbacks; second `RequestConfirmation` while pending replaces first (no `onCancel` fired for replaced) — in `Assets/Tests/EditMode/ConfirmationServiceTests.cs` (must compile and FAIL against T003 stub)
+- [x] T00X Write `SlotSaveSystemTests`: save/load round-trip (slot 1–7), index reflects occupancy+timestamp after save, delete clears file and marks index empty, `MigrateLegacyIfNeeded` copies `save.json`→`save_1.json` when no slot files exist, slot 0 and slot 8 throw `ArgumentOutOfRangeException`; use `Path.GetTempPath()` subdirectory isolation per quickstart.md — in `Assets/Tests/EditMode/SlotSaveSystemTests.cs` (must compile and FAIL against T002 stub)
+- [x] T00X [P] Write `ConfirmationServiceTests`: `IsPending` starts false; `RequestConfirmation` sets `IsPending=true` and stores prompt; `Resolve(true)` fires `onConfirm` and clears pending; `Resolve(false)` fires `onCancel` and clears pending; `Cancel()` clears without firing callbacks; second `RequestConfirmation` while pending replaces first (no `onCancel` fired for replaced) — in `Assets/Tests/EditMode/ConfirmationServiceTests.cs` (must compile and FAIL against T003 stub)
 
 ### Green Phase — Implementations
 
-- [ ] T006 Implement `SlotSaveSystem`: path helpers `{basePath}/save_{slot}.json` and `{basePath}/save_index.json`; validate slot in [1,7] throwing `ArgumentOutOfRangeException`; `SaveSlot` writes `save_{slot}.json` via `JsonUtility.ToJson` then updates `SaveIndex`; `LoadSlot` reads file via `JsonUtility.FromJson`, returns null if absent; `DeleteSlot` deletes file and marks index entry empty (`IsOccupied=false`, `SavedAtUtcTicks=0`); `LoadIndex` returns fresh 7-entry default when file absent; `MigrateLegacyIfNeeded` checks `save.json` exists and no `save_1.json`–`save_7.json` exist, then copies to `save_1.json` and writes index with slot 1 occupied — in `Assets/Scripts/Core/SlotSaveSystem.cs` (all T004 tests must pass)
-- [ ] T007 [P] Implement `ConfirmationService`: inner `PendingConfirmation` record holding `Prompt`, `OnConfirm`, `OnCancel`; `RequestConfirmation` stores new record (replacing any existing); `Resolve(true)` invokes `OnConfirm` then nulls record; `Resolve(false)` invokes `OnCancel` then nulls record; `Cancel` nulls record without invoking callbacks — in `Assets/Scripts/Services/ConfirmationService.cs` (all T005 tests must pass)
-- [ ] T008 Modify `GameManager`: add `CurrentSlot int` property (default -1); add `SlotSaveSystem SlotSaveSystem` field constructed with `Application.persistentDataPath`; add `ConfirmationService ConfirmationService` property; guard `PersistSession()` to no-op when `CurrentSlot == -1`; call `SlotSaveSystem.MigrateLegacyIfNeeded()` from `Bootstrap()`; if migration ran, set `CurrentSlot = 1` — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T00X Implement `SlotSaveSystem`: path helpers `{basePath}/save_{slot}.json` and `{basePath}/save_index.json`; validate slot in [1,7] throwing `ArgumentOutOfRangeException`; `SaveSlot` writes `save_{slot}.json` via `JsonUtility.ToJson` then updates `SaveIndex`; `LoadSlot` reads file via `JsonUtility.FromJson`, returns null if absent; `DeleteSlot` deletes file and marks index entry empty (`IsOccupied=false`, `SavedAtUtcTicks=0`); `LoadIndex` returns fresh 7-entry default when file absent; `MigrateLegacyIfNeeded` checks `save.json` exists and no `save_1.json`–`save_7.json` exist, then copies to `save_1.json` and writes index with slot 1 occupied — in `Assets/Scripts/Core/SlotSaveSystem.cs` (all T004 tests must pass)
+- [x] T00X [P] Implement `ConfirmationService`: inner `PendingConfirmation` record holding `Prompt`, `OnConfirm`, `OnCancel`; `RequestConfirmation` stores new record (replacing any existing); `Resolve(true)` invokes `OnConfirm` then nulls record; `Resolve(false)` invokes `OnCancel` then nulls record; `Cancel` nulls record without invoking callbacks — in `Assets/Scripts/Services/ConfirmationService.cs` (all T005 tests must pass)
+- [x] T00X Modify `GameManager`: add `CurrentSlot int` property (default -1); add `SlotSaveSystem SlotSaveSystem` field constructed with `Application.persistentDataPath`; add `ConfirmationService ConfirmationService` property; guard `PersistSession()` to no-op when `CurrentSlot == -1`; call `SlotSaveSystem.MigrateLegacyIfNeeded()` from `Bootstrap()`; if migration ran, set `CurrentSlot = 1` — in `Assets/Scripts/Core/GameManager.cs`
 
 **Checkpoint**: Foundation complete — all 5 user story phases can now begin (independently, in priority order).
 
@@ -61,12 +61,12 @@
 
 ### Red Phase
 
-- [ ] T009 [US1] Write `SaveCommandTests`: empty slot → returns `"Game saved to slot N."`; occupied slot → returns `"Slot N is occupied, overwrite? (y/n)"`; `onConfirm` callback saves and returns `"Game saved to slot N."`; `onCancel` callback returns `"Save cancelled."`; slot 0/8 → `"Error: Slot must be between 1 and 7."`; missing arg → `"Error: Usage: save <slot>"`; non-integer arg → `"Error: Slot must be between 1 and 7."` — in `Assets/Tests/EditMode/SaveCommandTests.cs` (must compile and FAIL)
+- [x] T00X [US1] Write `SaveCommandTests`: empty slot → returns `"Game saved to slot N."`; occupied slot → returns `"Slot N is occupied, overwrite? (y/n)"`; `onConfirm` callback saves and returns `"Game saved to slot N."`; `onCancel` callback returns `"Save cancelled."`; slot 0/8 → `"Error: Slot must be between 1 and 7."`; missing arg → `"Error: Usage: save <slot>"`; non-integer arg → `"Error: Slot must be between 1 and 7."` — in `Assets/Tests/EditMode/SaveCommandTests.cs` (must compile and FAIL)
 
 ### Green Phase
 
-- [ ] T010 [US1] Implement `SaveCommand`: constructor takes `SlotSaveSystem`, `ConfirmationService`, `Func<SaveData> getCurrentData`, `Action<int> setActiveSlot`; `Execute(string[] args)` parses `args[0]` with `TryParseSlot()`, validates [1,7], checks `LoadIndex().Slots[slot-1].IsOccupied`; on occupied calls `_confirmationService.RequestConfirmation(prompt, onConfirm, onCancel)` and returns prompt as `Ok`; on empty writes slot directly and returns success; `onConfirm` calls `SaveSlot` then `setActiveSlot(slot)` — in `Assets/Scripts/Services/Commands/SaveCommand.cs` (all T009 tests must pass)
-- [ ] T011 [US1] Register `SaveCommand` with verb `"save"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem`, `ConfirmationService`, `() => SaveData`, and `slot => CurrentSlot = slot` callback — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T0XX [US1] Implement `SaveCommand`: constructor takes `SlotSaveSystem`, `ConfirmationService`, `Func<SaveData> getCurrentData`, `Action<int> setActiveSlot`; `Execute(string[] args)` parses `args[0]` with `TryParseSlot()`, validates [1,7], checks `LoadIndex().Slots[slot-1].IsOccupied`; on occupied calls `_confirmationService.RequestConfirmation(prompt, onConfirm, onCancel)` and returns prompt as `Ok`; on empty writes slot directly and returns success; `onConfirm` calls `SaveSlot` then `setActiveSlot(slot)` — in `Assets/Scripts/Services/Commands/SaveCommand.cs` (all T009 tests must pass)
+- [x] T0XX [US1] Register `SaveCommand` with verb `"save"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem`, `ConfirmationService`, `() => SaveData`, and `slot => CurrentSlot = slot` callback — in `Assets/Scripts/Core/GameManager.cs`
 
 **Checkpoint**: US1 complete. Player can save to any slot with overwrite protection.
 
@@ -80,13 +80,13 @@
 
 ### Red Phase
 
-- [ ] T012 [US2] Write `LoadCommandTests`: occupied slot → calls `loadSlot` callback with correct slot number and returns `"Game loaded from slot N."`; empty slot → `"Error: Slot N is empty."`; out-of-range → `"Error: Slot must be between 1 and 7."`; missing arg → `"Error: Usage: load <slot>"`; non-integer arg → `"Error: Slot must be between 1 and 7."` — in `Assets/Tests/EditMode/LoadCommandTests.cs` (must compile and FAIL)
+- [x] T0XX [US2] Write `LoadCommandTests`: occupied slot → calls `loadSlot` callback with correct slot number and returns `"Game loaded from slot N."`; empty slot → `"Error: Slot N is empty."`; out-of-range → `"Error: Slot must be between 1 and 7."`; missing arg → `"Error: Usage: load <slot>"`; non-integer arg → `"Error: Slot must be between 1 and 7."` — in `Assets/Tests/EditMode/LoadCommandTests.cs` (must compile and FAIL)
 
 ### Green Phase
 
-- [ ] T013 [US2] Add `GameManager.LoadSlot(int slot)`: call `SlotSaveSystem.LoadSlot(slot)`, apply `MigrateIfNeeded` to loaded data, replace `SaveData`, re-initialise `LocationService` and `CommandLatencyService` from new data, call `RegisterCommands()` to replace all stale command instances, set `CurrentSlot = slot` — in `Assets/Scripts/Core/GameManager.cs`
-- [ ] T014 [US2] Implement `LoadCommand`: constructor takes `SlotSaveSystem`, `Action<int> loadSlot`; `Execute(string[] args)` parses slot, validates range, checks occupancy via `LoadIndex()`; on empty returns error; on occupied calls `_loadSlot(slot)` and returns success — in `Assets/Scripts/Services/Commands/LoadCommand.cs` (all T012 tests must pass)
-- [ ] T015 [US2] Register `LoadCommand` with verb `"load"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem` and `slot => LoadSlot(slot)` callback — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T0XX [US2] Add `GameManager.LoadSlot(int slot)`: call `SlotSaveSystem.LoadSlot(slot)`, apply `MigrateIfNeeded` to loaded data, replace `SaveData`, re-initialise `LocationService` and `CommandLatencyService` from new data, call `RegisterCommands()` to replace all stale command instances, set `CurrentSlot = slot` — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T0XX [US2] Implement `LoadCommand`: constructor takes `SlotSaveSystem`, `Action<int> loadSlot`; `Execute(string[] args)` parses slot, validates range, checks occupancy via `LoadIndex()`; on empty returns error; on occupied calls `_loadSlot(slot)` and returns success — in `Assets/Scripts/Services/Commands/LoadCommand.cs` (all T012 tests must pass)
+- [x] T0XX [US2] Register `LoadCommand` with verb `"load"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem` and `slot => LoadSlot(slot)` callback — in `Assets/Scripts/Core/GameManager.cs`
 
 **Checkpoint**: US1 + US2 complete. Full save/load cycle operational.
 
@@ -100,12 +100,12 @@
 
 ### Red Phase
 
-- [ ] T016 [US3] Write `DelsaveCommandTests`: occupied slot → calls `deleteSlot` callback and returns `"Save slot N removed."`; empty slot → `"Error: Slot N has no save to remove."`; out-of-range → `"Error: Slot must be between 1 and 7."`; missing arg → `"Error: Usage: delsave <slot>"`; deleting active slot fires `resetCurrentSlotIfActive` callback — in `Assets/Tests/EditMode/DelsaveCommandTests.cs` (must compile and FAIL)
+- [x] T0XX [US3] Write `DelsaveCommandTests`: occupied slot → calls `deleteSlot` callback and returns `"Save slot N removed."`; empty slot → `"Error: Slot N has no save to remove."`; out-of-range → `"Error: Slot must be between 1 and 7."`; missing arg → `"Error: Usage: delsave <slot>"`; deleting active slot fires `resetCurrentSlotIfActive` callback — in `Assets/Tests/EditMode/DelsaveCommandTests.cs` (must compile and FAIL)
 
 ### Green Phase
 
-- [ ] T017 [US3] Implement `DelsaveCommand`: constructor takes `SlotSaveSystem`, `Action<int> resetCurrentSlotIfActive`; `Execute(string[] args)` parses slot, validates range, checks occupancy; on empty returns error; on occupied calls `_slotSaveSystem.DeleteSlot(slot)`, invokes `_resetCurrentSlotIfActive(slot)`, returns success — in `Assets/Scripts/Services/Commands/DelsaveCommand.cs` (all T016 tests must pass)
-- [ ] T018 [US3] Register `DelsaveCommand` with verb `"delsave"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem` and `slot => { if (CurrentSlot == slot) CurrentSlot = -1; }` callback — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T0XX [US3] Implement `DelsaveCommand`: constructor takes `SlotSaveSystem`, `Action<int> resetCurrentSlotIfActive`; `Execute(string[] args)` parses slot, validates range, checks occupancy; on empty returns error; on occupied calls `_slotSaveSystem.DeleteSlot(slot)`, invokes `_resetCurrentSlotIfActive(slot)`, returns success — in `Assets/Scripts/Services/Commands/DelsaveCommand.cs` (all T016 tests must pass)
+- [x] T0XX [US3] Register `DelsaveCommand` with verb `"delsave"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem` and `slot => { if (CurrentSlot == slot) CurrentSlot = -1; }` callback — in `Assets/Scripts/Core/GameManager.cs`
 
 **Checkpoint**: US1–US3 complete. Full slot lifecycle (save/load/delete) operational.
 
@@ -119,13 +119,13 @@
 
 ### Red Phase
 
-- [ ] T019 [US4] Write `NewGameCommandTests`: command always returns `"Unsaved progress will be lost. Continue? (y/n)"`; `onConfirm` fires `newGame` callback and returns `"New game started."`; `onCancel` returns `"New game cancelled."`; confirms `CurrentSlot` set to -1 via callback; slot files not modified — in `Assets/Tests/EditMode/NewGameCommandTests.cs` (must compile and FAIL)
+- [x] T0XX [US4] Write `NewGameCommandTests`: command always returns `"Unsaved progress will be lost. Continue? (y/n)"`; `onConfirm` fires `newGame` callback and returns `"New game started."`; `onCancel` returns `"New game cancelled."`; confirms `CurrentSlot` set to -1 via callback; slot files not modified — in `Assets/Tests/EditMode/NewGameCommandTests.cs` (must compile and FAIL)
 
 ### Green Phase
 
-- [ ] T020 [US4] Add `GameManager.NewGame()`: replace `SaveData` with `SaveData.CreateDefault()`, re-initialise `LocationService` and `CommandLatencyService`, call `RegisterCommands()` to replace stale instances, set `CurrentSlot = -1` — in `Assets/Scripts/Core/GameManager.cs`
-- [ ] T021 [US4] Implement `NewGameCommand`: constructor takes `ConfirmationService`, `Action newGame`; `Execute(string[] args)` calls `_confirmationService.RequestConfirmation("Unsaved progress will be lost. Continue? (y/n)", onConfirm, onCancel)`; `onConfirm` calls `_newGame()` and routes `"New game started."` result; `onCancel` returns `"New game cancelled."` — in `Assets/Scripts/Services/Commands/NewGameCommand.cs` (all T019 tests must pass)
-- [ ] T022 [US4] Register `NewGameCommand` with verb `"newgame"` in `GameManager.RegisterCommands()`, injecting `ConfirmationService` and `NewGame` callback — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T0XX [US4] Add `GameManager.NewGame()`: replace `SaveData` with `SaveData.CreateDefault()`, re-initialise `LocationService` and `CommandLatencyService`, call `RegisterCommands()` to replace stale instances, set `CurrentSlot = -1` — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T0XX [US4] Implement `NewGameCommand`: constructor takes `ConfirmationService`, `Action newGame`; `Execute(string[] args)` calls `_confirmationService.RequestConfirmation("Unsaved progress will be lost. Continue? (y/n)", onConfirm, onCancel)`; `onConfirm` calls `_newGame()` and routes `"New game started."` result; `onCancel` returns `"New game cancelled."` — in `Assets/Scripts/Services/Commands/NewGameCommand.cs` (all T019 tests must pass)
+- [x] T0XX [US4] Register `NewGameCommand` with verb `"newgame"` in `GameManager.RegisterCommands()`, injecting `ConfirmationService` and `NewGame` callback — in `Assets/Scripts/Core/GameManager.cs`
 
 **Checkpoint**: US1–US4 complete. Save/load/delete/new-game lifecycle fully operational.
 
@@ -139,12 +139,12 @@
 
 ### Red Phase
 
-- [ ] T023 [US5] Write `SavesCommandTests`: all-empty → 7 lines each matching `"Slot N: [empty]"`; occupied slot → line matches `"Slot N: yyyy-MM-dd HH:mm"` using `new DateTime(ticks, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm")`; all-occupied → 7 timestamp lines; no errors thrown in any state — in `Assets/Tests/EditMode/SavesCommandTests.cs` (must compile and FAIL)
+- [x] T0XX [US5] Write `SavesCommandTests`: all-empty → 7 lines each matching `"Slot N: [empty]"`; occupied slot → line matches `"Slot N: yyyy-MM-dd HH:mm"` using `new DateTime(ticks, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm")`; all-occupied → 7 timestamp lines; no errors thrown in any state — in `Assets/Tests/EditMode/SavesCommandTests.cs` (must compile and FAIL)
 
 ### Green Phase
 
-- [ ] T024 [US5] Implement `SavesCommand`: constructor takes `SlotSaveSystem`; `Execute(string[] args)` calls `LoadIndex()`, iterates all 7 `Slots` entries, formats each as `"Slot N: yyyy-MM-dd HH:mm"` (UTC, `DateTimeKind.Utc`) when occupied or `"Slot N: [empty]"` when not, returns joined multi-line `CommandResult.Ok` — in `Assets/Scripts/Services/Commands/SavesCommand.cs` (all T023 tests must pass)
-- [ ] T025 [US5] Register `SavesCommand` with verb `"saves"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem` — in `Assets/Scripts/Core/GameManager.cs`
+- [x] T0XX [US5] Implement `SavesCommand`: constructor takes `SlotSaveSystem`; `Execute(string[] args)` calls `LoadIndex()`, iterates all 7 `Slots` entries, formats each as `"Slot N: yyyy-MM-dd HH:mm"` (UTC, `DateTimeKind.Utc`) when occupied or `"Slot N: [empty]"` when not, returns joined multi-line `CommandResult.Ok` — in `Assets/Scripts/Services/Commands/SavesCommand.cs` (all T023 tests must pass)
+- [x] T0XX [US5] Register `SavesCommand` with verb `"saves"` in `GameManager.RegisterCommands()`, injecting `SlotSaveSystem` — in `Assets/Scripts/Core/GameManager.cs`
 
 **Checkpoint**: All 5 user stories complete. Save management system fully functional.
 
@@ -154,8 +154,8 @@
 
 **Purpose**: Terminal UI wiring and final quality-gate compliance.
 
-- [ ] T026 Modify `TerminalController` input handler: before routing to `CommandParser`, check `GameManager.Instance.ConfirmationService.IsPending`; if pending, call `ConfirmationService.Resolve(input.Trim().ToLower() == "y")` and return (do NOT re-route to parser); implement "command-while-pending = cancel" rule: if input is not `"y"` or `"n"`, call `Resolve(false)` and discard input (per command-schema.md routing contract) — in `Assets/Scripts/UI/TerminalController.cs`
-- [ ] T027 [P] Add XML doc comments to all remaining public APIs lacking them: `SaveSlotInfo`, `SaveSlotIndex` fields; `SaveCommand`, `LoadCommand`, `DelsaveCommand`, `NewGameCommand`, `SavesCommand` constructors and `Execute()` methods (plan.md constitution requirement I: all public APIs require XML doc comments) — across `Assets/Scripts/`
+- [x] T0XX Modify `TerminalController` input handler: before routing to `CommandParser`, check `GameManager.Instance.ConfirmationService.IsPending`; if pending, call `ConfirmationService.Resolve(input.Trim().ToLower() == "y")` and return (do NOT re-route to parser); implement "command-while-pending = cancel" rule: if input is not `"y"` or `"n"`, call `Resolve(false)` and discard input (per command-schema.md routing contract) — in `Assets/Scripts/UI/TerminalController.cs`
+- [x] T0XX [P] Add XML doc comments to all remaining public APIs lacking them: `SaveSlotInfo`, `SaveSlotIndex` fields; `SaveCommand`, `LoadCommand`, `DelsaveCommand`, `NewGameCommand`, `SavesCommand` constructors and `Execute()` methods (plan.md constitution requirement I: all public APIs require XML doc comments) — across `Assets/Scripts/`
 
 ---
 
