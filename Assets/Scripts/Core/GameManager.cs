@@ -32,6 +32,15 @@ namespace HackYourWay.Core
         /// <summary>Per-command latency calculator; uses the current player's hardware tiers.</summary>
         public Services.CommandLatencyService CommandLatencyService { get; private set; }
 
+        /// <summary>Multi-slot file I/O service. Exposed for save-management commands.</summary>
+        public SlotSaveSystem SlotSaveSystem { get; private set; }
+
+        /// <summary>Pending yes/no confirmation state machine. Exposed for terminal input routing.</summary>
+        public Services.ConfirmationService ConfirmationService { get; private set; }
+
+        /// <summary>Active save slot (1–7), or -1 when no slot is active (e.g. after <c>newgame</c>).</summary>
+        public int CurrentSlot { get; private set; } = -1;
+
         // ── Serialized references ────────────────────────────────────────────
 
         [SerializeField] private TickManager _tickManager;
@@ -71,12 +80,24 @@ namespace HackYourWay.Core
 
         private void Bootstrap()
         {
-            _saveSystem = new SaveSystem();
+            _saveSystem         = new SaveSystem();
+            SlotSaveSystem      = new SlotSaveSystem();
+            ConfirmationService = new Services.ConfirmationService();
 
-            // 1. Load save (returns default if no file exists).
-            SaveData = _saveSystem.Load();
+            // 1. One-time legacy migration: copy save.json → save_1.json if first boot with slot system.
+            bool migrated = SlotSaveSystem.MigrateLegacyIfNeeded();
+            if (migrated)
+            {
+                CurrentSlot = 1;
+                SaveData    = SlotSaveSystem.LoadSlot(1) ?? _saveSystem.Load();
+            }
+            else
+            {
+                CurrentSlot = -1;
+                SaveData    = _saveSystem.Load();
+            }
 
-            // 2. Run schema migration (v1 → v2) before anything reads location data.
+            // 2. Run schema migration (v1 → v3) before anything reads location data.
             MigrateIfNeeded();
 
             // 3. Apply offline income for all income-generating malware.
@@ -210,21 +231,76 @@ namespace HackYourWay.Core
             CommandParser.Register("copy",     new CopyCommand(p, LocationService, CommandLatencyService));
             CommandParser.Register("move",     new MoveCommand(LocationService));
             CommandParser.Register("forget",   new ForgetCommand(LocationService));
+
+            // Save-management commands (fresh instances so they reference the current Player/services).
+            CommandParser.Register("save",    new SaveCommand(SlotSaveSystem, ConfirmationService,
+                                                  () => SaveData, slot => CurrentSlot = slot));
+            CommandParser.Register("load",    new LoadCommand(SlotSaveSystem, slot => LoadSlot(slot)));
+            CommandParser.Register("delsave", new DelsaveCommand(SlotSaveSystem,
+                                                  slot => { if (CurrentSlot == slot) CurrentSlot = -1; }));
+            CommandParser.Register("newgame", new NewGameCommand(ConfirmationService, NewGame));
+            CommandParser.Register("saves",   new SavesCommand(SlotSaveSystem));
+
             // Registered last so GetRegisteredVerbs() returns the complete list.
-            CommandParser.Register("help",     new HelpCommand(CommandParser));
+            CommandParser.Register("help",    new HelpCommand(CommandParser));
+        }
+
+        // ── Slot operations ──────────────────────────────────────────────────
+
+        /// <summary>
+        /// Loads save data from <paramref name="slot"/>, applies schema migration, re-initialises all
+        /// services and command instances without a scene reload. Sets <see cref="CurrentSlot"/>.
+        /// </summary>
+        public void LoadSlot(int slot)
+        {
+            SaveData = SlotSaveSystem.LoadSlot(slot) ?? new SaveData();
+            MigrateIfNeeded();
+            CommandLatencyService = new Services.CommandLatencyService(SaveData.Player);
+            LocationService       = new Services.LocationService(FindLocationConfig());
+            if (SaveData.Locations.Count > 0)
+            {
+                LocationService.RestoreFromSave(SaveData.Locations, SaveData.NextLocationId);
+                if (!string.IsNullOrEmpty(SaveData.CurrentLocationName))
+                    LocationService.SetCurrentLocation(SaveData.CurrentLocationName);
+            }
+            RegisterCommands();
+            CurrentSlot = slot;
+        }
+
+        /// <summary>
+        /// Resets the game to the default initial state. Existing saves are preserved.
+        /// Sets <see cref="CurrentSlot"/> to -1; <see cref="PersistSession"/> becomes a no-op
+        /// until the player explicitly saves to a slot.
+        /// </summary>
+        public void NewGame()
+        {
+            SaveData = CreateDefaultSaveData();
+            CommandLatencyService = new Services.CommandLatencyService(SaveData.Player);
+            LocationService       = new Services.LocationService(FindLocationConfig());
+            RegisterCommands();
+            CurrentSlot = -1;
         }
 
         // ── Save ─────────────────────────────────────────────────────────────
 
         private void PersistSession()
         {
+            if (CurrentSlot == -1) return; // no active slot — skip auto-save
             SaveData.Locations           = LocationService.ToSaveData();
             SaveData.NextLocationId      = LocationService.NextLocationId;
             SaveData.CurrentLocationName = LocationService.GetCurrentLocationName();
-            _saveSystem.Save(SaveData);
+            SlotSaveSystem.SaveSlot(CurrentSlot, SaveData);
         }
 
         // ── Helpers ──────────────────────────────────────────────────────────
+
+        private static SaveData CreateDefaultSaveData()
+        {
+            var data = new SaveData();
+            data.Player.UnlockedCurrencies.Add(CurrencyType.Bitcoin);
+            data.Player.AddBalance(CurrencyType.Bitcoin, 0);
+            return data;
+        }
 
         private static Data.LocationConfigSO FindLocationConfig()
         {
