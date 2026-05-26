@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://c3fhks6flxvun"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_h3y1s"]
+
+[resource]
+script = ExtResource("1_h3y1s")
+Id = "wep_cracker"
+DisplayName = "WEP Cracker"
+Category = 1
+Price = 0.05
+HasToolUnlock = true
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

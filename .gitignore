@@ -71,3 +71,8 @@ crashlytics-build.properties
 
 # extra removal
 *.log
+
+# Godot 4
+.godot/
+*.csproj
+!HackYourWay.csproj

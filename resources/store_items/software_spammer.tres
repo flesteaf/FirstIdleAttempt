@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://dwchqhjsx5re2"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_fxji7"]
+
+[resource]
+script = ExtResource("1_fxji7")
+Id = "spammer"
+DisplayName = "Spammer"
+Category = 1
+Price = 5.0
+HasToolUnlock = true
+UnlocksToolType = 5
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

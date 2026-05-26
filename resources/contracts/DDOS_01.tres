@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ContractSO" format=3 uid="uid://dg32n57r0lsax"]
+
+[ext_resource type="Script" uid="uid://b03tvybuj3p7g" path="res://Assets/Scripts/Data/ContractSO.cs" id="1_cyv24"]
+
+[resource]
+script = ExtResource("1_cyv24")
+Id = "ddos_01"
+Description = "Take down a target server"
+HasMalwareRequirement = true
+RequiredMalware = 1
+Reward = 0.5
+RewardCurrency = 1
+metadata/_custom_type_script = "uid://b03tvybuj3p7g"

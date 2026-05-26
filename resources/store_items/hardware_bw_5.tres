@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://damktpvgo6els"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_roexp"]
+
+[resource]
+script = ExtResource("1_roexp")
+Id = "hw_bw_5"
+DisplayName = "Dedicated Line"
+Description = "Speeds up scan, inject, firewall, ls, copy"
+Price = 0.3
+PriceCurrency = 1
+HasHardwareUpgrade = true
+HardwareStatAffected = 1
+HardwareTierGranted = 5
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

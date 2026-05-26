@@ -1,18 +1,18 @@
-﻿using UnityEngine;
+using Godot;
 using HackYourWay.Models;
 
 namespace HackYourWay.Data
 {
-    [CreateAssetMenu(fileName = "Contract", menuName = "HackYourWay/Contract")]
-    public class ContractSO : ScriptableObject
+    [GlobalClass]
+    public partial class ContractSO : Resource
     {
-        public string      Id;
-        public ContractType Type;
-        [TextArea] public string Description;
-        public bool        HasMalwareRequirement;
-        public MalwareType RequiredMalware;
-        public double      Reward;
-        public CurrencyType RewardCurrency;
+        [Export] public string Id { get; set; }
+        [Export] public ContractType Type { get; set; }
+        [Export(PropertyHint.MultilineText)] public string Description { get; set; }
+        [Export] public bool HasMalwareRequirement { get; set; }
+        [Export] public MalwareType RequiredMalware { get; set; }
+        [Export] public double Reward { get; set; }
+        [Export] public CurrencyType RewardCurrency { get; set; }
 
         public Contract ToModel()
         {

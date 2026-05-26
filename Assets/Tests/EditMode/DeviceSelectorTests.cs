@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using UnityEngine;
 using HackYourWay.Models;
 using HackYourWay.Services;
 using HackYourWay.Services.Commands;
@@ -13,7 +12,7 @@ namespace HackYourWay.Tests.EditMode
 
         private static LocationService BuildService(int scannedDeviceCount)
         {
-            var config = ScriptableObject.CreateInstance<LocationConfigSO>();
+            var config = new LocationConfigSO();
             config.MinNetworks          = 1;
             config.MaxNetworks          = 1;
             config.MinDevicesPerNetwork = scannedDeviceCount;
@@ -80,7 +79,7 @@ namespace HackYourWay.Tests.EditMode
         [Test]
         public void AwaitDevice_EmptyLocation_ReturnsError()
         {
-            var config = ScriptableObject.CreateInstance<LocationConfigSO>();
+            var config = new LocationConfigSO();
             config.MinNetworks          = 0;
             config.MaxNetworks          = 0;
             config.MinDevicesPerNetwork = 0;

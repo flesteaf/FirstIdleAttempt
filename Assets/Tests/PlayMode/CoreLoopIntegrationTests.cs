@@ -1,7 +1,4 @@
-using System.Collections;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 using HackYourWay.Core;
 using HackYourWay.Models;
 using HackYourWay.Services;
@@ -10,35 +7,38 @@ using HackYourWay.Data;
 namespace HackYourWay.Tests.PlayMode
 {
     /// <summary>
-    /// Play-mode integration tests for the US1 core loop:
+    /// Integration tests for the US1 core loop:
     /// scan → crack → inject miner → passive income → offline income on reload.
+    /// Runs within GDUnit4 (Godot runtime required for LocationConfigSO instantiation).
     /// </summary>
     public class CoreLoopIntegrationTests
     {
-        // ── Scene-less helpers ────────────────────────────────────────────────
+        // ── Helpers ───────────────────────────────────────────────────────────
 
         private static Services.LocationService BuildLocationService(LocationConfigSO config = null)
         {
             if (config == null)
             {
-                config = ScriptableObject.CreateInstance<LocationConfigSO>();
-                config.MinNetworks        = 1;
-                config.MaxNetworks        = 1;
-                config.MinDevicesPerNetwork = 1;
-                config.MaxDevicesPerNetwork = 1;
-                config.MinFilesPerDevice  = 0;
-                config.MaxFilesPerDevice  = 0;
-                config.SecurityDistribution = new float[] { 0f, 0f, 0f, 1f }; // WPA2
-                config.MinRansomAmount    = 0.01f;
-                config.MaxRansomAmount    = 0.10f;
+                config = new LocationConfigSO
+                {
+                    MinNetworks          = 1,
+                    MaxNetworks          = 1,
+                    MinDevicesPerNetwork = 1,
+                    MaxDevicesPerNetwork = 1,
+                    MinFilesPerDevice    = 0,
+                    MaxFilesPerDevice    = 0,
+                    SecurityDistribution = new float[] { 0f, 0f, 0f, 1f },
+                    MinRansomAmount      = 0.01f,
+                    MaxRansomAmount      = 0.10f,
+                };
             }
             return new Services.LocationService(config);
         }
 
         // ── Test 1: Command pipeline drives income accumulation ────────────────
 
-        [UnityTest]
-        public IEnumerator ScanCrackInjectMiner_BalanceIncreasesAfterTwoTicks()
+        [Test]
+        public void ScanCrackInjectMiner_BalanceIncreasesAfterTwoTicks()
         {
             // --- Arrange ---
             var svc    = BuildLocationService();
@@ -56,42 +56,36 @@ namespace HackYourWay.Tests.PlayMode
 
             var incomeService = new IncomeService(player, svc);
 
-            // --- Act: simulate player commands ---
-            svc.MoveToNextLocation(); // populate cache so scan has a current location
+            // --- Act ---
+            svc.MoveToNextLocation();
             parser.Parse("scan");
 
             var location = svc.GetCurrentLocation();
             var network  = location.Networks[0];
             var device   = network.Devices[0];
 
-            // Crack the network.
             parser.Parse($"crack WPA2 {network.Ssid}");
             Assert.IsTrue(network.IsHacked, "Network should be hacked after crack.");
 
-            // Disable firewall using explicit IP (no implicit targeting).
             network.IsHacked = true;
             parser.Parse($"firewall disable {device.Ip}");
             Assert.AreEqual(FirewallStatus.Disabled, device.FirewallStatus);
 
-            // Inject miner using direct path: inject {type} {IP} {SSID}.
             parser.Parse($"inject miner {device.Ip} {network.Ssid}");
             Assert.IsNotNull(device.ActiveMalware, "Miner should be installed.");
 
-            // Simulate two ticks via IncomeService.
             incomeService.OnTick(1.0);
             incomeService.OnTick(1.0);
 
             // --- Assert ---
             double balance = player.GetBalance(CurrencyType.Bitcoin);
             Assert.Greater(balance, 0.0, "Player should have earned BTC after two ticks.");
-
-            yield return null;
         }
 
         // ── Test 2: Offline income applies on simulated reload ────────────────
 
-        [UnityTest]
-        public IEnumerator OfflineIncome_AppliesOnSimulatedReload()
+        [Test]
+        public void OfflineIncome_AppliesOnSimulatedReload()
         {
             // --- Arrange ---
             var svc    = BuildLocationService();
@@ -102,9 +96,8 @@ namespace HackYourWay.Tests.PlayMode
             var location = svc.GetCurrentLocation();
             var device   = location.Networks[0].Devices[0];
 
-            // Install a miner with a known rate.
-            const double incomeRate  = 1.0; // 1 BTC/s
-            long installedTicks = System.DateTime.UtcNow.Ticks - System.TimeSpan.TicksPerSecond * 5; // 5s ago
+            const double incomeRate  = 1.0;
+            long installedTicks = System.DateTime.UtcNow.Ticks - System.TimeSpan.TicksPerSecond * 5;
             device.ActiveMalware = new Malware
             {
                 Type                = MalwareType.Miner,
@@ -114,11 +107,9 @@ namespace HackYourWay.Tests.PlayMode
                 InstalledAtUtcTicks = installedTicks
             };
 
-            // Mark the save as 3 seconds before install (so baseline = installedTicks).
-            player.LastSaveUtcTicks =
-                installedTicks - System.TimeSpan.TicksPerSecond * 2;
+            player.LastSaveUtcTicks = installedTicks - System.TimeSpan.TicksPerSecond * 2;
 
-            // --- Act: simulate offline income calculation ---
+            // --- Act ---
             var malwareList = new System.Collections.Generic.List<Malware> { device.ActiveMalware };
             var gains = OfflineIncomeCalculator.Calculate(
                 player.LastSaveUtcTicks,
@@ -128,12 +119,10 @@ namespace HackYourWay.Tests.PlayMode
             for (int i = 0; i < gains.Count; i++)
                 player.AddBalance(gains[i].Currency, gains[i].Amount);
 
-            // --- Assert: ~5 seconds of income at 1 BTC/s (≥4 expected due to timing) ---
+            // --- Assert ---
             double balance = player.GetBalance(CurrencyType.Bitcoin);
             Assert.GreaterOrEqual(balance, 4.0,
                 $"Offline income should credit ~5 BTC (got {balance:F4}).");
-
-            yield return null;
         }
     }
 }

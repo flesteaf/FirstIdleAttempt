@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://cgdctvlkwha7h"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_6gvo5"]
+
+[resource]
+script = ExtResource("1_6gvo5")
+Id = "hw_gpu_3"
+DisplayName = "Compute Cluster GPU"
+Description = "Speeds up crack only"
+Price = 0.5
+PriceCurrency = 1
+HasHardwareUpgrade = true
+HardwareStatAffected = 2
+HardwareTierGranted = 3
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

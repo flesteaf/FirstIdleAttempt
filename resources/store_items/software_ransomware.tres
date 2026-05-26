@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://bqpobmwix7gvi"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_hn6ve"]
+
+[resource]
+script = ExtResource("1_hn6ve")
+Id = "ransomware"
+DisplayName = "Ransomware"
+Category = 1
+Price = 5.0
+PriceCurrency = 1
+HasToolUnlock = true
+UnlocksToolType = 6
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
-using UnityEngine;
+using System.Text.Json;
+using Godot;
 using HackYourWay.Models;
 
 namespace HackYourWay.Core
@@ -11,10 +12,13 @@ namespace HackYourWay.Core
     /// </summary>
     public class SlotSaveSystem
     {
+        private static readonly JsonSerializerOptions JsonOptions =
+            new JsonSerializerOptions { IncludeFields = true };
+
         private readonly string _basePath;
 
-        /// <summary>Creates a <see cref="SlotSaveSystem"/> targeting <c>Application.persistentDataPath</c>.</summary>
-        public SlotSaveSystem() : this(Application.persistentDataPath) { }
+        /// <summary>Creates a <see cref="SlotSaveSystem"/> targeting the Godot user data directory.</summary>
+        public SlotSaveSystem() : this(OS.GetUserDataDir()) { }
 
         /// <summary>Creates a <see cref="SlotSaveSystem"/> targeting a custom base path (for test isolation).</summary>
         public SlotSaveSystem(string basePath)
@@ -24,7 +28,7 @@ namespace HackYourWay.Core
 
         /// <summary>
         /// Reads <c>save_{slot}.json</c> and deserialises it.
-        /// Returns <c>null</c> if the file is absent.
+        /// Returns <c>null</c> if the file is absent or corrupt.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Slot is outside [1, 7].</exception>
         public SaveData LoadSlot(int slot)
@@ -33,8 +37,15 @@ namespace HackYourWay.Core
             string path = SlotPath(slot);
             if (!File.Exists(path))
                 return null;
-            string json = File.ReadAllText(path);
-            return JsonUtility.FromJson<SaveData>(json);
+            try
+            {
+                string json = File.ReadAllText(path);
+                return JsonSerializer.Deserialize<SaveData>(json, JsonOptions);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -44,11 +55,11 @@ namespace HackYourWay.Core
         public void SaveSlot(int slot, SaveData data)
         {
             ValidateSlot(slot);
-            File.WriteAllText(SlotPath(slot), JsonUtility.ToJson(data, prettyPrint: false));
+            File.WriteAllText(SlotPath(slot), JsonSerializer.Serialize(data, JsonOptions));
 
             SaveSlotIndex index = LoadIndex();
-            index.Slots[slot - 1].IsOccupied      = true;
-            index.Slots[slot - 1].SavedAtUtcTicks  = DateTime.UtcNow.Ticks;
+            index.Slots[slot - 1].IsOccupied     = true;
+            index.Slots[slot - 1].SavedAtUtcTicks = DateTime.UtcNow.Ticks;
             SaveIndex(index);
         }
 
@@ -64,8 +75,8 @@ namespace HackYourWay.Core
                 File.Delete(path);
 
             SaveSlotIndex index = LoadIndex();
-            index.Slots[slot - 1].IsOccupied      = false;
-            index.Slots[slot - 1].SavedAtUtcTicks  = 0;
+            index.Slots[slot - 1].IsOccupied     = false;
+            index.Slots[slot - 1].SavedAtUtcTicks = 0;
             SaveIndex(index);
         }
 
@@ -78,17 +89,24 @@ namespace HackYourWay.Core
             string path = IndexPath();
             if (!File.Exists(path))
                 return CreateDefaultIndex();
-            string         json  = File.ReadAllText(path);
-            SaveSlotIndex  index = JsonUtility.FromJson<SaveSlotIndex>(json);
-            if (index == null || index.Slots == null || index.Slots.Length != 7)
+            try
+            {
+                string        json  = File.ReadAllText(path);
+                SaveSlotIndex index = JsonSerializer.Deserialize<SaveSlotIndex>(json, JsonOptions);
+                if (index == null || index.Slots == null || index.Slots.Length != 7)
+                    return CreateDefaultIndex();
+                return index;
+            }
+            catch
+            {
                 return CreateDefaultIndex();
-            return index;
+            }
         }
 
         /// <summary>Writes <c>save_index.json</c>.</summary>
         public void SaveIndex(SaveSlotIndex index)
         {
-            File.WriteAllText(IndexPath(), JsonUtility.ToJson(index, prettyPrint: false));
+            File.WriteAllText(IndexPath(), JsonSerializer.Serialize(index, JsonOptions));
         }
 
         /// <summary>
@@ -113,15 +131,16 @@ namespace HackYourWay.Core
             long ticks = DateTime.UtcNow.Ticks;
             try
             {
-                SaveData legacy = JsonUtility.FromJson<SaveData>(File.ReadAllText(legacyPath));
+                string raw = File.ReadAllText(legacyPath);
+                SaveData legacy = JsonSerializer.Deserialize<SaveData>(raw, JsonOptions);
                 if (legacy != null && legacy.Player.LastSaveUtcTicks > 0)
                     ticks = legacy.Player.LastSaveUtcTicks;
             }
             catch { /* fall back to UtcNow */ }
 
             SaveSlotIndex index = CreateDefaultIndex();
-            index.Slots[0].IsOccupied      = true;
-            index.Slots[0].SavedAtUtcTicks  = ticks;
+            index.Slots[0].IsOccupied     = true;
+            index.Slots[0].SavedAtUtcTicks = ticks;
             SaveIndex(index);
 
             return true;
@@ -129,8 +148,8 @@ namespace HackYourWay.Core
 
         // ── Helpers ──────────────────────────────────────────────────────────
 
-        private string SlotPath(int slot)  => Path.Combine(_basePath, $"save_{slot}.json");
-        private string IndexPath()         => Path.Combine(_basePath, "save_index.json");
+        private string SlotPath(int slot) => Path.Combine(_basePath, $"save_{slot}.json");
+        private string IndexPath()        => Path.Combine(_basePath, "save_index.json");
 
         private static void ValidateSlot(int slot)
         {

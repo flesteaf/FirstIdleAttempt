@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://cd6gv1nlb70uu"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_vmk1i"]
+
+[resource]
+script = ExtResource("1_vmk1i")
+Id = "hw_bw_4"
+DisplayName = "Full Fibre"
+Description = "Speeds up scan, inject, firewall, ls, copy"
+Price = 0.3
+HasHardwareUpgrade = true
+HardwareStatAffected = 1
+HardwareTierGranted = 4
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

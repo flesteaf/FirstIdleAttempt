@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using UnityEngine;
 using HackYourWay.Models;
 using HackYourWay.Services;
 using HackYourWay.Data;
@@ -10,7 +9,7 @@ namespace HackYourWay.Tests.EditMode
     {
         private static Services.LocationService BuildLocationService()
         {
-            var config = ScriptableObject.CreateInstance<LocationConfigSO>();
+            var config = new LocationConfigSO();
             config.MinNetworks = 1;
             config.MaxNetworks = 1;
             config.MinDevicesPerNetwork = 2;
@@ -119,7 +118,7 @@ namespace HackYourWay.Tests.EditMode
         [Test]
         public void OnTick_DevicesInTwoLocations_CombinesIncome()
         {
-            var config = ScriptableObject.CreateInstance<LocationConfigSO>();
+            var config = new LocationConfigSO();
             config.MinNetworks = 1; config.MaxNetworks = 1;
             config.MinDevicesPerNetwork = 1; config.MaxDevicesPerNetwork = 1;
             config.MinFilesPerDevice = 0; config.MaxFilesPerDevice = 0;

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CurrencyDefinitionSO" format=3 uid="uid://f84yka23hp3e"]
+
+[ext_resource type="Script" uid="uid://bq25pxcxkrwtj" path="res://Assets/Scripts/Data/CurrencyDefinitionSO.cs" id="1_dsi7s"]
+
+[resource]
+script = ExtResource("1_dsi7s")
+CurrencyType = 1
+DisplayName = "Monero"
+Symbol = "XMR"
+metadata/_custom_type_script = "uid://bq25pxcxkrwtj"

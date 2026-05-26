@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dsolkom2ta1r0"]
+
+[node name="Node2D" type="Node2D" unique_id=373967035]
+
+[node name="StoreItemRow" type="HBoxContainer" parent="." unique_id=1840518397]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NameLabel" type="Label" parent="StoreItemRow" unique_id=787190652]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RewardLabel" type="Label" parent="StoreItemRow" unique_id=1211123981]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="BuyButton" type="Button" parent="StoreItemRow" unique_id=1949224787]
+layout_mode = 2
+text = "Buy"

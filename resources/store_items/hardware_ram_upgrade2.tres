@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://cirjpnlclwsbe"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_2kb71"]
+
+[resource]
+script = ExtResource("1_2kb71")
+Id = "ram_upgrade"
+DisplayName = "RAM Upgrade"
+Price = 0.5
+IncomeMultiplier = 1.5
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

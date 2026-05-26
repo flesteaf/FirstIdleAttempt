@@ -1,6 +1,6 @@
 using System.IO;
+using System.Text.Json;
 using NUnit.Framework;
-using UnityEngine;
 using HackYourWay.Core;
 using HackYourWay.Models;
 
@@ -10,6 +10,9 @@ namespace HackYourWay.Tests.EditMode
     {
         private string        _testDir;
         private SlotSaveSystem _system;
+
+        private static readonly JsonSerializerOptions JsonOptions =
+            new JsonSerializerOptions { IncludeFields = true };
 
         [SetUp]
         public void SetUp()
@@ -140,7 +143,7 @@ namespace HackYourWay.Tests.EditMode
             data.Player.AddBalance(CurrencyType.Bitcoin, 77.0);
             File.WriteAllText(
                 Path.Combine(_testDir, "save.json"),
-                JsonUtility.ToJson(data));
+                JsonSerializer.Serialize(data, JsonOptions));
 
             bool migrated = _system.MigrateLegacyIfNeeded();
 
@@ -155,7 +158,7 @@ namespace HackYourWay.Tests.EditMode
         public void MigrateLegacyIfNeeded_WhenSlotFilesExist_DoesNotMigrate()
         {
             _system.SaveSlot(1, new SaveData());
-            File.WriteAllText(Path.Combine(_testDir, "save.json"), JsonUtility.ToJson(new SaveData()));
+            File.WriteAllText(Path.Combine(_testDir, "save.json"), JsonSerializer.Serialize(new SaveData(), JsonOptions));
 
             bool migrated = _system.MigrateLegacyIfNeeded();
 
@@ -171,7 +174,7 @@ namespace HackYourWay.Tests.EditMode
         [Test]
         public void MigrateLegacyIfNeeded_UpdatesIndex_Slot1Occupied()
         {
-            File.WriteAllText(Path.Combine(_testDir, "save.json"), JsonUtility.ToJson(new SaveData()));
+            File.WriteAllText(Path.Combine(_testDir, "save.json"), JsonSerializer.Serialize(new SaveData(), JsonOptions));
 
             _system.MigrateLegacyIfNeeded();
 

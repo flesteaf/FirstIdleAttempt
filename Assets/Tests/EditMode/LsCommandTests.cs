@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using UnityEngine;
 using HackYourWay.Models;
 using HackYourWay.Services;
 using HackYourWay.Services.Commands;
@@ -13,7 +12,7 @@ namespace HackYourWay.Tests.EditMode
 
         private static LocationService BuildService(string ip = "10.0.0.1", bool scanned = true)
         {
-            var config = ScriptableObject.CreateInstance<LocationConfigSO>();
+            var config = new LocationConfigSO();
             config.MinNetworks          = 1;
             config.MaxNetworks          = 1;
             config.MinDevicesPerNetwork = 1;

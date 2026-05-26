@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://co2nixq5rc5d"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_w8owj"]
+
+[resource]
+script = ExtResource("1_w8owj")
+Id = "bot_software"
+DisplayName = "Bot Software"
+Category = 1
+Price = 1.0
+HasToolUnlock = true
+UnlocksToolType = 4
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

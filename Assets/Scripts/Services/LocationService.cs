@@ -238,7 +238,7 @@ namespace HackYourWay.Services
             {
                 Id       = seed.ToString(),
                 Name     = $"node_{seed * NameMultiplier % NameModulus}",
-                ConfigId = _config != null ? _config.name : string.Empty,
+                ConfigId = _config != null ? _config.ResourceName : string.Empty,
                 IsVisited = false
             };
 

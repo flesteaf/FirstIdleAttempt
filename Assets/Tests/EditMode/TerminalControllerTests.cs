@@ -1,22 +1,23 @@
 using System.Reflection;
 using NUnit.Framework;
-using UnityEngine;
 using HackYourWay.UI;
 
 namespace HackYourWay.Tests.EditMode
 {
     /// <summary>
-    /// EditMode tests for <see cref="TerminalController.AwaitSelection"/> state machine.
-    /// Arrow-key navigation and Enter-key confirmation require play-mode with an active
-    /// InputSystem device; those paths are covered by PlayMode tests.
+    /// Tests for <see cref="TerminalController.AwaitSelection"/> state machine.
+    /// Arrow-key navigation and Enter-key confirmation require a running Godot scene;
+    /// those paths are covered by GDUnit4 integration tests.
+    ///
+    /// NOTE: These tests require GDUnit4 to run (TerminalController extends Control,
+    /// a Godot type that requires the engine runtime).
     /// </summary>
     public class TerminalControllerTests
     {
-        private GameObject         _go;
         private TerminalController _tc;
 
         // Reflection handles — SelectionState is a private struct
-        private static readonly FieldInfo  SelectionStateField =
+        private static readonly FieldInfo SelectionStateField =
             typeof(TerminalController).GetField("_selectionState",
                 BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -31,14 +32,13 @@ namespace HackYourWay.Tests.EditMode
         [SetUp]
         public void SetUp()
         {
-            _go = new GameObject("TerminalController");
-            _tc = _go.AddComponent<TerminalController>();
+            _tc = new TerminalController();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(_go);
+            _tc = null;
         }
 
         // ── AwaitSelection setup ──────────────────────────────────────────────
@@ -58,7 +58,6 @@ namespace HackYourWay.Tests.EditMode
             string[] captured = null;
             _tc.AwaitSelection(new[] { "Alpha", "Beta" }, _ => { });
 
-            // Read the Options array from the private SelectionState struct
             var state   = SelectionStateField.GetValue(_tc);
             var options = (string[]) state.GetType()
                 .GetField("Options", BindingFlags.Public | BindingFlags.Instance)
@@ -72,7 +71,6 @@ namespace HackYourWay.Tests.EditMode
         [Test]
         public void AwaitSelection_NullOutputView_DoesNotThrow()
         {
-            // _outputView is null in EditMode — AwaitSelection must be safe
             Assert.DoesNotThrow(() => _tc.AwaitSelection(new[] { "x" }, _ => { }));
         }
 
@@ -84,7 +82,6 @@ namespace HackYourWay.Tests.EditMode
             int confirmed = int.MinValue;
             _tc.AwaitSelection(new[] { "Alpha", "Beta" }, idx => confirmed = idx);
 
-            // Typing "2" + Enter → jump to Beta (index 1) and confirm
             HandleSelectionInputMethod.Invoke(_tc, new object[] { "2" });
 
             Assert.AreEqual(1, confirmed, "Digit '2' should confirm index 1 (Beta).");
@@ -96,7 +93,6 @@ namespace HackYourWay.Tests.EditMode
             int confirmed = int.MinValue;
             _tc.AwaitSelection(new[] { "Alpha", "Beta" }, idx => confirmed = idx);
 
-            // "3" maps to Cancel (last option, index 2)
             HandleSelectionInputMethod.Invoke(_tc, new object[] { "3" });
 
             Assert.AreEqual(-1, confirmed, "Selecting Cancel should invoke callback with -1.");
@@ -132,7 +128,6 @@ namespace HackYourWay.Tests.EditMode
             int confirmed = int.MinValue;
             _tc.AwaitSelection(new[] { "Alpha" }, idx => confirmed = idx);
 
-            // Options are Alpha + Cancel = 2 entries; "99" is out of range
             HandleSelectionInputMethod.Invoke(_tc, new object[] { "99" });
 
             Assert.AreEqual(-1, confirmed, "Out-of-range digit should cancel selection.");

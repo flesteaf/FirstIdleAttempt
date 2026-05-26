@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
+using Godot;
 using HackYourWay.Models;
 using HackYourWay.Services;
 using HackYourWay.Services.Commands;
@@ -7,73 +7,57 @@ using HackYourWay.Services.Commands;
 namespace HackYourWay.Core
 {
     /// <summary>
-    /// Singleton MonoBehaviour that bootstraps the game session.
-    /// Loads save data, applies offline income, runs v1→v2 migration, and wires all services.
-    /// Saves on application quit and pause.
+    /// Autoload singleton that bootstraps the game session.
+    /// Loads save data, applies offline income, runs schema migrations, and wires all services.
+    /// Saves on application quit and focus-out.
     /// </summary>
-    public class GameManager : MonoBehaviour
+    public partial class GameManager : Node
     {
         public static GameManager Instance { get; private set; }
 
         // ── Public accessors ─────────────────────────────────────────────────
 
-        /// <summary>The loaded (or default) save data for this session.</summary>
         public SaveData SaveData { get; private set; }
-
-        /// <summary>The active player from the current save.</summary>
         public Player Player => SaveData.Player;
-
-        /// <summary>The command parser; commands are registered in Awake.</summary>
         public CommandParser CommandParser { get; private set; }
-
-        /// <summary>Manages all locations (procedural generation + save/restore).</summary>
         public Services.LocationService LocationService { get; private set; }
-
-        /// <summary>Per-command latency calculator; uses the current player's hardware tiers.</summary>
         public Services.CommandLatencyService CommandLatencyService { get; private set; }
-
-        /// <summary>Multi-slot file I/O service. Exposed for save-management commands.</summary>
         public SlotSaveSystem SlotSaveSystem { get; private set; }
-
-        /// <summary>Pending yes/no confirmation state machine. Exposed for terminal input routing.</summary>
         public Services.ConfirmationService ConfirmationService { get; private set; }
 
         /// <summary>Active save slot (1–7), or -1 when no slot is active (e.g. after <c>newgame</c>).</summary>
         public int CurrentSlot { get; private set; } = -1;
 
-        // ── Serialized references ────────────────────────────────────────────
-
-        [SerializeField] private TickManager _tickManager;
-
         // ── Private fields ───────────────────────────────────────────────────
 
-        private SaveSystem _saveSystem;
+        private SaveSystem   _saveSystem;
+        private TickManager  _tickManager;
 
-        // ── Unity lifecycle ──────────────────────────────────────────────────
+        // ── Godot lifecycle ──────────────────────────────────────────────────
 
-        private void Awake()
+        public override void _Ready()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            GetTree().AutoAcceptQuit = false;
+
+            _tickManager = new TickManager();
+            AddChild(_tickManager);
 
             Bootstrap();
         }
 
-        private void OnApplicationQuit()
+        public override void _Notification(int what)
         {
-            PersistSession();
-        }
-
-        private void OnApplicationPause(bool pauseStatus)
-        {
-            if (pauseStatus)
-                PersistSession();
+            switch (what)
+            {
+                case (int)NotificationWMCloseRequest:
+                    PersistSession();
+                    GetTree().Quit();
+                    break;
+                case (int)NotificationApplicationFocusOut:
+                    PersistSession();
+                    break;
+            }
         }
 
         // ── Bootstrap ────────────────────────────────────────────────────────
@@ -121,8 +105,7 @@ namespace HackYourWay.Core
 
             // 7. Create IncomeService and register with TickManager.
             var incomeService = new IncomeService(SaveData.Player, LocationService);
-            if (_tickManager != null)
-                _tickManager.Register(incomeService);
+            _tickManager.Register(incomeService);
         }
 
         // ── Schema migration ─────────────────────────────────────────────────
@@ -131,7 +114,6 @@ namespace HackYourWay.Core
         {
             if (SaveData.Version < 2)
             {
-                // v1 → v2: back-fill location names; set CurrentLocationName.
                 const int nameMultiplier = 77;
                 const int nameModulus    = 1000;
 
@@ -151,12 +133,9 @@ namespace HackYourWay.Core
 
             if (SaveData.Version < 3)
             {
-                // v2 → v3: back-fill player hardware tiers and device hardware tiers.
-                // JsonUtility defaults missing int fields to 0; valid tier minimum is 1.
                 var p = SaveData.Player;
                 if (p.CpuTier       == 0) p.CpuTier       = 1;
                 if (p.BandwidthTier == 0) p.BandwidthTier  = 1;
-                // GpuTier 0 = no GPU — correct default, no migration needed.
 
                 for (int l = 0; l < SaveData.Locations.Count; l++)
                 {
@@ -232,7 +211,6 @@ namespace HackYourWay.Core
             CommandParser.Register("move",     new MoveCommand(LocationService));
             CommandParser.Register("forget",   new ForgetCommand(LocationService));
 
-            // Save-management commands (fresh instances so they reference the current Player/services).
             CommandParser.Register("save",    new SaveCommand(SlotSaveSystem, ConfirmationService,
                                                   () => SaveData, slot => CurrentSlot = slot));
             CommandParser.Register("load",    new LoadCommand(SlotSaveSystem, slot => LoadSlot(slot)));
@@ -241,7 +219,6 @@ namespace HackYourWay.Core
             CommandParser.Register("newgame", new NewGameCommand(ConfirmationService, NewGame));
             CommandParser.Register("saves",   new SavesCommand(SlotSaveSystem));
 
-            // Registered last so GetRegisteredVerbs() returns the complete list.
             CommandParser.Register("help",    new HelpCommand(CommandParser));
         }
 
@@ -253,7 +230,7 @@ namespace HackYourWay.Core
         /// </summary>
         public void LoadSlot(int slot)
         {
-            SaveData = SlotSaveSystem.LoadSlot(slot) ?? new SaveData();
+            SaveData              = SlotSaveSystem.LoadSlot(slot) ?? new SaveData();
             MigrateIfNeeded();
             CommandLatencyService = new Services.CommandLatencyService(SaveData.Player);
             LocationService       = new Services.LocationService(FindLocationConfig());
@@ -274,7 +251,7 @@ namespace HackYourWay.Core
         /// </summary>
         public void NewGame()
         {
-            SaveData = CreateDefaultSaveData();
+            SaveData              = CreateDefaultSaveData();
             CommandLatencyService = new Services.CommandLatencyService(SaveData.Player);
             LocationService       = new Services.LocationService(FindLocationConfig());
             RegisterCommands();
@@ -285,7 +262,7 @@ namespace HackYourWay.Core
 
         private void PersistSession()
         {
-            if (CurrentSlot == -1) return; // no active slot — skip auto-save
+            if (CurrentSlot == -1) return;
             SaveData.Locations           = LocationService.ToSaveData();
             SaveData.NextLocationId      = LocationService.NextLocationId;
             SaveData.CurrentLocationName = LocationService.GetCurrentLocationName();
@@ -304,25 +281,14 @@ namespace HackYourWay.Core
 
         private static Data.LocationConfigSO FindLocationConfig()
         {
-            var config = Resources.Load<Data.LocationConfigSO>("Locations/LocationConfig");
+            var config = GD.Load<Data.LocationConfigSO>("res://resources/locations/LocationConfig.tres");
             if (config == null)
             {
-                config = ScriptableObject.CreateInstance<Data.LocationConfigSO>();
-                Debug.LogWarning("[GameManager] No LocationConfig asset found in Resources/Locations/. " +
-                                 "Using default values. Create Assets/Resources/Locations/LocationConfig.asset.");
+                GD.PushWarning("[GameManager] No LocationConfig.tres found at res://resources/locations/. " +
+                               "Using default values. Create the asset in the Godot editor.");
+                config = new Data.LocationConfigSO();
             }
             return config;
         }
-
-        // ── Test support ─────────────────────────────────────────────────────
-
-#if UNITY_INCLUDE_TESTS
-        public void SimulateLoad()
-        {
-            PersistSession();
-            SaveData = _saveSystem.Load();
-            ApplyOfflineIncome();
-        }
-#endif
     }
 }

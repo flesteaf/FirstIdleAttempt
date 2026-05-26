@@ -1,26 +1,22 @@
-using System.Collections;
-using TMPro;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using Godot;
 using HackYourWay.Core;
 using HackYourWay.Models;
 
 namespace HackYourWay.UI
 {
     /// <summary>
-    /// Wires a TMP InputField to the <see cref="CommandParser"/>.
+    /// Wires a <see cref="LineEdit"/> to the <see cref="CommandParser"/>.
     /// Passes command results to <see cref="TerminalOutputView"/> and clears
     /// the input field after each submission.
     /// Supports interactive selection mode (<see cref="AwaitSelection"/>) for
     /// arrow-key-navigable numbered lists used by inject, forget, firewall, ls, copy.
     /// </summary>
-    public class TerminalController : MonoBehaviour
+    public partial class TerminalController : Control
     {
         public static TerminalController Instance { get; private set; }
 
-        [SerializeField] private TMP_InputField    _inputField;
-        [SerializeField] private TerminalOutputView _outputView;
+        [Export] private LineEdit           _inputField;
+        [Export] private TerminalOutputView _outputView;
 
         private readonly CommandHistory _history = new CommandHistory();
 
@@ -28,7 +24,7 @@ namespace HackYourWay.UI
 
         private struct SelectionState
         {
-            public string[]           Options;       // includes "Cancel" as last entry
+            public string[]           Options;
             public int                HighlightIndex;
             public System.Action<int> OnSelected;
         }
@@ -36,68 +32,106 @@ namespace HackYourWay.UI
         private SelectionState? _selectionState;
         private int             _selectionCheckpoint = -1;
 
-        // ── Command execution latency ─────────────────────────────────────────
+        // ── Command execution delay (replaces coroutine) ──────────────────────
 
-        private Coroutine _pendingExecution;
+        private float  _executionElapsed   = -1f;
+        private float  _executionTotal;
+        private string _executingInput;
+        private int    _executionCheckpoint = -1;
+
         private const float InstantThreshold = 0.05f;
         private const int   ProgressBarWidth  = 20;
 
-        // ── Unity lifecycle ───────────────────────────────────────────────────
+        // ── Godot lifecycle ───────────────────────────────────────────────────
 
-        private void Awake()
+        public override void _Ready()
         {
             if (Instance == null) Instance = this;
-        }
 
-        private void Start()
-        {
             if (_inputField != null)
             {
-                _inputField.onSubmit.AddListener(OnSubmit);
-                _inputField.ActivateInputField();
+                _inputField.TextSubmitted += OnSubmit;
+                _inputField.GrabFocus();
             }
         }
 
-        private void OnDestroy()
+        public override void _ExitTree()
         {
             if (Instance == this) Instance = null;
             if (_inputField != null)
-                _inputField.onSubmit.RemoveListener(OnSubmit);
-            if (_pendingExecution != null)
-                StopCoroutine(_pendingExecution);
+                _inputField.TextSubmitted -= OnSubmit;
         }
 
-        private void Update()
+        public override void _Process(double delta)
         {
-            if (_inputField == null || !_inputField.isFocused) return;
+            if (_executionElapsed < 0) return;
 
-            var kb = Keyboard.current;
-            if (kb == null) return;
+            _executionElapsed += (float)delta;
+            float t = Mathf.Clamp(_executionElapsed / _executionTotal, 0f, 1f);
+
+            if (_executionCheckpoint >= 0 && _outputView != null)
+            {
+                int filled = Mathf.RoundToInt(t * ProgressBarWidth);
+                _outputView.RestoreToCheckpoint(_executionCheckpoint);
+                _outputView.AppendLineNoFlush(
+                    $"  [{new string('█', filled)}{new string('░', ProgressBarWidth - filled)}] {(int)(t * 100),3}%",
+                    TerminalLineType.System);
+                _outputView.FlushNow();
+            }
+
+            if (_executionElapsed >= _executionTotal)
+            {
+                if (_executionCheckpoint >= 0 && _outputView != null)
+                    _outputView.RestoreToCheckpoint(_executionCheckpoint);
+
+                string input      = _executingInput;
+                _executionElapsed = -1f;
+                _executingInput   = null;
+                ExecuteCommandImmediate(input);
+            }
+        }
+
+        public override void _Input(InputEvent @event)
+        {
+            if (@event is not InputEventKey key || !key.Pressed || key.Echo) return;
+            if (_inputField == null || !_inputField.HasFocus()) return;
 
             if (_selectionState != null)
             {
-                if (kb.upArrowKey.wasPressedThisFrame)   MoveHighlight(-1);
-                if (kb.downArrowKey.wasPressedThisFrame) MoveHighlight(+1);
-                return; // suppress history navigation during selection
+                if (key.Keycode == Key.Up)   { MoveHighlight(-1); GetViewport().SetInputAsHandled(); }
+                if (key.Keycode == Key.Down) { MoveHighlight(+1); GetViewport().SetInputAsHandled(); }
+                return;
             }
 
-            if (kb.tabKey.wasPressedThisFrame)       HandleTab();
-            if (kb.upArrowKey.wasPressedThisFrame)   HandleHistoryUp();
-            if (kb.downArrowKey.wasPressedThisFrame) HandleHistoryDown();
+            if (key.Keycode == Key.Tab)
+            {
+                HandleTab();
+                GetViewport().SetInputAsHandled();
+            }
+            else if (key.Keycode == Key.Up)
+            {
+                HandleHistoryUp();
+                GetViewport().SetInputAsHandled();
+            }
+            else if (key.Keycode == Key.Down)
+            {
+                HandleHistoryDown();
+                GetViewport().SetInputAsHandled();
+            }
         }
 
         // ── Command submission ────────────────────────────────────────────────
 
         private void OnSubmit(string input)
         {
+            _inputField.Text = string.Empty;
+            _inputField.GrabFocus();
+
             if (string.IsNullOrWhiteSpace(input))
             {
                 if (_selectionState != null)
                 {
-                    // Empty Enter confirms current highlight
                     ConfirmSelection();
-                    _inputField.text = string.Empty;
-                    _inputField.ActivateInputField();
                 }
                 return;
             }
@@ -105,37 +139,24 @@ namespace HackYourWay.UI
             if (_selectionState != null)
             {
                 HandleSelectionInput(input.Trim());
-                _inputField.text = string.Empty;
-                _inputField.ActivateInputField();
                 return;
             }
 
             // ── Confirmation routing ──────────────────────────────────────────
-            // When a command is awaiting y/n, route all input to ConfirmationService.
-            // Any input other than "y" is treated as a cancel (per command-schema.md).
             var confirmSvc = GameManager.Instance?.ConfirmationService;
             if (confirmSvc != null && confirmSvc.IsPending)
             {
                 _history.Add(input.Trim());
                 _outputView?.AppendLine($"› {input}", TerminalLineType.Command);
-                _inputField.text = string.Empty;
-                _inputField.ActivateInputField();
                 confirmSvc.Resolve(input.Trim().ToLower() == "y");
                 return;
             }
 
             // Drop input silently while a command is already executing
-            if (_pendingExecution != null)
-            {
-                _inputField.text = string.Empty;
-                _inputField.ActivateInputField();
-                return;
-            }
+            if (_executionElapsed >= 0) return;
 
             _history.Add(input.Trim());
             _outputView?.AppendLine($"› {input}", TerminalLineType.Command);
-            _inputField.text = string.Empty;
-            _inputField.ActivateInputField();
 
             float latency = 0f;
             if (GameManager.Instance != null)
@@ -158,7 +179,10 @@ namespace HackYourWay.UI
             }
             else
             {
-                _pendingExecution = StartCoroutine(ExecuteWithDelay(input.Trim(), latency));
+                _executionCheckpoint = _outputView?.SaveCheckpoint() ?? -1;
+                _executionTotal      = latency;
+                _executionElapsed    = 0f;
+                _executingInput      = input.Trim();
             }
         }
 
@@ -209,36 +233,6 @@ namespace HackYourWay.UI
             }
         }
 
-        private IEnumerator ExecuteWithDelay(string input, float latency)
-        {
-            int checkpoint = _outputView?.SaveCheckpoint() ?? -1;
-            float elapsed  = 0f;
-
-            while (elapsed < latency)
-            {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / latency);
-
-                if (checkpoint >= 0 && _outputView != null)
-                {
-                    int filled = Mathf.RoundToInt(t * ProgressBarWidth);
-                    _outputView.RestoreToCheckpoint(checkpoint);
-                    _outputView.AppendLineNoFlush(
-                        $"  [{new string('█', filled)}{new string('░', ProgressBarWidth - filled)}] {(int)(t * 100),3}%",
-                        TerminalLineType.System);
-                    _outputView.FlushNow();
-                }
-
-                yield return null;
-            }
-
-            if (checkpoint >= 0 && _outputView != null)
-                _outputView.RestoreToCheckpoint(checkpoint);
-
-            ExecuteCommandImmediate(input);
-            _pendingExecution = null;
-        }
-
         // ── Selection internals ───────────────────────────────────────────────
 
         private void HandleSelectionInput(string input)
@@ -247,7 +241,6 @@ namespace HackYourWay.UI
 
             if (int.TryParse(input, out int choice) && choice >= 1 && choice <= state.Options.Length)
             {
-                // Jump to chosen row then confirm
                 state.HighlightIndex = choice - 1;
                 _selectionState      = state;
                 RenderSelection();
@@ -255,7 +248,6 @@ namespace HackYourWay.UI
             }
             else
             {
-                // Non-digit or out-of-range → cancel
                 CancelSelection();
             }
         }
@@ -317,7 +309,7 @@ namespace HackYourWay.UI
         {
             if (GameManager.Instance == null) return;
 
-            string prefix  = _inputField.text.Trim();
+            string prefix  = _inputField.Text.Trim();
             var    verbs   = GameManager.Instance.CommandParser.GetRegisteredVerbs();
             var    matches = new System.Collections.Generic.List<string>();
 
@@ -329,16 +321,15 @@ namespace HackYourWay.UI
 
             if (matches.Count == 1)
             {
-                _inputField.text = matches[0];
-                _inputField.caretPosition = matches[0].Length;
+                _inputField.Text         = matches[0];
+                _inputField.CaretColumn  = matches[0].Length;
             }
             else if (matches.Count > 1)
             {
                 _outputView?.AppendLine(string.Join("  ", matches));
             }
 
-            EventSystem.current?.SetSelectedGameObject(null);
-            _inputField.ActivateInputField();
+            _inputField.GrabFocus();
         }
 
         // ── Command history ───────────────────────────────────────────────────
@@ -347,15 +338,15 @@ namespace HackYourWay.UI
         {
             string entry = _history.NavigateBack();
             if (entry == null) return;
-            _inputField.text = entry;
-            _inputField.caretPosition = entry.Length;
+            _inputField.Text        = entry;
+            _inputField.CaretColumn = entry.Length;
         }
 
         private void HandleHistoryDown()
         {
-            string entry = _history.NavigateForward();
-            _inputField.text          = entry ?? string.Empty;
-            _inputField.caretPosition = _inputField.text.Length;
+            string entry            = _history.NavigateForward();
+            _inputField.Text        = entry ?? string.Empty;
+            _inputField.CaretColumn = _inputField.Text.Length;
         }
     }
 }

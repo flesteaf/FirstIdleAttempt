@@ -1,0 +1,1007 @@
+{
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\settings.json": {
+    "mtime": 1779639086.4665332,
+    "ast_hash": "5d6ecd96cf065b16e8bb9fbf5d7d8f0d",
+    "semantic_hash": "5d6ecd96cf065b16e8bb9fbf5d7d8f0d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\settings.local.json": {
+    "mtime": 1778513019.5465565,
+    "ast_hash": "6e6bcd26133b6781e4a859c3d4128270",
+    "semantic_hash": "6e6bcd26133b6781e4a859c3d4128270"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\feature.json": {
+    "mtime": 1778513019.5605545,
+    "ast_hash": "82c0377d07d54ae8b1a6f884138dbf2a",
+    "semantic_hash": "82c0377d07d54ae8b1a6f884138dbf2a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\init-options.json": {
+    "mtime": 1778513019.5605545,
+    "ast_hash": "e4924e7919a26b64b508835b5f97f476",
+    "semantic_hash": "e4924e7919a26b64b508835b5f97f476"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\integration.json": {
+    "mtime": 1778513019.561555,
+    "ast_hash": "c3adcc80ef9623e87197963a065cbd1a",
+    "semantic_hash": "c3adcc80ef9623e87197963a065cbd1a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\bash\\auto-commit.sh": {
+    "mtime": 1778513019.558555,
+    "ast_hash": "d2d4e743a2dce4ec402b97cc1e013138",
+    "semantic_hash": "d2d4e743a2dce4ec402b97cc1e013138"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\bash\\create-new-feature.sh": {
+    "mtime": 1778513019.558555,
+    "ast_hash": "4d8911d2ee8b859fad02fec880c703ea",
+    "semantic_hash": "4d8911d2ee8b859fad02fec880c703ea"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\bash\\git-common.sh": {
+    "mtime": 1778513019.5595548,
+    "ast_hash": "18763550598bec5a682c15ea714a1074",
+    "semantic_hash": "18763550598bec5a682c15ea714a1074"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\bash\\initialize-repo.sh": {
+    "mtime": 1778513019.5595548,
+    "ast_hash": "527b1c7c477bf13b058b64b2353ad6d4",
+    "semantic_hash": "527b1c7c477bf13b058b64b2353ad6d4"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\powershell\\auto-commit.ps1": {
+    "mtime": 1778513019.5595548,
+    "ast_hash": "9ff0fea7dbeb7902c4be21ccaccb0d59",
+    "semantic_hash": "9ff0fea7dbeb7902c4be21ccaccb0d59"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\powershell\\create-new-feature.ps1": {
+    "mtime": 1778513019.5605545,
+    "ast_hash": "69c7b493fe43330cc04bddc09144cb02",
+    "semantic_hash": "69c7b493fe43330cc04bddc09144cb02"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\powershell\\git-common.ps1": {
+    "mtime": 1778513019.5605545,
+    "ast_hash": "1dc2badac0ca7c398bc6fee4f55d8312",
+    "semantic_hash": "1dc2badac0ca7c398bc6fee4f55d8312"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\scripts\\powershell\\initialize-repo.ps1": {
+    "mtime": 1778513019.5605545,
+    "ast_hash": "95f5fb126c9a696357c21dc29a4ba160",
+    "semantic_hash": "95f5fb126c9a696357c21dc29a4ba160"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\integrations\\claude.manifest.json": {
+    "mtime": 1778513019.5622153,
+    "ast_hash": "a4cb2f16c2fffa3e82e4a684cdc9ad91",
+    "semantic_hash": "a4cb2f16c2fffa3e82e4a684cdc9ad91"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\integrations\\speckit.manifest.json": {
+    "mtime": 1778513019.5622153,
+    "ast_hash": "b9767f8de6c809700c9159573bd72afb",
+    "semantic_hash": "b9767f8de6c809700c9159573bd72afb"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\integrations\\claude\\scripts\\update-context.ps1": {
+    "mtime": 1778513019.5622153,
+    "ast_hash": "b606d1ed4292225865247f3910bdc026",
+    "semantic_hash": "b606d1ed4292225865247f3910bdc026"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\integrations\\claude\\scripts\\update-context.sh": {
+    "mtime": 1778513019.5622153,
+    "ast_hash": "77620e19318d78c62aabeae59a376c5c",
+    "semantic_hash": "77620e19318d78c62aabeae59a376c5c"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\scripts\\powershell\\check-prerequisites.ps1": {
+    "mtime": 1778513019.5633354,
+    "ast_hash": "c24853430b39a11766a182ccfeb2e1b4",
+    "semantic_hash": "c24853430b39a11766a182ccfeb2e1b4"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\scripts\\powershell\\common.ps1": {
+    "mtime": 1778513019.564335,
+    "ast_hash": "a1534b51f7fb450883a9d5c30df16192",
+    "semantic_hash": "a1534b51f7fb450883a9d5c30df16192"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\scripts\\powershell\\create-new-feature.ps1": {
+    "mtime": 1778513019.564335,
+    "ast_hash": "8786e236be284b433a73f21b804dd8be",
+    "semantic_hash": "8786e236be284b433a73f21b804dd8be"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\scripts\\powershell\\setup-plan.ps1": {
+    "mtime": 1778513019.564335,
+    "ast_hash": "635fee5bc2b761cc8725d0ff4a5eb943",
+    "semantic_hash": "635fee5bc2b761cc8725d0ff4a5eb943"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\scripts\\powershell\\update-agent-context.ps1": {
+    "mtime": 1778513019.564335,
+    "ast_hash": "4ba6275cb52fecd9dcad935b08e8c311",
+    "semantic_hash": "4ba6275cb52fecd9dcad935b08e8c311"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Core\\GameManager.cs": {
+    "mtime": 1778514537.6173816,
+    "ast_hash": "50d0efebefab17738cb978cf0c7c5702",
+    "semantic_hash": "50d0efebefab17738cb978cf0c7c5702"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Core\\OfflineIncomeCalculator.cs": {
+    "mtime": 1778513019.586918,
+    "ast_hash": "115fac94996b78229071108820272f8a",
+    "semantic_hash": "115fac94996b78229071108820272f8a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Core\\SaveSystem.cs": {
+    "mtime": 1778514461.3692079,
+    "ast_hash": "82bd33b747bde5e2768f4c5720f4a8d9",
+    "semantic_hash": "82bd33b747bde5e2768f4c5720f4a8d9"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Core\\SlotSaveSystem.cs": {
+    "mtime": 1778514482.7843182,
+    "ast_hash": "bf125e7c1977e8b34eb0b28859d3edfc",
+    "semantic_hash": "bf125e7c1977e8b34eb0b28859d3edfc"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Core\\TickManager.cs": {
+    "mtime": 1778514493.0708704,
+    "ast_hash": "719f3e234468651f7cd8afb24b23267b",
+    "semantic_hash": "719f3e234468651f7cd8afb24b23267b"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Data\\ContractSO.cs": {
+    "mtime": 1778514443.375023,
+    "ast_hash": "9016e426eac61d7c499aecdbf40accf7",
+    "semantic_hash": "9016e426eac61d7c499aecdbf40accf7"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Data\\CurrencyDefinitionSO.cs": {
+    "mtime": 1778514445.5992186,
+    "ast_hash": "d6a17e316165634407eb01d8e91d43b0",
+    "semantic_hash": "d6a17e316165634407eb01d8e91d43b0"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Data\\LocationConfigSO.cs": {
+    "mtime": 1778514450.441484,
+    "ast_hash": "b258a17a68af78499004729f17a3cbb2",
+    "semantic_hash": "b258a17a68af78499004729f17a3cbb2"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Data\\StoreItemSO.cs": {
+    "mtime": 1778514439.8030136,
+    "ast_hash": "cc896d8e85c6185dff4c22b98273c212",
+    "semantic_hash": "cc896d8e85c6185dff4c22b98273c212"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Interfaces\\ICommand.cs": {
+    "mtime": 1778513019.5919175,
+    "ast_hash": "545d117e9314f82e5832ffc6120c064d",
+    "semantic_hash": "545d117e9314f82e5832ffc6120c064d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Interfaces\\ITickable.cs": {
+    "mtime": 1778513019.5919175,
+    "ast_hash": "0a96f91b52fe7734b32fb66a803af452",
+    "semantic_hash": "0a96f91b52fe7734b32fb66a803af452"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\CommandHistory.cs": {
+    "mtime": 1778513019.5929177,
+    "ast_hash": "8f7fb328f078a8a1de8c529552b1cbe7",
+    "semantic_hash": "8f7fb328f078a8a1de8c529552b1cbe7"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\Contract.cs": {
+    "mtime": 1778513019.5929177,
+    "ast_hash": "391b4bc2eaee1cb49268623ce3093148",
+    "semantic_hash": "391b4bc2eaee1cb49268623ce3093148"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\ContractType.cs": {
+    "mtime": 1778513019.5939207,
+    "ast_hash": "a9d5e2448b10469d50352a576d8ce1e1",
+    "semantic_hash": "a9d5e2448b10469d50352a576d8ce1e1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\CurrencyType.cs": {
+    "mtime": 1778513019.5939207,
+    "ast_hash": "f1afb0b1f5eea79aadc96c56f07af246",
+    "semantic_hash": "f1afb0b1f5eea79aadc96c56f07af246"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\Device.cs": {
+    "mtime": 1778513019.594918,
+    "ast_hash": "48493f4574f441f93ea05d4e2bbdce8f",
+    "semantic_hash": "48493f4574f441f93ea05d4e2bbdce8f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\FirewallStatus.cs": {
+    "mtime": 1778513019.594918,
+    "ast_hash": "055ba8efdbed964bd058598abebcc387",
+    "semantic_hash": "055ba8efdbed964bd058598abebcc387"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\ForgetResult.cs": {
+    "mtime": 1778513019.5955086,
+    "ast_hash": "1cca8180977f7192716a0e0fb5f80dc2",
+    "semantic_hash": "1cca8180977f7192716a0e0fb5f80dc2"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\HardwareStat.cs": {
+    "mtime": 1778513019.5955086,
+    "ast_hash": "a312189ad2b45bd4cbf22de733342199",
+    "semantic_hash": "a312189ad2b45bd4cbf22de733342199"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\Location.cs": {
+    "mtime": 1778513019.5955086,
+    "ast_hash": "b4d899db4b10fe8219ffd6cc821accc0",
+    "semantic_hash": "b4d899db4b10fe8219ffd6cc821accc0"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\Malware.cs": {
+    "mtime": 1778513019.5965977,
+    "ast_hash": "6246772ce60b53e9dcb1f046380a4556",
+    "semantic_hash": "6246772ce60b53e9dcb1f046380a4556"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\MalwareType.cs": {
+    "mtime": 1778513019.5965977,
+    "ast_hash": "a7cb4491287500ef289ad1f8deead25e",
+    "semantic_hash": "a7cb4491287500ef289ad1f8deead25e"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\Network.cs": {
+    "mtime": 1778513019.5965977,
+    "ast_hash": "2ea6f3f973ad65965722db9b619412ee",
+    "semantic_hash": "2ea6f3f973ad65965722db9b619412ee"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\Player.cs": {
+    "mtime": 1778515027.7748234,
+    "ast_hash": "385c7c1184d2d004d60e79270cce05b4",
+    "semantic_hash": "385c7c1184d2d004d60e79270cce05b4"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\SaveData.cs": {
+    "mtime": 1778515027.7793305,
+    "ast_hash": "ab4566caa10890275d254d5d4bb6c516",
+    "semantic_hash": "ab4566caa10890275d254d5d4bb6c516"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\SaveSlotInfo.cs": {
+    "mtime": 1778515027.7843325,
+    "ast_hash": "8d743eadd71d1b21b36ece46e10f65bf",
+    "semantic_hash": "8d743eadd71d1b21b36ece46e10f65bf"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\SecurityLevel.cs": {
+    "mtime": 1778513019.598598,
+    "ast_hash": "27aa9fb631f60f07689c58d40846f3dc",
+    "semantic_hash": "27aa9fb631f60f07689c58d40846f3dc"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\StoreItem.cs": {
+    "mtime": 1778513019.598598,
+    "ast_hash": "3dac30ddf452631deb5ea62ff513e900",
+    "semantic_hash": "3dac30ddf452631deb5ea62ff513e900"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\StoreItemCategory.cs": {
+    "mtime": 1778513019.5995977,
+    "ast_hash": "a8116e4a6379c2bc24e9a96df6564f8f",
+    "semantic_hash": "a8116e4a6379c2bc24e9a96df6564f8f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Models\\ToolType.cs": {
+    "mtime": 1778513019.5995977,
+    "ast_hash": "a2808499ee13daecd17f863432d2d2c2",
+    "semantic_hash": "a2808499ee13daecd17f863432d2d2c2"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\CommandLatencyService.cs": {
+    "mtime": 1778513019.6005998,
+    "ast_hash": "81a21f65baaef8755329f289c4bcea32",
+    "semantic_hash": "81a21f65baaef8755329f289c4bcea32"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\CommandParser.cs": {
+    "mtime": 1778513019.6005998,
+    "ast_hash": "e9f97a701b65a3e6940fa1feca028cde",
+    "semantic_hash": "e9f97a701b65a3e6940fa1feca028cde"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\ConfirmationService.cs": {
+    "mtime": 1778513019.6075983,
+    "ast_hash": "996f598ed10e5d7c1dae9bd1e28d6ccd",
+    "semantic_hash": "996f598ed10e5d7c1dae9bd1e28d6ccd"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\ContractService.cs": {
+    "mtime": 1778513019.6075983,
+    "ast_hash": "4e040ac123af9b9028f636d948bf6c42",
+    "semantic_hash": "4e040ac123af9b9028f636d948bf6c42"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\IncomeService.cs": {
+    "mtime": 1778513019.6085973,
+    "ast_hash": "bebb820d7f99e67ea9f9a16e4b204310",
+    "semantic_hash": "bebb820d7f99e67ea9f9a16e4b204310"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\LocationService.cs": {
+    "mtime": 1778513019.6085973,
+    "ast_hash": "5cabe3881d1f6ac816e17b12ff1a6100",
+    "semantic_hash": "5cabe3881d1f6ac816e17b12ff1a6100"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\StoreService.cs": {
+    "mtime": 1778513019.6095965,
+    "ast_hash": "0d65e1fe83a0aac6bd178412311b2845",
+    "semantic_hash": "0d65e1fe83a0aac6bd178412311b2845"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\CopyCommand.cs": {
+    "mtime": 1778513019.6016002,
+    "ast_hash": "430d4ffdc959458915214dc9f5f7f39b",
+    "semantic_hash": "430d4ffdc959458915214dc9f5f7f39b"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\CrackCommand.cs": {
+    "mtime": 1778513019.6016002,
+    "ast_hash": "40650c48abe525ce2019c482fb1c78e1",
+    "semantic_hash": "40650c48abe525ce2019c482fb1c78e1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\DelsaveCommand.cs": {
+    "mtime": 1778513019.6026,
+    "ast_hash": "bf3d5ea215ea8b8f0ac9864fe0f37bbd",
+    "semantic_hash": "bf3d5ea215ea8b8f0ac9864fe0f37bbd"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\DeviceSelector.cs": {
+    "mtime": 1778513019.6026,
+    "ast_hash": "821f0bd6b1d548dc43843866d11fa4c1",
+    "semantic_hash": "821f0bd6b1d548dc43843866d11fa4c1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\FirewallCommand.cs": {
+    "mtime": 1778513019.603598,
+    "ast_hash": "92fd68a0886c3be3e7985acd303eae67",
+    "semantic_hash": "92fd68a0886c3be3e7985acd303eae67"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\ForgetCommand.cs": {
+    "mtime": 1778513019.603598,
+    "ast_hash": "cace434d38c3ffc2c0c81e907e17ec0d",
+    "semantic_hash": "cace434d38c3ffc2c0c81e907e17ec0d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\HelpCommand.cs": {
+    "mtime": 1778513019.6045978,
+    "ast_hash": "852be2b874026a2f938fe197bd976989",
+    "semantic_hash": "852be2b874026a2f938fe197bd976989"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\InjectCommand.cs": {
+    "mtime": 1778513019.6045978,
+    "ast_hash": "17a55f27f5969bbf3894893dd18a1237",
+    "semantic_hash": "17a55f27f5969bbf3894893dd18a1237"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\LoadCommand.cs": {
+    "mtime": 1778513019.6045978,
+    "ast_hash": "a2511953986deef0a96f96058efd4a51",
+    "semantic_hash": "a2511953986deef0a96f96058efd4a51"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\LsCommand.cs": {
+    "mtime": 1778513019.605597,
+    "ast_hash": "bc648a96901a752e378c804d54684b37",
+    "semantic_hash": "bc648a96901a752e378c804d54684b37"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\MoveCommand.cs": {
+    "mtime": 1778513019.605597,
+    "ast_hash": "7c66191b060e01adc2f021cdaae24151",
+    "semantic_hash": "7c66191b060e01adc2f021cdaae24151"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\NewGameCommand.cs": {
+    "mtime": 1778513019.605597,
+    "ast_hash": "fc0a12dabe15e901ae470f1b15eecf47",
+    "semantic_hash": "fc0a12dabe15e901ae470f1b15eecf47"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\SaveCommand.cs": {
+    "mtime": 1778513019.6065974,
+    "ast_hash": "a4d69be4d2a26e602b5e409afbdb3823",
+    "semantic_hash": "a4d69be4d2a26e602b5e409afbdb3823"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\SavesCommand.cs": {
+    "mtime": 1778513019.6065974,
+    "ast_hash": "e780e06f4ac75f8647e4fe80183251bf",
+    "semantic_hash": "e780e06f4ac75f8647e4fe80183251bf"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\ScanCommand.cs": {
+    "mtime": 1778513019.6065974,
+    "ast_hash": "999af22eeae80ab52e3855c2a77bd7ce",
+    "semantic_hash": "999af22eeae80ab52e3855c2a77bd7ce"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\Services\\Commands\\ShowCommand.cs": {
+    "mtime": 1778513019.6075983,
+    "ast_hash": "a2f96183c1b204a6a203f99135dbc09f",
+    "semantic_hash": "a2f96183c1b204a6a203f99135dbc09f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\UI\\ContractController.cs": {
+    "mtime": 1778514629.9730718,
+    "ast_hash": "4d654a3a613a8c1ac5d479839265cb7e",
+    "semantic_hash": "4d654a3a613a8c1ac5d479839265cb7e"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\UI\\HUDController.cs": {
+    "mtime": 1778514567.7693436,
+    "ast_hash": "af4a79bab3055c733acd87e06f108b4b",
+    "semantic_hash": "af4a79bab3055c733acd87e06f108b4b"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\UI\\StoreController.cs": {
+    "mtime": 1778514638.445253,
+    "ast_hash": "a463c13dbd947e62321ceef2f657500a",
+    "semantic_hash": "a463c13dbd947e62321ceef2f657500a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\UI\\TerminalController.cs": {
+    "mtime": 1778514611.9903688,
+    "ast_hash": "ce097ce143a6f6235b87ef125fc65447",
+    "semantic_hash": "ce097ce143a6f6235b87ef125fc65447"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Scripts\\UI\\TerminalOutputView.cs": {
+    "mtime": 1778514560.8575578,
+    "ast_hash": "eb9890d62d8516cef4e3737eba5c3683",
+    "semantic_hash": "eb9890d62d8516cef4e3737eba5c3683"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\CommandHistoryTests.cs": {
+    "mtime": 1778513019.6254199,
+    "ast_hash": "4950960efad06bba0f263f14cad924e4",
+    "semantic_hash": "4950960efad06bba0f263f14cad924e4"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\CommandLatencyServiceTests.cs": {
+    "mtime": 1778513019.6254199,
+    "ast_hash": "b9b2b1cded057528958c309c5ed28674",
+    "semantic_hash": "b9b2b1cded057528958c309c5ed28674"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\CommandParserTests.cs": {
+    "mtime": 1778513019.6264198,
+    "ast_hash": "3b4437e32a0cda0266f93733ef8181f3",
+    "semantic_hash": "3b4437e32a0cda0266f93733ef8181f3"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\CommandParserVerbsTests.cs": {
+    "mtime": 1778513019.6264198,
+    "ast_hash": "28edf76b3e0e87abdfa737f3c2385581",
+    "semantic_hash": "28edf76b3e0e87abdfa737f3c2385581"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\ConfirmationServiceTests.cs": {
+    "mtime": 1778513019.6274202,
+    "ast_hash": "4b162cfb6baaa40cb53948f24e04956e",
+    "semantic_hash": "4b162cfb6baaa40cb53948f24e04956e"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\ContractServiceTests.cs": {
+    "mtime": 1778513019.6274202,
+    "ast_hash": "9b05891bd1ef98993bc6bc1649248388",
+    "semantic_hash": "9b05891bd1ef98993bc6bc1649248388"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\CopyCommandTests.cs": {
+    "mtime": 1778515015.1151426,
+    "ast_hash": "e24d9d43fb50664b2af9d02df9dbd23a",
+    "semantic_hash": "e24d9d43fb50664b2af9d02df9dbd23a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\CrackCommandTests.cs": {
+    "mtime": 1778515015.1196575,
+    "ast_hash": "2acbf7d8d5d5a155ee7a53dff797afe2",
+    "semantic_hash": "2acbf7d8d5d5a155ee7a53dff797afe2"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\DelsaveCommandTests.cs": {
+    "mtime": 1778513019.6288793,
+    "ast_hash": "0257af2e776ca6a8d12cdd39843b9271",
+    "semantic_hash": "0257af2e776ca6a8d12cdd39843b9271"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\DeviceSelectorTests.cs": {
+    "mtime": 1778515015.12716,
+    "ast_hash": "b4e12e3f140afe815f33a07598d476b5",
+    "semantic_hash": "b4e12e3f140afe815f33a07598d476b5"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\FirewallCommandTests.cs": {
+    "mtime": 1778515015.1321707,
+    "ast_hash": "2d60b9e9f4a9286554ee586e951f69ae",
+    "semantic_hash": "2d60b9e9f4a9286554ee586e951f69ae"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\ForgetCommandTests.cs": {
+    "mtime": 1778513019.6300054,
+    "ast_hash": "ad5f45cc4b1f8599e7672a9aa7b4bf3d",
+    "semantic_hash": "ad5f45cc4b1f8599e7672a9aa7b4bf3d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\IncomeServiceTests.cs": {
+    "mtime": 1778515015.1392283,
+    "ast_hash": "40c8938e069c6b34683a4dc21e36a4dc",
+    "semantic_hash": "40c8938e069c6b34683a4dc21e36a4dc"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\InjectCommandTests.cs": {
+    "mtime": 1778513019.6320038,
+    "ast_hash": "729289f0bfa4601063d0292c402fef96",
+    "semantic_hash": "729289f0bfa4601063d0292c402fef96"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\LoadCommandTests.cs": {
+    "mtime": 1778513019.6320038,
+    "ast_hash": "ec413ed525bb8071528472528d56bc0a",
+    "semantic_hash": "ec413ed525bb8071528472528d56bc0a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\LocationServiceTests.cs": {
+    "mtime": 1778515015.1487403,
+    "ast_hash": "6651fde78f9c98728ddeb14bd8ebf8f8",
+    "semantic_hash": "6651fde78f9c98728ddeb14bd8ebf8f8"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\LsCommandTests.cs": {
+    "mtime": 1778515015.15374,
+    "ast_hash": "86386ebf8a7924f791039775d3fb42f1",
+    "semantic_hash": "86386ebf8a7924f791039775d3fb42f1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\MoveCommandTests.cs": {
+    "mtime": 1778515015.158252,
+    "ast_hash": "d608e4f86893890f3a311d8d8aeb59fd",
+    "semantic_hash": "d608e4f86893890f3a311d8d8aeb59fd"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\NewGameCommandTests.cs": {
+    "mtime": 1778513019.633962,
+    "ast_hash": "3baf999f448564c649c6be49ff98b851",
+    "semantic_hash": "3baf999f448564c649c6be49ff98b851"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\OfflineIncomeCalculatorTests.cs": {
+    "mtime": 1778513019.633962,
+    "ast_hash": "f4f61603f0dc455ee303d486d7ce7ccf",
+    "semantic_hash": "f4f61603f0dc455ee303d486d7ce7ccf"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\SaveCommandTests.cs": {
+    "mtime": 1778513019.6349618,
+    "ast_hash": "a6dee1dc26b734ba2c3561322b585903",
+    "semantic_hash": "a6dee1dc26b734ba2c3561322b585903"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\SavesCommandTests.cs": {
+    "mtime": 1778513019.6349618,
+    "ast_hash": "8e6350c2b605175eff03a90eb3091612",
+    "semantic_hash": "8e6350c2b605175eff03a90eb3091612"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\SaveSystemTests.cs": {
+    "mtime": 1778513019.6349618,
+    "ast_hash": "b0ceabcb0c6cd8dacc8b26f047e42c96",
+    "semantic_hash": "b0ceabcb0c6cd8dacc8b26f047e42c96"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\ScanCommandTests.cs": {
+    "mtime": 1778515015.1743283,
+    "ast_hash": "bb0f06490a7f1b381a2d77b57bd212c0",
+    "semantic_hash": "bb0f06490a7f1b381a2d77b57bd212c0"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\ShowCommandTests.cs": {
+    "mtime": 1778513019.6359615,
+    "ast_hash": "1ab0b69d11e8a8c0ff3e4617427ee32f",
+    "semantic_hash": "1ab0b69d11e8a8c0ff3e4617427ee32f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\SlotSaveSystemTests.cs": {
+    "mtime": 1778515051.4373589,
+    "ast_hash": "9238da457be4164847562e18269aa85e",
+    "semantic_hash": "9238da457be4164847562e18269aa85e"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\StoreServiceTests.cs": {
+    "mtime": 1778513019.636992,
+    "ast_hash": "158cf534c9a8020aa49da95ad2a1feb3",
+    "semantic_hash": "158cf534c9a8020aa49da95ad2a1feb3"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\EditMode\\TerminalControllerTests.cs": {
+    "mtime": 1778514732.7339737,
+    "ast_hash": "325f8ca919a2df04d12e49a7783c828d",
+    "semantic_hash": "325f8ca919a2df04d12e49a7783c828d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\PlayMode\\CoreLoopIntegrationTests.cs": {
+    "mtime": 1778514757.982624,
+    "ast_hash": "7914f7e8e5c8b8f9b70cdd05f72e84aa",
+    "semantic_hash": "7914f7e8e5c8b8f9b70cdd05f72e84aa"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\PlayMode\\PerformanceTests.cs": {
+    "mtime": 1778514809.5157547,
+    "ast_hash": "8b0773dc984a57ce0ae0b35ea4add05f",
+    "semantic_hash": "8b0773dc984a57ce0ae0b35ea4add05f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\PlayMode\\StoreContractIntegrationTests.cs": {
+    "mtime": 1778514772.0895793,
+    "ast_hash": "53954648d4d9ae8d5fe62be358880287",
+    "semantic_hash": "53954648d4d9ae8d5fe62be358880287"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\Tests\\PlayMode\\TerminalUxIntegrationTests.cs": {
+    "mtime": 1778514789.1675475,
+    "ast_hash": "9b5db7cc3008164bc1e3e9d0f213db40",
+    "semantic_hash": "9b5db7cc3008164bc1e3e9d0f213db40"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Packages\\manifest.json": {
+    "mtime": 1778513019.6719134,
+    "ast_hash": "b0cc346f877d447a68ebb89ffb659c21",
+    "semantic_hash": "b0cc346f877d447a68ebb89ffb659c21"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Packages\\packages-lock.json": {
+    "mtime": 1778513019.6729133,
+    "ast_hash": "721a498f62ec360783d947e3d907a6c8",
+    "semantic_hash": "721a498f62ec360783d947e3d907a6c8"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\ProjectSettings\\SceneTemplateSettings.json": {
+    "mtime": 1778513019.676913,
+    "ast_hash": "3620a2b0a1c79cc4ae4b6b6ad599ff4d",
+    "semantic_hash": "3620a2b0a1c79cc4ae4b6b6ad599ff4d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\CLAUDE.md": {
+    "mtime": 1779638969.167006,
+    "ast_hash": "1f72337dfe0a98bfbb962ed260ca5e17",
+    "semantic_hash": "1f72337dfe0a98bfbb962ed260ca5e17"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\README.md": {
+    "mtime": 1778513019.6789124,
+    "ast_hash": "d28254fac5fd7d100783780bbe9300a8",
+    "semantic_hash": "d28254fac5fd7d100783780bbe9300a8"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\RecreateUI.md": {
+    "mtime": 1778514950.316198,
+    "ast_hash": "9e547cb75bab299ab8c395a5d2e39c30",
+    "semantic_hash": "9e547cb75bab299ab8c395a5d2e39c30"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\tasks.md": {
+    "mtime": 1778514410.463414,
+    "ast_hash": "e4754709abcafd14833be78e325495c9",
+    "semantic_hash": "e4754709abcafd14833be78e325495c9"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\CLAUDE.md": {
+    "mtime": 1779638969.1436212,
+    "ast_hash": "817fe671013b35ae0bc9301dfe449a87",
+    "semantic_hash": "817fe671013b35ae0bc9301dfe449a87"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\graphify\\SKILL.md": {
+    "mtime": 1779638969.1436212,
+    "ast_hash": "e065bdafac4ca689ffd4e353ffd71160",
+    "semantic_hash": "e065bdafac4ca689ffd4e353ffd71160"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-analyze\\SKILL.md": {
+    "mtime": 1778513019.5475552,
+    "ast_hash": "8419a48591c98ba2912c3ce4b680dc07",
+    "semantic_hash": "8419a48591c98ba2912c3ce4b680dc07"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-checklist\\SKILL.md": {
+    "mtime": 1778513019.5485554,
+    "ast_hash": "f62458611e2f390200694ed5042cd214",
+    "semantic_hash": "f62458611e2f390200694ed5042cd214"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-clarify\\SKILL.md": {
+    "mtime": 1778513019.5485554,
+    "ast_hash": "b3dfcedc7b4c99d503805391ead1a5c1",
+    "semantic_hash": "b3dfcedc7b4c99d503805391ead1a5c1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-constitution\\SKILL.md": {
+    "mtime": 1778513019.5485554,
+    "ast_hash": "f0aaf67a32dd68ae781dc486c84c714a",
+    "semantic_hash": "f0aaf67a32dd68ae781dc486c84c714a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-git-commit\\SKILL.md": {
+    "mtime": 1778513019.549555,
+    "ast_hash": "f8e41738698603bc912a3aacfa0a1960",
+    "semantic_hash": "f8e41738698603bc912a3aacfa0a1960"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-git-feature\\SKILL.md": {
+    "mtime": 1778513019.549555,
+    "ast_hash": "7b6588ed5d88b925c6a2956935f88a71",
+    "semantic_hash": "7b6588ed5d88b925c6a2956935f88a71"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-git-initialize\\SKILL.md": {
+    "mtime": 1778513019.550555,
+    "ast_hash": "c1fbb5d4e82fa7e5c7966a00e94ef2e1",
+    "semantic_hash": "c1fbb5d4e82fa7e5c7966a00e94ef2e1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-git-remote\\SKILL.md": {
+    "mtime": 1778513019.550555,
+    "ast_hash": "9705c3462c2338a7b7853f7574c6ccbd",
+    "semantic_hash": "9705c3462c2338a7b7853f7574c6ccbd"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-git-validate\\SKILL.md": {
+    "mtime": 1778513019.550555,
+    "ast_hash": "e3fb18f895d5cc20da04f8cf13639572",
+    "semantic_hash": "e3fb18f895d5cc20da04f8cf13639572"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-implement\\SKILL.md": {
+    "mtime": 1778513019.5515552,
+    "ast_hash": "cf9e0d18c7a98b967e9920e9d1bbc96a",
+    "semantic_hash": "cf9e0d18c7a98b967e9920e9d1bbc96a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-plan\\SKILL.md": {
+    "mtime": 1778513019.5515552,
+    "ast_hash": "6ca63ad73225d72002e18fa3ef015689",
+    "semantic_hash": "6ca63ad73225d72002e18fa3ef015689"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-specify\\SKILL.md": {
+    "mtime": 1778513019.5525546,
+    "ast_hash": "5f7873478e1f7204d7f4fb41eff3c147",
+    "semantic_hash": "5f7873478e1f7204d7f4fb41eff3c147"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-tasks\\SKILL.md": {
+    "mtime": 1778513019.5525546,
+    "ast_hash": "2f333e39a602e096241cb47f577bee43",
+    "semantic_hash": "2f333e39a602e096241cb47f577bee43"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.claude\\skills\\speckit-taskstoissues\\SKILL.md": {
+    "mtime": 1778513019.5525546,
+    "ast_hash": "13789df4d59f643aa2b6e04152643994",
+    "semantic_hash": "13789df4d59f643aa2b6e04152643994"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions.yml": {
+    "mtime": 1778513019.555555,
+    "ast_hash": "00732a6a8ce6db2e25fcb80eeb01214d",
+    "semantic_hash": "00732a6a8ce6db2e25fcb80eeb01214d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\config-template.yml": {
+    "mtime": 1778513019.5575552,
+    "ast_hash": "5e75a948773bf61a0cae4b8b754d4b74",
+    "semantic_hash": "5e75a948773bf61a0cae4b8b754d4b74"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\extension.yml": {
+    "mtime": 1778513019.558555,
+    "ast_hash": "0d81f3bde7ea407f2df90ce5682dee26",
+    "semantic_hash": "0d81f3bde7ea407f2df90ce5682dee26"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\git-config.yml": {
+    "mtime": 1778513019.558555,
+    "ast_hash": "2c529867791323177c06ec60cde3a8f5",
+    "semantic_hash": "2c529867791323177c06ec60cde3a8f5"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\README.md": {
+    "mtime": 1778513019.5565555,
+    "ast_hash": "eed45b5180d18f00413d182a44305c49",
+    "semantic_hash": "eed45b5180d18f00413d182a44305c49"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\commands\\speckit.git.commit.md": {
+    "mtime": 1778513019.5565555,
+    "ast_hash": "d4e764faf7d76c7a4b671431a71a9792",
+    "semantic_hash": "d4e764faf7d76c7a4b671431a71a9792"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\commands\\speckit.git.feature.md": {
+    "mtime": 1778513019.5565555,
+    "ast_hash": "75a19c9c4c7716dff4ab59a6aad3f92f",
+    "semantic_hash": "75a19c9c4c7716dff4ab59a6aad3f92f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\commands\\speckit.git.initialize.md": {
+    "mtime": 1778513019.5575552,
+    "ast_hash": "67993c0633a13536982a700e5fc7f43b",
+    "semantic_hash": "67993c0633a13536982a700e5fc7f43b"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\commands\\speckit.git.remote.md": {
+    "mtime": 1778513019.5575552,
+    "ast_hash": "9fddd41588f63a311434e31f12d00053",
+    "semantic_hash": "9fddd41588f63a311434e31f12d00053"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\extensions\\git\\commands\\speckit.git.validate.md": {
+    "mtime": 1778513019.5575552,
+    "ast_hash": "4ed5432ca17a8633ad99c241bef07fbc",
+    "semantic_hash": "4ed5432ca17a8633ad99c241bef07fbc"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\memory\\constitution.md": {
+    "mtime": 1778514849.3750002,
+    "ast_hash": "e5f8fd1a6af8d9a44642978dd3585e69",
+    "semantic_hash": "e5f8fd1a6af8d9a44642978dd3585e69"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\templates\\agent-file-template.md": {
+    "mtime": 1778513019.565335,
+    "ast_hash": "287b949aba1e2ae3a27ea2445a938fff",
+    "semantic_hash": "287b949aba1e2ae3a27ea2445a938fff"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\templates\\checklist-template.md": {
+    "mtime": 1778513019.565335,
+    "ast_hash": "517d9d536c1a96322637cb0082cfc18b",
+    "semantic_hash": "517d9d536c1a96322637cb0082cfc18b"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\templates\\constitution-template.md": {
+    "mtime": 1778513019.565335,
+    "ast_hash": "8667511ac346dad1c731438a3081aaa1",
+    "semantic_hash": "8667511ac346dad1c731438a3081aaa1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\templates\\plan-template.md": {
+    "mtime": 1778513019.565335,
+    "ast_hash": "2c7c5e9830ceee9bdb342d5fb3d6cbaa",
+    "semantic_hash": "2c7c5e9830ceee9bdb342d5fb3d6cbaa"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\templates\\spec-template.md": {
+    "mtime": 1778513019.5663345,
+    "ast_hash": "7d91a132bedf882d717b13aca0b909d8",
+    "semantic_hash": "7d91a132bedf882d717b13aca0b909d8"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\.specify\\templates\\tasks-template.md": {
+    "mtime": 1778513019.5663345,
+    "ast_hash": "6cf82db9787092a7225b44ec0aecc773",
+    "semantic_hash": "6cf82db9787092a7225b44ec0aecc773"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\TextMesh Pro\\Fonts\\LiberationSans - OFL.txt": {
+    "mtime": 1778513019.6409943,
+    "ast_hash": "a0631122fee5a71a264609ff53bf5a23",
+    "semantic_hash": "a0631122fee5a71a264609ff53bf5a23"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\TextMesh Pro\\Resources\\LineBreaking Following Characters.txt": {
+    "mtime": 1778513019.6546361,
+    "ast_hash": "345c77ed32179f5f982dcf8e2b1d92af",
+    "semantic_hash": "345c77ed32179f5f982dcf8e2b1d92af"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\Assets\\TextMesh Pro\\Resources\\LineBreaking Leading Characters.txt": {
+    "mtime": 1778513019.6546361,
+    "ast_hash": "d52dd40acd32a62df3bc764b1e783ddf",
+    "semantic_hash": "d52dd40acd32a62df3bc764b1e783ddf"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\ProjectSettings\\ProjectVersion.txt": {
+    "mtime": 1778513019.676913,
+    "ast_hash": "fbe2145da0e36646ab3e9eec46cc97fb",
+    "semantic_hash": "fbe2145da0e36646ab3e9eec46cc97fb"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\data-model.md": {
+    "mtime": 1778513019.6800227,
+    "ast_hash": "9c656ab3d4c97eba1e527e5b9fba15d9",
+    "semantic_hash": "9c656ab3d4c97eba1e527e5b9fba15d9"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\plan.md": {
+    "mtime": 1778513019.6800227,
+    "ast_hash": "50e2b3137a5c07d3c06a5ee059945440",
+    "semantic_hash": "50e2b3137a5c07d3c06a5ee059945440"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\quickstart.md": {
+    "mtime": 1778513019.6810226,
+    "ast_hash": "e248f99853dc0d55069fe1ca8556e0fa",
+    "semantic_hash": "e248f99853dc0d55069fe1ca8556e0fa"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\research.md": {
+    "mtime": 1778513019.6810226,
+    "ast_hash": "80aed046f0302a00a7f49a025c917e2a",
+    "semantic_hash": "80aed046f0302a00a7f49a025c917e2a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\spec.md": {
+    "mtime": 1778513019.6818733,
+    "ast_hash": "563f3bdd8cf774dbde03c95043f073a8",
+    "semantic_hash": "563f3bdd8cf774dbde03c95043f073a8"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\tasks.md": {
+    "mtime": 1778513019.6818733,
+    "ast_hash": "d6cfb900972ccba0c7f6c76f005a8f79",
+    "semantic_hash": "d6cfb900972ccba0c7f6c76f005a8f79"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\checklists\\requirements.md": {
+    "mtime": 1778513019.6800227,
+    "ast_hash": "6821ea5aeccf84ba507e9307a48573a7",
+    "semantic_hash": "6821ea5aeccf84ba507e9307a48573a7"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\001-hacking-idle-core\\contracts\\command-schema.md": {
+    "mtime": 1778513019.6800227,
+    "ast_hash": "ad6f4a7aac79590b350c9c982803b7bc",
+    "semantic_hash": "ad6f4a7aac79590b350c9c982803b7bc"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\002-network-discovery-income\\plan.md": {
+    "mtime": 1778513019.6828785,
+    "ast_hash": "b1ea52c1fc0b9a6fd3d1bd71d161968d",
+    "semantic_hash": "b1ea52c1fc0b9a6fd3d1bd71d161968d"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\002-network-discovery-income\\spec.md": {
+    "mtime": 1778513019.6828785,
+    "ast_hash": "2bcd0c29168402c6e1bd176797f47403",
+    "semantic_hash": "2bcd0c29168402c6e1bd176797f47403"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\002-network-discovery-income\\specify-prompts.md": {
+    "mtime": 1778513019.6828785,
+    "ast_hash": "9cfc9015387798afcad0c9c042525114",
+    "semantic_hash": "9cfc9015387798afcad0c9c042525114"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\002-network-discovery-income\\tasks.md": {
+    "mtime": 1778513019.6838784,
+    "ast_hash": "37c94230ec949847235c0296aa06e739",
+    "semantic_hash": "37c94230ec949847235c0296aa06e739"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\002-network-discovery-income\\contracts\\command-schema.md": {
+    "mtime": 1778513019.6818733,
+    "ast_hash": "d457f0f89bce794f98b4a8d551a3ece4",
+    "semantic_hash": "d457f0f89bce794f98b4a8d551a3ece4"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\data-model.md": {
+    "mtime": 1778513019.6848783,
+    "ast_hash": "29aae261716e14211a0030e48b8b0746",
+    "semantic_hash": "29aae261716e14211a0030e48b8b0746"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\plan.md": {
+    "mtime": 1778513019.6848783,
+    "ast_hash": "e5ca6143230761d4c550d9f1f870723f",
+    "semantic_hash": "e5ca6143230761d4c550d9f1f870723f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\prefab-layout.md": {
+    "mtime": 1778513019.6848783,
+    "ast_hash": "a86e63f25c8756672121112add1d5850",
+    "semantic_hash": "a86e63f25c8756672121112add1d5850"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\quickstart.md": {
+    "mtime": 1778513019.6848783,
+    "ast_hash": "673aa45de6e5a9c1ad26afc783fe57a7",
+    "semantic_hash": "673aa45de6e5a9c1ad26afc783fe57a7"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\research.md": {
+    "mtime": 1778513019.6858804,
+    "ast_hash": "a082b537059c825777ec3896507fdbbf",
+    "semantic_hash": "a082b537059c825777ec3896507fdbbf"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\spec.md": {
+    "mtime": 1778513019.6858804,
+    "ast_hash": "f03b73be58e63f00ad8da2e566c7d1b7",
+    "semantic_hash": "f03b73be58e63f00ad8da2e566c7d1b7"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\tasks.md": {
+    "mtime": 1778513019.6858804,
+    "ast_hash": "3e8ac6b3636c3c7e6662420dfa508deb",
+    "semantic_hash": "3e8ac6b3636c3c7e6662420dfa508deb"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\checklists\\requirements.md": {
+    "mtime": 1778513019.6838784,
+    "ast_hash": "e7d494ffc9fa8b9865c6243c16fdfb81",
+    "semantic_hash": "e7d494ffc9fa8b9865c6243c16fdfb81"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\003-terminal-ux\\contracts\\terminal-ux-contracts.md": {
+    "mtime": 1778513019.6838784,
+    "ast_hash": "032e7397c28f808dac0038cb25246985",
+    "semantic_hash": "032e7397c28f808dac0038cb25246985"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\004-location-network-persistence\\data-model.md": {
+    "mtime": 1778513019.6868787,
+    "ast_hash": "a9f3c5fa94a08cee6d8ac150ed03fb37",
+    "semantic_hash": "a9f3c5fa94a08cee6d8ac150ed03fb37"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\004-location-network-persistence\\plan.md": {
+    "mtime": 1778513019.6878786,
+    "ast_hash": "db0fd7f8a03c48dafbc77276c70cdaec",
+    "semantic_hash": "db0fd7f8a03c48dafbc77276c70cdaec"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\004-location-network-persistence\\research.md": {
+    "mtime": 1778513019.6878786,
+    "ast_hash": "27699c8f4de033d0277ae5d0377b55e4",
+    "semantic_hash": "27699c8f4de033d0277ae5d0377b55e4"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\004-location-network-persistence\\spec.md": {
+    "mtime": 1778513019.6878786,
+    "ast_hash": "2599376a54175d5262f14136f9c9f96c",
+    "semantic_hash": "2599376a54175d5262f14136f9c9f96c"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\004-location-network-persistence\\tasks.md": {
+    "mtime": 1778513019.6888788,
+    "ast_hash": "8683a0a61f4f3db7465a38d4447b1ce1",
+    "semantic_hash": "8683a0a61f4f3db7465a38d4447b1ce1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\004-location-network-persistence\\checklists\\requirements.md": {
+    "mtime": 1778513019.6868787,
+    "ast_hash": "23884e82c97c79740a19b61749c9ab05",
+    "semantic_hash": "23884e82c97c79740a19b61749c9ab05"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\004-location-network-persistence\\contracts\\command-schema.md": {
+    "mtime": 1778513019.6868787,
+    "ast_hash": "80ec59bfaab2e4bfe95b042e25f4b550",
+    "semantic_hash": "80ec59bfaab2e4bfe95b042e25f4b550"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\data-model.md": {
+    "mtime": 1778513019.689909,
+    "ast_hash": "35dba7d7bac9fd17acd856ebd419a827",
+    "semantic_hash": "35dba7d7bac9fd17acd856ebd419a827"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\plan.md": {
+    "mtime": 1778513019.689909,
+    "ast_hash": "e93d4589b4e1e8d93ed4ad57c3a24eb9",
+    "semantic_hash": "e93d4589b4e1e8d93ed4ad57c3a24eb9"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\quickstart.md": {
+    "mtime": 1778513019.689909,
+    "ast_hash": "38245c453988f6a00fab7140475a0aa2",
+    "semantic_hash": "38245c453988f6a00fab7140475a0aa2"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\research.md": {
+    "mtime": 1778513019.6909094,
+    "ast_hash": "99f70853fa088c1a16597a198a489c57",
+    "semantic_hash": "99f70853fa088c1a16597a198a489c57"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\spec.md": {
+    "mtime": 1778513019.6909094,
+    "ast_hash": "06ac5eae2ee3c6c20ee8348dc74eb09a",
+    "semantic_hash": "06ac5eae2ee3c6c20ee8348dc74eb09a"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\tasks.md": {
+    "mtime": 1778513019.6919098,
+    "ast_hash": "e757e2f301b2537b8c407ea241c8edae",
+    "semantic_hash": "e757e2f301b2537b8c407ea241c8edae"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\checklists\\requirements.md": {
+    "mtime": 1778513019.6888788,
+    "ast_hash": "7501d075bef14f248e5800f9fbf5fc0f",
+    "semantic_hash": "7501d075bef14f248e5800f9fbf5fc0f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\006-command-hardware-latency\\contracts\\command-schema.md": {
+    "mtime": 1778513019.689909,
+    "ast_hash": "1e20d27dc0ce5faaeeb52b25bbe94d33",
+    "semantic_hash": "1e20d27dc0ce5faaeeb52b25bbe94d33"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\data-model.md": {
+    "mtime": 1778513019.6929111,
+    "ast_hash": "ae6fee0fd6822e9801e5121028d4c2a6",
+    "semantic_hash": "ae6fee0fd6822e9801e5121028d4c2a6"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\plan.md": {
+    "mtime": 1778513019.6929111,
+    "ast_hash": "93883c07b6169e9ffc105e37f8c93fb1",
+    "semantic_hash": "93883c07b6169e9ffc105e37f8c93fb1"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\quickstart.md": {
+    "mtime": 1778513019.6929111,
+    "ast_hash": "4bfc28c30d647c79591a932f6b7e9b52",
+    "semantic_hash": "4bfc28c30d647c79591a932f6b7e9b52"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\research.md": {
+    "mtime": 1778513019.6939106,
+    "ast_hash": "1ddb9a6dfe87ee77cd8351d9cfd30a41",
+    "semantic_hash": "1ddb9a6dfe87ee77cd8351d9cfd30a41"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\spec.md": {
+    "mtime": 1778513019.6939106,
+    "ast_hash": "90f64fe59c1f5c3d45c4ec63140f1c33",
+    "semantic_hash": "90f64fe59c1f5c3d45c4ec63140f1c33"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\tasks.md": {
+    "mtime": 1778513019.6939106,
+    "ast_hash": "b5424fab11ed0d5ab0a404b57f919aa3",
+    "semantic_hash": "b5424fab11ed0d5ab0a404b57f919aa3"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\checklists\\requirements.md": {
+    "mtime": 1778513019.6919098,
+    "ast_hash": "afa98601b6caf72a25f1e32d49bb518f",
+    "semantic_hash": "afa98601b6caf72a25f1e32d49bb518f"
+  },
+  "D:\\Programming\\GodotGames\\HackYourWay\\specs\\007-game-save-management\\contracts\\command-schema.md": {
+    "mtime": 1778513019.6929111,
+    "ast_hash": "43eaa2b20b2ef26535c1a15cafad5ab7",
+    "semantic_hash": "43eaa2b20b2ef26535c1a15cafad5ab7"
+  }
+}

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ContractSO" format=3 uid="uid://ccp4r1hte3xpg"]
+
+[ext_resource type="Script" uid="uid://b03tvybuj3p7g" path="res://Assets/Scripts/Data/ContractSO.cs" id="1_tkloh"]
+
+[resource]
+script = ExtResource("1_tkloh")
+Id = "file_retrieval_01"
+Type = 1
+Description = "Retrieve a password file"
+Reward = 0.2
+metadata/_custom_type_script = "uid://b03tvybuj3p7g"

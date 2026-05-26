@@ -1,6 +1,4 @@
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+using Godot;
 using HackYourWay.Core;
 using HackYourWay.Data;
 using HackYourWay.Services;
@@ -9,19 +7,24 @@ namespace HackYourWay.UI
 {
     /// <summary>
     /// Renders the store catalog and handles purchase button events.
-    /// Loads <see cref="StoreItemSO"/> assets from <c>Assets/Resources/StoreItems/</c>.
+    /// Loads <see cref="StoreItemSO"/> resources from <c>res://resources/store_items/</c>.
     /// Delegates purchases to <see cref="StoreService"/>.
-    /// Feedback messages are sent to the <see cref="TerminalOutputView"/>.
+    ///
+    /// Expected row scene node layout:
+    ///   StoreItemRow.tscn
+    ///   ├── NameLabel  (Label)
+    ///   ├── PriceLabel (Label)
+    ///   └── BuyButton  (Button)
     /// </summary>
-    public class StoreController : MonoBehaviour
+    public partial class StoreController : Control
     {
-        [SerializeField] private Transform          _itemListParent;
-        [SerializeField] private GameObject         _itemRowPrefab;
-        [SerializeField] private TerminalOutputView _terminalOutput;
+        [Export] private Node               _itemListParent;
+        [Export] private PackedScene        _itemRowPrefab;
+        [Export] private TerminalOutputView _terminalOutput;
 
         private StoreService _storeService;
 
-        private void Start()
+        public override void _Ready()
         {
             if (GameManager.Instance != null)
                 _storeService = new StoreService(GameManager.Instance.Player);
@@ -35,31 +38,34 @@ namespace HackYourWay.UI
         {
             if (_itemListParent == null || _itemRowPrefab == null) return;
 
-            // Clear existing rows.
-            for (int i = _itemListParent.childCount - 1; i >= 0; i--)
-                Destroy(_itemListParent.GetChild(i).gameObject);
+            for (int i = _itemListParent.GetChildCount() - 1; i >= 0; i--)
+                _itemListParent.GetChild(i).QueueFree();
 
-            StoreItemSO[] items = Resources.LoadAll<StoreItemSO>("StoreItems");
+            const string path = "res://resources/store_items";
+            using var dir = DirAccess.Open(path);
+            if (dir == null) return;
 
-            for (int i = 0; i < items.Length; i++)
+            dir.ListDirBegin();
+            string name;
+            while ((name = dir.GetNext()) != string.Empty)
             {
-                StoreItemSO so  = items[i];
-                GameObject  row = Instantiate(_itemRowPrefab, _itemListParent);
+                if (!name.EndsWith(".tres", System.StringComparison.OrdinalIgnoreCase)) continue;
+                var so = GD.Load<StoreItemSO>($"{path}/{name}");
+                if (so == null) continue;
 
-                // Set display name and price via child TMP labels.
-                var labels = row.GetComponentsInChildren<TextMeshProUGUI>();
-                if (labels.Length >= 2)
-                {
-                    labels[0].text = so.DisplayName;
-                    labels[1].text = $"{so.Price:F4} {so.PriceCurrency}";
-                }
+                var row = _itemRowPrefab.Instantiate();
+                _itemListParent.AddChild(row);
 
-                // Wire purchase button.
-                var btn = row.GetComponentInChildren<Button>();
+                var nameLabel  = row.GetNodeOrNull<Label>("NameLabel");
+                var priceLabel = row.GetNodeOrNull<Label>("PriceLabel");
+                if (nameLabel  != null) nameLabel.Text  = so.DisplayName;
+                if (priceLabel != null) priceLabel.Text = $"{so.Price:F4} {so.PriceCurrency}";
+
+                var btn = row.GetNodeOrNull<Button>("BuyButton");
                 if (btn != null)
                 {
-                    StoreItemSO captured = so; // capture for closure
-                    btn.onClick.AddListener(() => OnPurchase(captured));
+                    StoreItemSO captured = so;
+                    btn.Pressed += () => OnPurchase(captured);
                 }
             }
         }
@@ -72,8 +78,6 @@ namespace HackYourWay.UI
 
             var result = _storeService.Purchase(so.ToModel());
             _terminalOutput?.AppendLine(result.Message);
-
-            // Rebuild catalog to refresh UI state (bought items can be greyed out in future).
             BuildCatalog();
         }
     }

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://bsblbfgjm2bbs"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_a2qev"]
+
+[resource]
+script = ExtResource("1_a2qev")
+Id = "hw_gpu_1"
+DisplayName = "Basic Gaming GPU"
+Description = "Speeds up crack only"
+Price = 0.1
+PriceCurrency = 1
+HasHardwareUpgrade = true
+HardwareStatAffected = 2
+HardwareTierGranted = 1
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

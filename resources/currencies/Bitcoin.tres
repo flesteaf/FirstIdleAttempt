@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CurrencyDefinitionSO" format=3 uid="uid://dtwv0yff0j6et"]
+
+[ext_resource type="Script" uid="uid://bq25pxcxkrwtj" path="res://Assets/Scripts/Data/CurrencyDefinitionSO.cs" id="1_6j188"]
+
+[resource]
+script = ExtResource("1_6j188")
+DisplayName = "Bitcoin"
+Symbol = "BTC"
+metadata/_custom_type_script = "uid://bq25pxcxkrwtj"

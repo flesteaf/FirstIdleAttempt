@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://bq0nx2wo7n0qw"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_4l58a"]
+
+[resource]
+script = ExtResource("1_4l58a")
+Id = "wpa_cracker"
+DisplayName = "WPA Cracker"
+Category = 1
+Price = 0.2
+HasToolUnlock = true
+UnlocksToolType = 1
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

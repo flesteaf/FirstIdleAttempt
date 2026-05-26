@@ -1,54 +1,54 @@
-using UnityEngine;
+using Godot;
 using HackYourWay.Models;
 
 namespace HackYourWay.Data
 {
     /// <summary>Designer-editable definition of a store item.</summary>
-    [CreateAssetMenu(fileName = "StoreItem", menuName = "HackYourWay/Store Item")]
-    public class StoreItemSO : ScriptableObject
+    [GlobalClass]
+    public partial class StoreItemSO : Resource
     {
-        public string Id;
-        public string DisplayName;
-        [TextArea] public string Description;
-        public StoreItemCategory Category;
-        public double Price;
-        public CurrencyType PriceCurrency = CurrencyType.Bitcoin;
+        [Export] public string Id { get; set; }
+        [Export] public string DisplayName { get; set; }
+        [Export(PropertyHint.MultilineText)] public string Description { get; set; }
+        [Export] public StoreItemCategory Category { get; set; }
+        [Export] public double Price { get; set; }
+        [Export] public CurrencyType PriceCurrency { get; set; } = CurrencyType.Bitcoin;
 
-        [Header("Software — Tool Unlock")]
-        public bool HasToolUnlock;
-        public ToolType UnlocksToolType;
+        [ExportGroup("Software — Tool Unlock")]
+        [Export] public bool HasToolUnlock { get; set; }
+        [Export] public ToolType UnlocksToolType { get; set; }
 
-        [Header("Milestone — Currency Unlock")]
-        public bool HasCurrencyUnlock;
-        public CurrencyType UnlocksCurrency;
+        [ExportGroup("Milestone — Currency Unlock")]
+        [Export] public bool HasCurrencyUnlock { get; set; }
+        [Export] public CurrencyType UnlocksCurrency { get; set; }
 
-        [Header("PC Component — Income Multiplier")]
-        [Min(1f)] public double IncomeMultiplier = 1.0;
+        [ExportGroup("PC Component — Income Multiplier")]
+        [Export] public double IncomeMultiplier { get; set; } = 1.0;
 
-        [Header("Hardware Upgrade")]
-        public bool         HasHardwareUpgrade;
-        public HardwareStat HardwareStatAffected;
-        public int          HardwareTierGranted;
+        [ExportGroup("Hardware Upgrade")]
+        [Export] public bool HasHardwareUpgrade { get; set; }
+        [Export] public HardwareStat HardwareStatAffected { get; set; }
+        [Export] public int HardwareTierGranted { get; set; }
 
-        /// <summary>Converts this SO into a runtime <see cref="StoreItem"/> model.</summary>
+        /// <summary>Converts this resource into a runtime <see cref="StoreItem"/> model.</summary>
         public StoreItem ToModel()
         {
             return new StoreItem
             {
-                Id                = Id,
-                DisplayName       = DisplayName,
-                Description       = Description,
-                Category          = Category,
-                Price             = Price,
-                PriceCurrency     = PriceCurrency,
-                HasToolUnlock     = HasToolUnlock,
-                UnlocksToolType   = UnlocksToolType,
+                Id                   = Id,
+                DisplayName          = DisplayName,
+                Description          = Description,
+                Category             = Category,
+                Price                = Price,
+                PriceCurrency        = PriceCurrency,
+                HasToolUnlock        = HasToolUnlock,
+                UnlocksToolType      = UnlocksToolType,
                 HasCurrencyUnlock    = HasCurrencyUnlock,
-                UnlocksCurrency     = UnlocksCurrency,
-                IncomeMultiplier    = IncomeMultiplier,
-                HasHardwareUpgrade  = HasHardwareUpgrade,
+                UnlocksCurrency      = UnlocksCurrency,
+                IncomeMultiplier     = IncomeMultiplier,
+                HasHardwareUpgrade   = HasHardwareUpgrade,
                 HardwareStatAffected = HardwareStatAffected,
-                HardwareTierGranted = HardwareTierGranted
+                HardwareTierGranted  = HardwareTierGranted
             };
         }
     }

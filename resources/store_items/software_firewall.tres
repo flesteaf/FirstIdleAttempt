@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://bieuirqxgdtx8"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_f4eg5"]
+
+[resource]
+script = ExtResource("1_f4eg5")
+Id = "firewall_disabler"
+DisplayName = "Firewall Disabler"
+Category = 1
+Price = 0.3
+HasToolUnlock = true
+UnlocksToolType = 3
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

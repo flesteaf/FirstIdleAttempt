@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://688v3v1di6vi"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_r5mqv"]
+
+[resource]
+script = ExtResource("1_r5mqv")
+Id = "monero_unlock"
+DisplayName = "Monero Minining"
+Category = 1
+Price = 5.0
+HasCurrencyUnlock = true
+UnlocksCurrency = 1
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

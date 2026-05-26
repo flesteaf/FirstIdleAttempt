@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ContractSO" format=3 uid="uid://d2klh72bgm8dy"]
+
+[ext_resource type="Script" uid="uid://b03tvybuj3p7g" path="res://Assets/Scripts/Data/ContractSO.cs" id="1_6dlg3"]
+
+[resource]
+script = ExtResource("1_6dlg3")
+Id = "facilitated_attack_01"
+Type = 2
+Description = "Facilitate an attack via bot network"
+HasMalwareRequirement = true
+RequiredMalware = 1
+Reward = 1.0
+RewardCurrency = 1
+metadata/_custom_type_script = "uid://b03tvybuj3p7g"

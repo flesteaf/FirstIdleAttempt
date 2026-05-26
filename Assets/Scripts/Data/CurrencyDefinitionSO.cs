@@ -1,18 +1,16 @@
-using UnityEngine;
+using Godot;
 using HackYourWay.Models;
 
 namespace HackYourWay.Data
 {
     /// <summary>Designer-editable definition of a virtual currency.</summary>
-    [CreateAssetMenu(fileName = "CurrencyDefinition", menuName = "HackYourWay/Currency Definition")]
-    public class CurrencyDefinitionSO : ScriptableObject
+    [GlobalClass]
+    public partial class CurrencyDefinitionSO : Resource
     {
-        public CurrencyType CurrencyType;
+        [Export] public CurrencyType CurrencyType { get; set; }
 
-        [Tooltip("Full name shown in UI, e.g. 'Bitcoin'")]
-        public string DisplayName;
+        [Export] public string DisplayName { get; set; }
 
-        [Tooltip("Short symbol shown next to amounts, e.g. 'BTC'")]
-        public string Symbol;
+        [Export] public string Symbol { get; set; }
     }
 }

@@ -1,11 +1,14 @@
 <!--
 SYNC IMPACT REPORT
-Version change: 1.0.1 → 1.0.2
+Version change: 1.0.2 → 2.0.0
 Modified principles:
-  - Dev Workflow — branch naming: HYW-{issue-number} prefix made optional; pattern simplified to feature/{short-description}
+  - I. Code Quality — removed MonoBehaviour references; updated to Godot Node terminology
+  - II. Testing Standards — Unity Test Framework replaced with GDUnit4 + NUnit
+  - IV. Performance — Unity Profiler replaced with Godot's built-in Profiler; Update() → _Process()
+  - Quality Gates 1, 2, 3 — engine-specific references updated
 Added sections: N/A
 Removed sections: N/A
-Templates requiring updates: N/A
+Templates requiring updates: plan-template.md (Technical Context language/version fields)
 Follow-up TODOs: None.
 -->
 
@@ -15,32 +18,35 @@ Follow-up TODOs: None.
 
 ### I. Code Quality
 
-All C# code MUST be clean, readable, and maintainable. Every MonoBehaviour and
-system component MUST have one clearly defined responsibility (Single Responsibility
-Principle). Magic numbers MUST be replaced with named constants or serialized
-inspector fields. Dead code MUST NOT be committed. All public APIs MUST have XML
-documentation comments. Deeply nested logic (>3 levels) MUST be extracted into
-named methods or helper classes.
+All C# code MUST be clean, readable, and maintainable. Every Node and
+plain C# system class MUST have one clearly defined responsibility (Single
+Responsibility Principle). Magic numbers MUST be replaced with named constants
+or exported fields. Dead code MUST NOT be committed. All public APIs MUST have
+XML documentation comments. Deeply nested logic (>3 levels) MUST be extracted
+into named methods or helper classes. All Godot Node subclasses MUST be declared
+`partial` to support the source generator.
 
-**Rationale**: Unity projects accumulate technical debt rapidly when code quality
-is not enforced early. Clear ownership and purpose prevent spaghetti MonoBehaviour
-hierarchies that become untestable and impossible to extend as the game grows.
+**Rationale**: Game projects accumulate technical debt rapidly when code quality
+is not enforced early. Clear ownership and purpose prevent tangled Node hierarchies
+that become untestable and impossible to extend as the game grows.
 
 ### II. Testing Standards
 
-All game logic MUST be testable in isolation via the Unity Test Framework (NUnit,
-edit-mode and play-mode). New features MUST be accompanied by unit tests before
-the PR is merged. Tests MUST be written and confirmed failing before implementation
-begins (Red-Green-Refactor). Integration tests MUST cover all cross-system
-interactions (e.g., command parsing → inventory state → UI feedback). Test
-coverage MUST NOT regress; any PR that reduces coverage requires explicit written
-justification and reviewer sign-off.
+All game logic MUST be testable in isolation. Unit tests run without the Godot
+runtime MUST use NUnit via `dotnet test` from a standalone test project. Tests
+that require Node instantiation or scene context MUST use GDUnit4 running inside
+the Godot editor. New features MUST be accompanied by tests before the PR is
+merged. Tests MUST be written and confirmed failing before implementation begins
+(Red-Green-Refactor). Integration tests MUST cover all cross-system interactions
+(e.g., command parsing → inventory state → UI feedback). Test coverage MUST NOT
+regress; any PR that reduces coverage requires explicit written justification and
+reviewer sign-off.
 
 **Rationale**: A test-first discipline was established in HYW-12 and MUST be
 maintained. Untested hacking mechanics and progression logic lead to balance and
-state-management bugs that are expensive to diagnose in later milestones. Unity 6
-(6000.4.2f1) supports the Test Runner with edit-mode and play-mode tests, making
-enforcement low-friction.
+state-management bugs that are expensive to diagnose in later milestones. Godot
+4.6 with GDUnit4 supports both scene-level integration tests and headless unit
+tests, making enforcement low-friction.
 
 ### III. User Experience Consistency
 
@@ -61,11 +67,11 @@ item, or contract MUST feel native to the same game world.
 
 The game MUST maintain a stable 45 FPS on minimum target hardware (PC with
 integrated GPU, 4 GB RAM). No single frame MUST exceed 22.22 ms of CPU work
-during normal gameplay. Memory allocations in hot paths (Update loops, command
-processing, idle tick resolution) MUST be avoided; use object pooling and
-pre-allocated collections. The Unity Profiler MUST be run against any feature
-that introduces new Update() calls, coroutines, or runtime asset loading, and
-Profiler data MUST be attached to the PR before merge.
+during normal gameplay. Memory allocations in hot paths (`_Process` loops,
+command processing, idle tick resolution) MUST be avoided; use object pooling
+and pre-allocated collections. Godot's built-in Profiler MUST be run against any
+feature that introduces new `_Process()` calls, Timers, or runtime resource
+loading, and Profiler data MUST be attached to the PR before merge.
 
 **Rationale**: Idle games run continuously, often in the background. Performance
 regressions degrade experience silently and compound over long play sessions.
@@ -88,9 +94,9 @@ Early profiling prevents costly architecture rewrites in later milestones.
 
 All of the following gates MUST be green before any PR is merged:
 
-1. **Build Gate**: Project builds in Unity 6 (6000.4.2f1) without errors or warnings.
-2. **Test Gate**: All edit-mode and play-mode tests pass in the Unity Test Runner.
-3. **Performance Gate**: No new Update() hot paths are introduced without Profiler
+1. **Build Gate**: Project builds in Godot 4.6 without errors or warnings.
+2. **Test Gate**: All GDUnit4 tests (unit + integration) pass in the Godot editor test runner.
+3. **Performance Gate**: No new `_Process()` hot paths are introduced without Profiler
    data attached to the PR.
 4. **UX Gate**: Affected UI flows are reviewed against the established visual and
    command-output style.
@@ -116,4 +122,4 @@ Amendments require:
 All PRs and code reviews MUST verify compliance with this constitution. Added
 complexity MUST be justified; YAGNI principles apply throughout the project.
 
-**Version**: 1.0.2 | **Ratified**: 2026-04-13 | **Last Amended**: 2026-04-25
+**Version**: 2.0.0 | **Ratified**: 2026-04-13 | **Last Amended**: 2026-05-11

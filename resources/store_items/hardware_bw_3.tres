@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://c2u1ib7plpdga"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_pssph"]
+
+[resource]
+script = ExtResource("1_pssph")
+Id = "hw_bw_3"
+DisplayName = "Fibre Lite"
+Description = "Speeds up scan, inject, firewall, ls, copy"
+Price = 0.1
+HasHardwareUpgrade = true
+HardwareStatAffected = 1
+HardwareTierGranted = 3
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

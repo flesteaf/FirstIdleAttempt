@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://c3t2s4tl8q5kk"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_3yakc"]
+
+[resource]
+script = ExtResource("1_3yakc")
+Id = "hw_cpu_3"
+DisplayName = "Quad-Core CPU"
+Description = "Speeds up crack"
+Price = 0.015
+HasHardwareUpgrade = true
+HardwareTierGranted = 3
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

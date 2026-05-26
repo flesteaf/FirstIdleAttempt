@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://bn0bq1e1kpsj"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_au0k0"]
+
+[resource]
+script = ExtResource("1_au0k0")
+Id = "hw_cpu_5"
+DisplayName = "Server Rack"
+Description = "Speeds up crack"
+Price = 0.5
+HasHardwareUpgrade = true
+HardwareTierGranted = 5
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

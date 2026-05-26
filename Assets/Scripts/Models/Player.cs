@@ -7,7 +7,7 @@ namespace HackYourWay.Models
     public class Player
     {
         /// <summary>
-        /// Currency balances. Uses List instead of Dictionary for JsonUtility compatibility.
+        /// Currency balances stored as a List for JSON serialization compatibility.
         /// </summary>
         public List<CurrencyBalance> Balances = new List<CurrencyBalance>();
 
@@ -77,7 +77,7 @@ namespace HackYourWay.Models
 
     }
 
-    /// <summary>JsonUtility-compatible currency/amount pair (replaces Dictionary).</summary>
+    /// <summary>Currency/amount pair used in the balances list.</summary>
     [System.Serializable]
     public struct CurrencyBalance
     {

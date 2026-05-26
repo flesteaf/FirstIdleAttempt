@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using UnityEngine;
 using HackYourWay.Models;
 using HackYourWay.Services;
 using HackYourWay.Services.Commands;
@@ -16,7 +15,7 @@ namespace HackYourWay.Tests.EditMode
             bool scanned   = true,
             bool withFiles = false)
         {
-            var config = ScriptableObject.CreateInstance<LocationConfigSO>();
+            var config = new LocationConfigSO();
             config.MinNetworks          = 1;
             config.MaxNetworks          = 1;
             config.MinDevicesPerNetwork = 1;

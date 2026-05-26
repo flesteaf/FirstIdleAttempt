@@ -16,7 +16,7 @@ namespace HackYourWay.Models
 
     /// <summary>
     /// Root wrapper for all 7 slot metadata entries; serialised to
-    /// <c>Application.persistentDataPath/save_index.json</c> via <c>JsonUtility</c>.
+    /// <c>OS.GetUserDataDir()/save_index.json</c> via System.Text.Json.
     /// </summary>
     [System.Serializable]
     public class SaveSlotIndex

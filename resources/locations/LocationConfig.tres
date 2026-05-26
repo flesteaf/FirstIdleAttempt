@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="LocationConfigSO" format=3 uid="uid://bcr17b74pjemt"]
+
+[ext_resource type="Script" uid="uid://bkg2epx55qsju" path="res://Assets/Scripts/Data/LocationConfigSO.cs" id="1_q3ti1"]
+
+[resource]
+script = ExtResource("1_q3ti1")
+metadata/_custom_type_script = "uid://bkg2epx55qsju"

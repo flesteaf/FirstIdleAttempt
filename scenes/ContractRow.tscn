@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://5mirqsswynq8"]
+
+[node name="Node2D" type="Node2D" unique_id=1819807605]
+
+[node name="ContractRow" type="HBoxContainer" parent="." unique_id=90490888]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DescriptionLabel" type="Label" parent="ContractRow" unique_id=1415997511]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RewardLabel" type="Label" parent="ContractRow" unique_id=1969231730]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="AcceptButton" type="Button" parent="ContractRow" unique_id=416636153]
+layout_mode = 2
+text = "Accept"

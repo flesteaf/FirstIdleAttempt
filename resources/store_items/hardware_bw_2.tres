@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StoreItemSO" format=3 uid="uid://b0xiyi4m4j18w"]
+
+[ext_resource type="Script" uid="uid://cdtj8q1tiqpoa" path="res://Assets/Scripts/Data/StoreItemSO.cs" id="1_kq18x"]
+
+[resource]
+script = ExtResource("1_kq18x")
+Id = "hw_bw_2"
+DisplayName = "Cable Internet"
+Description = "Speeds up scan, inject, firewall, ls, copy"
+Price = 0.003
+HasHardwareUpgrade = true
+HardwareStatAffected = 1
+HardwareTierGranted = 2
+metadata/_custom_type_script = "uid://cdtj8q1tiqpoa"

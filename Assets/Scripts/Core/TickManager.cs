@@ -1,38 +1,38 @@
 using System.Collections.Generic;
-using UnityEngine;
+using Godot;
 using HackYourWay.Interfaces;
 
 namespace HackYourWay.Core
 {
     /// <summary>
     /// Drives all game systems that need periodic updates.
-    /// Uses <c>InvokeRepeating</c> at a fixed 1-second interval — NOT per-frame
-    /// <c>Update()</c> — to satisfy Constitution Principle IV (zero per-frame
-    /// allocations in the idle tick path).
+    /// Uses a <see cref="Timer"/> child node at a fixed 1-second interval —
+    /// not per-frame <c>_Process</c> — to satisfy Constitution Principle IV
+    /// (zero per-frame allocations in the idle tick path).
     /// </summary>
-    public class TickManager : MonoBehaviour
+    public partial class TickManager : Node
     {
-        /// <summary>Singleton reference; set in Awake, cleared on destroy.</summary>
         public static TickManager Instance { get; private set; }
 
-        private const float TickInterval = 1f;
+        private const double TickInterval = 1.0;
 
         private readonly List<ITickable> _subscribers = new List<ITickable>();
 
-        private void Awake()
+        public override void _Ready()
         {
-            if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+            if (Instance != null && Instance != this) { QueueFree(); return; }
             Instance = this;
+
+            var timer = new Timer();
+            timer.WaitTime  = TickInterval;
+            timer.Autostart = true;
+            timer.Timeout   += Tick;
+            AddChild(timer);
         }
 
-        private void OnDestroy()
+        public override void _ExitTree()
         {
             if (Instance == this) Instance = null;
-        }
-
-        private void Start()
-        {
-            InvokeRepeating(nameof(Tick), TickInterval, TickInterval);
         }
 
         /// <summary>Subscribes a system to receive ticks.</summary>
@@ -50,7 +50,6 @@ namespace HackYourWay.Core
 
         private void Tick()
         {
-            // No LINQ — for-loop avoids GC per Unity perf guidelines.
             for (int i = 0; i < _subscribers.Count; i++)
                 _subscribers[i].OnTick(TickInterval);
         }

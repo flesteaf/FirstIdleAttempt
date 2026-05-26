@@ -1,5 +1,4 @@
-using TMPro;
-using UnityEngine;
+using Godot;
 using HackYourWay.Core;
 using HackYourWay.Interfaces;
 using HackYourWay.Models;
@@ -9,14 +8,14 @@ namespace HackYourWay.UI
     /// <summary>
     /// Heads-up display showing the player's current currency balance and active location.
     /// Implements <see cref="ITickable"/> so it updates every game tick rather than every frame
-    /// (Constitution Principle IV — no per-frame Update overhead).
+    /// (Constitution Principle IV — no per-frame _Process overhead).
     /// </summary>
-    public class HUDController : MonoBehaviour, ITickable
+    public partial class HUDController : Control, ITickable
     {
-        [SerializeField] private TextMeshProUGUI _bitcoinLabel;
-        [SerializeField] private TextMeshProUGUI _locationLabel;
+        [Export] private Label _bitcoinLabel;
+        [Export] private Label _locationLabel;
 
-        private void Start()
+        public override void _Ready()
         {
             if (TickManager.Instance != null)
                 TickManager.Instance.Register(this);
@@ -24,7 +23,7 @@ namespace HackYourWay.UI
             Refresh();
         }
 
-        private void OnDestroy()
+        public override void _ExitTree()
         {
             if (TickManager.Instance != null)
                 TickManager.Instance.Unregister(this);
@@ -38,7 +37,7 @@ namespace HackYourWay.UI
 
         // ── Internal ──────────────────────────────────────────────────────────
 
-        private double _lastBtc = double.MinValue;
+        private double _lastBtc          = double.MinValue;
         private string _lastLocationName = null;
 
         private void Refresh()
@@ -50,7 +49,7 @@ namespace HackYourWay.UI
             {
                 _lastBtc = btc;
                 if (_bitcoinLabel != null)
-                    _bitcoinLabel.text = $"BTC: {btc:F4}";
+                    _bitcoinLabel.Text = $"BTC: {btc:F4}";
             }
 
             string locationName = GameManager.Instance.LocationService?.GetCurrentLocationName() ?? string.Empty;
@@ -58,7 +57,7 @@ namespace HackYourWay.UI
             {
                 _lastLocationName = locationName;
                 if (_locationLabel != null)
-                    _locationLabel.text = string.IsNullOrEmpty(locationName) ? "" : $"LOC: {locationName}";
+                    _locationLabel.Text = string.IsNullOrEmpty(locationName) ? "" : $"LOC: {locationName}";
             }
         }
     }

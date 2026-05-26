@@ -1,0 +1,145 @@
+[gd_scene format=3 uid="uid://cb20w0a3hx073"]
+
+[ext_resource type="Script" uid="uid://357ek5s4p627" path="res://Assets/Scripts/UI/TerminalController.cs" id="1_lnm5d"]
+[ext_resource type="Script" uid="uid://dgmutwpwqc8xy" path="res://Assets/Scripts/UI/HUDController.cs" id="2_qpcaw"]
+[ext_resource type="FontFile" uid="uid://cq3iqik82gnjt" path="res://Assets/Fonts/ShareTechMono-Regular.ttf" id="3_4xyx5"]
+[ext_resource type="Script" uid="uid://i5mw4wkt1wjd" path="res://Assets/Scripts/UI/TerminalOutputView.cs" id="4_nppl0"]
+[ext_resource type="Script" uid="uid://c20hy6er8pn63" path="res://Assets/Scripts/UI/ContractController.cs" id="5_5g1ft"]
+[ext_resource type="PackedScene" uid="uid://5mirqsswynq8" path="res://scenes/ContractRow.tscn" id="6_4xyx5"]
+[ext_resource type="Script" uid="uid://bjxt4lddt74g6" path="res://Assets/Scripts/UI/StoreController.cs" id="6_tnej5"]
+[ext_resource type="PackedScene" uid="uid://dsolkom2ta1r0" path="res://scenes/StoreItemRow.tscn" id="8_nppl0"]
+
+[node name="TerminalScene" type="Control" node_paths=PackedStringArray("_inputField", "_outputView")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lnm5d")
+_inputField = NodePath("VBoxContainer/InputBar/InputField")
+_outputView = NodePath("VBoxContainer/OutputPanel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("_bitcoinLabel", "_locationLabel")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_qpcaw")
+_bitcoinLabel = NodePath("BitcoinLabel")
+_locationLabel = NodePath("LocationLabel")
+
+[node name="HeaderLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_4xyx5")
+theme_override_font_sizes/font_size = 14
+text = "HACK YOUR WAY - NODE_47"
+
+[node name="BitcoinLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4xyx5")
+theme_override_font_sizes/font_size = 14
+
+[node name="LocationLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4xyx5")
+theme_override_font_sizes/font_size = 14
+
+[node name="OutputPanel" type="RichTextLabel" parent="VBoxContainer" node_paths=PackedStringArray("_outputText", "_headerLabel")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("3_4xyx5")
+theme_override_fonts/bold_font = ExtResource("3_4xyx5")
+theme_override_fonts/bold_italics_font = ExtResource("3_4xyx5")
+theme_override_fonts/italics_font = ExtResource("3_4xyx5")
+theme_override_fonts/mono_font = ExtResource("3_4xyx5")
+theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/bold_font_size = 14
+theme_override_font_sizes/bold_italics_font_size = 14
+theme_override_font_sizes/italics_font_size = 14
+theme_override_font_sizes/mono_font_size = 14
+bbcode_enabled = true
+scroll_following = true
+scroll_following_visible_characters = true
+script = ExtResource("4_nppl0")
+_outputText = NodePath(".")
+_headerLabel = NodePath("../HBoxContainer/HeaderLabel")
+
+[node name="InputBar" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="InputField" type="LineEdit" parent="VBoxContainer/InputBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_4xyx5")
+theme_override_font_sizes/font_size = 14
+placeholder_text = "Type a command..."
+
+[node name="ContractPanel" type="Panel" parent="." node_paths=PackedStringArray("_contractListParent", "_terminalOutput")]
+visible = false
+layout_mode = 0
+offset_left = 880.0
+offset_top = 10.0
+offset_right = 1270.0
+offset_bottom = 710.0
+script = ExtResource("5_5g1ft")
+_contractListParent = NodePath("VBoxContainer/ContractList")
+_contractRowPrefab = ExtResource("6_4xyx5")
+_terminalOutput = NodePath("../VBoxContainer/OutputPanel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContractPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="ContractPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4xyx5")
+theme_override_font_sizes/font_size = 14
+text = "Contracts"
+
+[node name="ContractList" type="VBoxContainer" parent="ContractPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StorePanel" type="Panel" parent="." node_paths=PackedStringArray("_itemListParent", "_terminalOutput")]
+visible = false
+layout_mode = 0
+offset_left = 880.0
+offset_top = 10.0
+offset_right = 1270.0
+offset_bottom = 710.0
+script = ExtResource("6_tnej5")
+_itemListParent = NodePath("VBoxContainer/ItemList")
+_itemRowPrefab = ExtResource("8_nppl0")
+_terminalOutput = NodePath("../VBoxContainer/OutputPanel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StorePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="StorePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4xyx5")
+theme_override_font_sizes/font_size = 14
+text = "Store"
+
+[node name="ItemList" type="VBoxContainer" parent="StorePanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3

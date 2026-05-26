@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
 using HackYourWay.Models;
 using HackYourWay.Services;
 using HackYourWay.Data;
@@ -11,7 +10,7 @@ namespace HackYourWay.Tests.EditMode
     {
         private static Services.LocationService BuildEmpty()
         {
-            var config = ScriptableObject.CreateInstance<LocationConfigSO>();
+            var config = new LocationConfigSO();
             config.MinNetworks          = 1;
             config.MaxNetworks          = 1;
             config.MinDevicesPerNetwork = 1;
